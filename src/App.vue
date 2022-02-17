@@ -1,5 +1,7 @@
 <template>
-  <u-app></u-app>
+  <u-app>
+    <h1>Тестинг</h1>
+  </u-app>
 </template>
 
 <style>
