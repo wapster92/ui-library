@@ -15,7 +15,6 @@
     display: flex;
     align-items: center;
     padding: var(--u-logo-padding);
-    max-width: 100px;
     &__link {
       display: inline-flex;
 

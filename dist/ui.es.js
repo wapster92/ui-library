@@ -17,7 +17,7 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-import { getCurrentScope, onScopeDispose, ref, watch, unref, computed, defineComponent, openBlock, createElementBlock, createElementVNode, warn, getCurrentInstance, provide, inject, isRef, onMounted, onBeforeUnmount, onBeforeMount, mergeProps, renderSlot, shallowRef, nextTick, onUpdated, resolveComponent, withDirectives, normalizeClass, normalizeStyle, createCommentVNode, Fragment, createBlock, withCtx, resolveDynamicComponent, withModifiers, createVNode, toDisplayString, vShow, toRef, Transition, reactive, cloneVNode, Text, h, Comment, Teleport, createTextVNode, readonly, useSlots, resolveDirective, renderList, effectScope, markRaw, isReactive, toRaw, onUnmounted, toRefs } from "vue";
+import { getCurrentScope, onScopeDispose, ref, watch, unref, computed, defineComponent, openBlock, createElementBlock, createElementVNode, warn, getCurrentInstance, provide, inject, isRef, onMounted, onBeforeUnmount, onBeforeMount, mergeProps, renderSlot, shallowRef, nextTick, onUpdated, resolveComponent, withDirectives, normalizeClass, normalizeStyle, createCommentVNode, Fragment, createBlock, withCtx, resolveDynamicComponent, withModifiers, createVNode, toDisplayString, vShow, toRef, Transition, reactive, cloneVNode, Text, h, Comment, Teleport, createTextVNode, readonly, useSlots, resolveDirective, renderList, markRaw, effectScope, isReactive, toRaw, onUnmounted, toRefs } from "vue";
 var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
 var freeGlobal$1 = freeGlobal;
 var freeSelf = typeof self == "object" && self && self.Object === Object && self;
@@ -1002,7 +1002,6 @@ const composeEventHandlers = (theirsHandler, oursHandler, { checkForDefaultPreve
   };
   return handleEvent;
 };
-var isVue2 = false;
 function tryOnScopeDispose(fn2) {
   if (getCurrentScope()) {
     onScopeDispose(fn2);
@@ -10988,38 +10987,6 @@ var MutationType;
   MutationType2["patchObject"] = "patch object";
   MutationType2["patchFunction"] = "patch function";
 })(MutationType || (MutationType = {}));
-function createPinia() {
-  const scope = effectScope(true);
-  const state = scope.run(() => ref({}));
-  let _p = [];
-  let toBeInstalled = [];
-  const pinia = markRaw({
-    install(app) {
-      setActivePinia(pinia);
-      {
-        pinia._a = app;
-        app.provide(piniaSymbol, pinia);
-        app.config.globalProperties.$pinia = pinia;
-        toBeInstalled.forEach((plugin) => _p.push(plugin));
-        toBeInstalled = [];
-      }
-    },
-    use(plugin) {
-      if (!this._a && !isVue2) {
-        toBeInstalled.push(plugin);
-      } else {
-        _p.push(plugin);
-      }
-      return this;
-    },
-    _p,
-    _a: null,
-    _e: scope,
-    _s: /* @__PURE__ */ new Map(),
-    state
-  });
-  return pinia;
-}
 const noop = () => {
 };
 function addSubscription(subscriptions, callback, detached, onCleanup = noop) {
@@ -11323,12 +11290,9 @@ function _sfc_render(_ctx, _cache) {
     ])
   ]);
 }
-var ULogo = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render], ["__scopeId", "data-v-0cca49c8"]]);
+var ULogo = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render], ["__scopeId", "data-v-0f033c7a"]]);
 const _sfc_main$1 = {
   setup(__props) {
-    const state = useMenuStore();
-    state.changeState();
-    console.log(state.isState);
     return (_ctx, _cache) => {
       return openBlock(), createBlock(ULogo, null, {
         default: withCtx(() => [
@@ -11469,6 +11433,9 @@ var ru = /* @__PURE__ */ getDefaultExportFromCjs(ru$1);
 var UApp_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _sfc_main = /* @__PURE__ */ defineComponent({
   setup(__props) {
+    const state = useMenuStore();
+    state.changeState();
+    console.log(state.isState);
     return (_ctx, _cache) => {
       return openBlock(), createBlock(unref(ElConfigProvider), { locale: unref(ru) }, {
         default: withCtx(() => [
@@ -11511,12 +11478,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var UApp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-18ea2e1a"]]);
+var UApp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-71374822"]]);
 var index = "";
 const UI = {
   install(Vue) {
     Vue.component("UApp", UApp);
-    Vue.use(createPinia());
   }
 };
 export { UI as default };

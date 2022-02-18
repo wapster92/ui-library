@@ -7,9 +7,12 @@
   </u-app>
 </template>
 <script setup>
-  import Logo from './assets/img/logo.svg'
+  import Logo from './assets/img/logo.svg';
 </script>
 <style>
+  * {
+    box-sizing: border-box;
+  }
   body {
     margin: 0;
   }

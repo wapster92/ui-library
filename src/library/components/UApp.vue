@@ -29,14 +29,19 @@
     ElConfigProvider,
     ElAside,
     ElDatePicker,
-  } from 'element-plus'
-  import UHeader from './panel/components/UHeader.vue'
-  import ru from 'element-plus/lib/locale/lang/ru'
+  } from 'element-plus';
+  import { useMenuStore } from '../store/panel.js';
+
+  const state = useMenuStore();
+  state.changeState();
+  console.log(state.isState);
+  import UHeader from './panel/components/UHeader.vue';
+  import ru from 'element-plus/lib/locale/lang/ru';
 </script>
 
 <style scoped lang="scss">
   .u-header {
-    --el-header-padding: 0 20px 0 0;
+    --el-header-padding: 0 0 0 0;
     background: linear-gradient(
       0deg,
       rgba(231, 230, 233, 1) 0%,
