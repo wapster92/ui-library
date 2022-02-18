@@ -1,0 +1,6 @@
+root = true
+
+[**.{js,vue,mjs}]
+indent_style = space
+ij_continuation_indent_size = 2
+indent_size = 2
