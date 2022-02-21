@@ -1,6 +1,6 @@
 <template>
   <ElConfigProvider :locale="ru">
-    <ElContainer>
+    <ElContainer class="u-app">
       <ElHeader height="40px" class="u-header">
         <UHeader>
           <template #logo>
@@ -9,9 +9,15 @@
         </UHeader>
       </ElHeader>
       <ElContainer>
-        <ElAside width="200px" />
+        <ElAside class="u-aside" :width="widthMenu">
+          <div class="menu"></div>
+          <div class="menu-item" @transitionend="test">
+            <span class="menu-item__icon">Ikon</span>
+            <span class="menu-item__item"  :class="{'menu-item__item--active': stateMenu.isState}">Item</span>
+          </div>
+        </ElAside>
         <ElMain>
-          <ElDatePicker />
+          <ElDatePicker type="time" />
           <slot />
         </ElMain>
       </ElContainer>
@@ -31,12 +37,17 @@
     ElDatePicker,
   } from 'element-plus';
   import { useMenuStore } from '../store/panel.js';
+  import {computed} from "vue";
 
-  const state = useMenuStore();
-  state.changeState();
-  console.log(state.isState);
+
   import UHeader from './panel/components/UHeader.vue';
   import ru from 'element-plus/lib/locale/lang/ru';
+  const stateMenu = useMenuStore();
+  const widthMenu = computed(() => stateMenu.isState ? '200px': '50px')
+
+  const test = () => {
+    console.log('animation end')
+  }
 </script>
 
 <style scoped lang="scss">
@@ -47,5 +58,24 @@
       rgba(231, 230, 233, 1) 0%,
       rgba(182, 188, 189, 1) 100%
     );
+  }
+
+  .u-aside {
+    border-right: 1px solid #303133;
+    background: #939b9b;
+    transition: width var(--el-transition-duration);
+  }
+  .u-app {
+    height: 100%;
+    min-height: 100vh;
+  }
+  .menu-item {
+    &__item {
+      transition: opacity .3s;
+      opacity: 0;
+      &--active {
+        opacity: 1;
+      }
+    }
   }
 </style>

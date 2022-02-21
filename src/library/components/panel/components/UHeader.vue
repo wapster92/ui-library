@@ -31,7 +31,8 @@
   .header {
     height: 100%;
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 130px 1fr;
+    grid-template-rows: minmax(100%, 40px);
   }
   .main {
     display: flex;

@@ -10,18 +10,18 @@
 
 <style scoped lang="scss">
   .logo {
-    --u-logo-padding: 0 15px;
+    --u-logo-padding: 8px 15px;
     height: 100%;
     display: flex;
     align-items: center;
     padding: var(--u-logo-padding);
     &__link {
       display: inline-flex;
-
-      max-height: 38px;
+      height: 100%;
       :slotted(svg) {
         width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: cover;
       }
     }
   }
