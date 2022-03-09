@@ -1,8 +1,14 @@
 import { defineStore } from 'pinia';
 
+export interface MenuStore {
+  isState: boolean;
+  changeState(): void;
+}
+
+
 export const useMenuStore = defineStore('menu', {
   state: () => {
-    return {
+    return <MenuStore>{
       isState: false,
     };
   },

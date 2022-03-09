@@ -10,13 +10,13 @@
 
 <style scoped lang="scss">
   .logo {
-    --u-logo-padding: 8px 15px;
-    height: 100%;
+    height: 24px;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: var(--u-logo-padding);
     &__link {
-      display: inline-flex;
+      display: flex;
       height: 100%;
       :slotted(svg) {
         width: 100%;

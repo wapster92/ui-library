@@ -1,14 +1,9 @@
 <template>
   <div class="header">
-    <ULogo>
-      <template #default>
-        <slot name="logo" />
-      </template>
-    </ULogo>
-    <div class="main">
-      <ElButton size="small" type="primary" @click="changeMenuStatus">
+    <div class="button-wrapper">
+      <ElButton class="btn" size="small" type="primary" @click="changeMenuStatus">
         <ElIcon>
-          <Fold v-if="menuStore.isState" />
+          <Fold v-if="isState" />
           <Expand v-else />
         </ElIcon>
       </ElButton>
@@ -16,14 +11,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { ElButton, ElIcon } from 'element-plus';
   import { Fold, Expand } from '@element-plus/icons-vue';
-  import { useMenuStore } from '../../../store/panel.js';
-  import ULogo from './ULogo.vue';
-  const menuStore = useMenuStore();
+  import {MenuStore, useMenuStore} from '../../../store/panel.ts';
+  const {changeState, isState}:MenuStore = useMenuStore();
   const changeMenuStatus = () => {
-    menuStore.changeState();
+    changeState();
   };
 </script>
 
@@ -31,12 +25,14 @@
   .header {
     height: 100%;
     display: grid;
-    grid-template-columns: 130px 1fr;
-    grid-template-rows: minmax(100%, 40px);
+    grid-template-columns: auto 1fr;
+    grid-template-rows: minmax(100%, 42px);
+    background: #F3F5F8;
   }
-  .main {
+  .button-wrapper {
     display: flex;
     align-items: center;
     height: 100%;
+    padding: 0 20px;
   }
 </style>
