@@ -2,7 +2,7 @@
   <ElConfigProvider :locale="ru">
     <ElContainer class="u-app">
       <ElAside class="u-aside" :width="widthMenu">
-        <UMenu>
+        <UMenu v-bind="$attrs">
           <template #logo>
             <slot name="logo" :menuOpen="stateMenu.isState"></slot>
           </template>
@@ -34,7 +34,7 @@
     ElAside,
     ElDatePicker,
   } from 'element-plus';
-  import {MenuStore, useMenuStore} from '../store/panel.ts';
+  import {MenuStore, useMenuStore} from '../store/panel';
   import {computed} from "vue";
 
 

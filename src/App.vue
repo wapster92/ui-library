@@ -1,5 +1,5 @@
 <template>
-  <u-app>
+  <u-app :menuItems="items">
     <template #logo="{menuOpen}">
       <transition name="fade" mode="out-in">
         <Logo v-if="menuOpen" />
@@ -13,6 +13,10 @@
 <script setup>
   import Logo from './assets/img/logo.svg';
   import LogoSmall from './assets/img/logo-small.svg';
+  const items = [{
+    icon: LogoSmall,
+    name: 'test'
+  }]
 </script>
 <style>
   * {

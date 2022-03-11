@@ -3,7 +3,7 @@
     <div class="button-wrapper">
       <ElButton class="btn" size="small" type="primary" @click="changeMenuStatus">
         <ElIcon>
-          <Fold v-if="isState" />
+          <Fold v-if="menuStore.isState" />
           <Expand v-else />
         </ElIcon>
       </ElButton>
@@ -14,10 +14,10 @@
 <script setup lang="ts">
   import { ElButton, ElIcon } from 'element-plus';
   import { Fold, Expand } from '@element-plus/icons-vue';
-  import {MenuStore, useMenuStore} from '../../../store/panel.ts';
-  const {changeState, isState}:MenuStore = useMenuStore();
+  import { MenuStore, useMenuStore } from "../../../store/panel";
+  const menuStore:MenuStore = useMenuStore();
   const changeMenuStatus = () => {
-    changeState();
+    menuStore.changeState();
   };
 </script>
 
