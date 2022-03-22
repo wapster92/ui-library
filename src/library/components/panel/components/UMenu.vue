@@ -10,7 +10,7 @@
     <nav class="menu">
       <ul class="menu__list">
         <li class="menu-item" v-for="item of props.menuItems">
-
+          <component :is="item.iconSvg"></component>
           <span class="menu-item__item">{{ item.name }}</span>
         </li>
       </ul>
@@ -21,16 +21,18 @@
 
 <script lang="ts" setup>
 import ULogo from './ULogo.vue'
-import { Component, defineProps, withDefaults } from "vue";
+import { defineProps, withDefaults } from "vue";
 
 interface IMenuItem {
-  name: String,
+  iconSvg: Function,
+  name: string,
 }
 interface IProps {
   menuItems: IMenuItem[],
 }
 
 const props = withDefaults(defineProps<IProps>(), {})
+console.log(props.menuItems)
 
 </script>
 

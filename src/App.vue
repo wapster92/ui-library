@@ -5,16 +5,18 @@
         <Logo v-if="menuOpen" />
         <LogoSmall v-else />
       </transition>
-
+      
     </template>
     <h1>Тестинг</h1>
+    <component :is="LogoSmall"></component>
   </u-app>
 </template>
 <script setup>
-  import Logo from './assets/img/logo.svg';
-  import LogoSmall from './assets/img/logo-small.svg';
+  import Logo from '@/assets/img/logo.svg';
+  import LogoSmall from '@/assets/img/logo-small.svg';
+  
   const items = [{
-    icon: LogoSmall,
+    iconSrc: LogoSmall,
     name: 'test'
   }]
 </script>
