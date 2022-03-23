@@ -8,7 +8,6 @@
       
     </template>
     <h1>Тестинг</h1>
-    <component :is="LogoSmall"></component>
   </u-app>
 </template>
 <script setup>
@@ -16,7 +15,7 @@
   import LogoSmall from '@/assets/img/logo-small.svg';
   
   const items = [{
-    iconSrc: LogoSmall,
+    iconSvg: LogoSmall,
     name: 'test'
   }]
 </script>

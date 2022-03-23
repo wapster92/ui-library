@@ -2,11 +2,11 @@
   <ElConfigProvider :locale="ru">
     <ElContainer class="u-app">
       <ElAside class="u-aside" :width="widthMenu">
-        <UMenu v-bind="$attrs">
+        <UMenuPanel v-bind="$attrs">
           <template #logo>
             <slot name="logo" :menuOpen="stateMenu.isState"></slot>
           </template>
-        </UMenu>
+        </UMenuPanel>
       </ElAside>
       <ElContainer>
         <ElHeader height="42px" class="u-header">
@@ -40,7 +40,7 @@
 
   import UHeader from './panel/components/UHeader.vue';
   import ru from 'element-plus/lib/locale/lang/ru';
-  import UMenu from './panel/components/UMenu.vue'
+  import UMenuPanel from './panel/components/UMenuPanel.vue'
   const stateMenu:MenuStore = useMenuStore();
   const widthMenu = computed(() => stateMenu.isState ? '200px': '50px');
 </script>
