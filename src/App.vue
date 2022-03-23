@@ -14,10 +14,24 @@
   import Logo from '@/assets/img/logo.svg';
   import LogoSmall from '@/assets/img/logo-small.svg';
   
-  const items = [{
-    iconSvg: LogoSmall,
-    name: 'test'
-  }]
+  const items = [
+    {
+      iconSvg: LogoSmall,
+      name: 'Name - 1',
+      menuItems: {
+        name: 'Name - 1 - 1'
+      }
+    },
+    {
+      iconSvg: LogoSmall,
+      name: 'Name - 2',
+      groupName: 'Info'
+    },
+    {
+      iconSvg: LogoSmall,
+      name: 'Name - 3'
+    },
+  ];
 </script>
 <style>
   * {

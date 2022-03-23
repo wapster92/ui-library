@@ -1,20 +1,32 @@
 <template>
   <nav class="menu">
-    <ul class="menu__list">
-      <li class="menu-item" v-for="item of props.menuItems">
-        <component :is="item.iconSvg"></component>
-        <span class="menu-item__item">{{ item.name }}</span>
-      </li>
-    </ul>
+    <ElMenu>
+      <template v-for="(menuItem, i) of menuItems" :key="i">
+        <ElMenuItemGroup v-if="menuItem.groupName">
+          <template #title><span>{{ menuItem.groupName }}</span></template>
+          <ElSubMenu :index="i" v-if="menuItem?.menuItems">
+            <template #title>{{ menuItem.name }}</template>
+          </ElSubMenu>
+          <ElMenuItem v-else :index="i">{{ menuItem.name }}</ElMenuItem>
+        </ElMenuItemGroup>
+        <ElSubMenu v-if="menuItem?.menuItems">
+          <template #title>{{ menuItem.name }}</template>
+        </ElSubMenu>
+        <ElMenuItem v-else :index="i">{{ menuItem.name }}</ElMenuItem>
+      </template>
+    </ElMenu>
   </nav>
 </template>
 
 <script lang="ts" setup>
 import { defineProps, withDefaults } from "vue";
+import {ElMenu, ElSubMenu, ElMenuItem, ElMenuItemGroup} from "element-plus";
 
 interface IMenuItem {
   iconSvg: Function,
   name: string,
+  groupName?: string,
+  menuItems?: IMenuItem[],
 }
 interface IProps {
   menuItems: IMenuItem[],
