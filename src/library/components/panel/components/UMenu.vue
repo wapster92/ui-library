@@ -65,10 +65,7 @@ interface IProps {
 }
 
 const {menuItems} = withDefaults(defineProps<IProps>(), {})
-const isCollapse = ref(true)
-const collapse = () => {
-  isCollapse.value = !isCollapse.value
-}
+
 </script>
 
 <style lang="scss" scoped>
