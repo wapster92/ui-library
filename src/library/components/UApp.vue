@@ -42,7 +42,7 @@
   import ru from 'element-plus/lib/locale/lang/ru';
   import UMenuPanel from './panel/components/UMenuPanel.vue'
   const stateMenu:MenuStore = useMenuStore();
-  const widthMenu = computed(() => stateMenu.isState ? '200px': '50px');
+  const widthMenu = computed(() => stateMenu.isState ? '200px': '66px');
 </script>
 
 <style scoped lang="scss">

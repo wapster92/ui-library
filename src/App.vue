@@ -8,19 +8,21 @@
       
     </template>
     <h1>Тестинг</h1>
+    <button @click="changeItems">Click</button>
   </u-app>
 </template>
 <script setup>
   import Logo from '@/assets/img/logo.svg';
   import LogoSmall from '@/assets/img/logo-small.svg';
+  import { ref } from "vue";
   
-  const items = [
+  const items = ref([
     {
       iconSvg: LogoSmall,
       name: 'Name - 1',
-      menuItems: {
-        name: 'Name - 1 - 1'
-      }
+      menuItems: [
+        { name: "Name - 1 - 1" }
+      ]
     },
     {
       iconSvg: LogoSmall,
@@ -31,7 +33,7 @@
       iconSvg: LogoSmall,
       name: 'Name - 3'
     },
-  ];
+  ]);
 </script>
 <style>
   * {
