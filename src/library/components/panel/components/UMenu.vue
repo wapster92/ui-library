@@ -4,7 +4,7 @@
       <template v-for="(menuItem, i) of menuItems" :key="i">
         <ElMenuItemGroup v-if="menuItem.groupName">
           <template #title><span>{{ menuItem.groupName }}</span></template>
-          <ElSubMenu :index="i" v-if="menuItem?.menuItems">
+          <ElSubMenu :index="`${i}`" v-if="menuItem?.menuItems">
             <template #title>
               <ElIcon>
                 <component :is="menuItem.iconSvg"></component>
@@ -15,7 +15,7 @@
               <template #title><span>{{ subItem.name }}</span></template>
             </ElMenuItem>
           </ElSubMenu>
-          <ElMenuItem v-else :index="i">
+          <ElMenuItem v-else :index="`${i}`">
             <ElIcon>
               <component :is="menuItem.iconSvg"></component>
             </ElIcon>
@@ -23,7 +23,7 @@
           </ElMenuItem>
         </ElMenuItemGroup>
         <template v-else>
-          <ElSubMenu :index="i" v-if="menuItem?.menuItems">
+          <ElSubMenu :index="`${i}`" v-if="menuItem?.menuItems">
             <template #title>
               <ElIcon>
                 <component :is="menuItem.iconSvg"></component>
@@ -34,7 +34,7 @@
               <template #title><span>{{ subItem.name }}</span></template>
             </ElMenuItem>
           </ElSubMenu>
-          <ElMenuItem v-else :index="i">
+          <ElMenuItem v-else :index="`${i}`">
             <ElIcon>
               <component :is="menuItem.iconSvg"></component>
             </ElIcon>
