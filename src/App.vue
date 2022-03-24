@@ -14,23 +14,23 @@
 <script setup>
   import Logo from '@/assets/img/logo.svg';
   import LogoSmall from '@/assets/img/logo-small.svg';
-  import { ref } from "vue";
+  import { markRaw, reactive } from "vue";
   
-  const items = ref([
+  const items = reactive([
     {
-      iconSvg: LogoSmall,
+      iconSvg: markRaw(LogoSmall),
       name: 'Name - 1',
       menuItems: [
         { name: "Name - 1 - 1" }
       ]
     },
     {
-      iconSvg: LogoSmall,
+      iconSvg: markRaw(LogoSmall),
       name: 'Name - 2',
       groupName: 'Info'
     },
     {
-      iconSvg: LogoSmall,
+      iconSvg: markRaw(LogoSmall),
       name: 'Name - 3'
     },
   ]);

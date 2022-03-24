@@ -17,7 +17,6 @@
           </UHeader>
         </ElHeader>
         <ElMain>
-          <ElDatePicker type="time" />
           <slot />
         </ElMain>
       </ElContainer>
