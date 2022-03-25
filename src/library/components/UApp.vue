@@ -1,27 +1,29 @@
 <template>
-  <ElConfigProvider :locale="ru">
-    <ElContainer class="u-app">
-      <ElAside class="u-aside" :width="widthMenu">
-        <UMenuPanel v-bind="$attrs">
-          <template #logo>
-            <slot name="logo" :menuOpen="stateMenu.isState"></slot>
-          </template>
-        </UMenuPanel>
-      </ElAside>
-      <ElContainer>
-        <ElHeader height="42px" class="u-header">
-          <UHeader>
+  <div>
+    <ElConfigProvider :locale="ru">
+      <ElContainer class="u-app">
+        <ElAside class="u-aside" :width="widthMenu">
+          <UMenuPanel v-bind="$attrs">
             <template #logo>
-              <slot name="logo" />
+              <slot name="logo" :menuOpen="stateMenu.isState"></slot>
             </template>
-          </UHeader>
-        </ElHeader>
-        <ElMain>
-          <slot />
-        </ElMain>
+          </UMenuPanel>
+        </ElAside>
+        <ElContainer>
+          <ElHeader height="42px" class="u-header">
+            <UHeader>
+              <template #logo>
+                <slot name="logo" />
+              </template>
+            </UHeader>
+          </ElHeader>
+          <ElMain>
+            <slot />
+          </ElMain>
+        </ElContainer>
       </ElContainer>
-    </ElContainer>
-  </ElConfigProvider>
+    </ElConfigProvider>
+  </div>
 </template>
 
 <script setup lang="ts">
