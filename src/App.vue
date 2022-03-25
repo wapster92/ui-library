@@ -1,15 +1,15 @@
 <template>
-  <u-app :menuItems="items">
+  <UApp :menuItems="items">
     <template #logo="{menuOpen}">
       <transition name="fade" mode="out-in">
         <Logo v-if="menuOpen" />
         <LogoSmall v-else />
       </transition>
-      
     </template>
-    <h1>Тестинг</h1>
-    <button @click="changeItems">Click</button>
-  </u-app>
+    <template #default>
+      <h1>Тестинг</h1>
+    </template>
+  </UApp>
 </template>
 <script setup>
   import Logo from '@/assets/img/logo.svg';

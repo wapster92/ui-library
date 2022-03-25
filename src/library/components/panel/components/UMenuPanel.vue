@@ -7,7 +7,9 @@
         </template>
       </ULogo>
     </div>
-    <UMenu v-bind="$attrs"></UMenu>
+    <slot name="menu">
+      <UMenu v-bind="$attrs"></UMenu>
+    </slot>
   </div>
 
 </template>

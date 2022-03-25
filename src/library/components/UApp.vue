@@ -7,6 +7,9 @@
             <template #logo>
               <slot name="logo" :menuOpen="stateMenu.isState"></slot>
             </template>
+            <template #menu>
+              <slot name="menu"></slot>
+            </template>
           </UMenuPanel>
         </ElAside>
         <ElContainer>

@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref, withDefaults } from "vue";
+import { defineProps, withDefaults } from "vue";
 import {ElMenu, ElSubMenu, ElMenuItem, ElMenuItemGroup, ElIcon} from "element-plus";
 import {MenuStore, useMenuStore} from '../../../store/panel';
 
