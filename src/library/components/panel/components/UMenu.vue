@@ -70,6 +70,8 @@ const {menuItems} = withDefaults(defineProps<IProps>(), {})
 
 <style lang="scss" scoped>
 .menu-component {
+  --el-menu-item-height: 40px;
+  margin-top: 20px;
   border-right: none;
 }
 </style>

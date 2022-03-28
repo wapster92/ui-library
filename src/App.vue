@@ -1,5 +1,5 @@
 <template>
-  <UApp :menuItems="items">
+  <u-app :menu-items="items">
     <template #logo="{menuOpen}">
       <transition name="fade" mode="out-in">
         <Logo v-if="menuOpen" />
@@ -7,46 +7,39 @@
       </transition>
     </template>
     <template #default>
-      <h1>Тестинг</h1>
+      <TableListing/>
     </template>
-  </UApp>
+  </u-app>
 </template>
 <script setup>
   import Logo from '@/assets/img/logo.svg';
   import LogoSmall from '@/assets/img/logo-small.svg';
   import { markRaw, reactive } from "vue";
-  
+  import {User, SetUp, Help} from "@element-plus/icons-vue";
+
   const items = reactive([
     {
-      iconSvg: markRaw(LogoSmall),
-      name: 'Name - 1',
-      menuItems: [
-        { name: "Name - 1 - 1" }
-      ]
+      iconSvg: markRaw(User),
+      name: 'Пользователи',
     },
     {
-      iconSvg: markRaw(LogoSmall),
-      name: 'Name - 2',
-      groupName: 'Info'
+      iconSvg: markRaw(SetUp),
+      name: 'Система',
     },
     {
-      iconSvg: markRaw(LogoSmall),
-      name: 'Name - 3'
+      iconSvg: markRaw(Help),
+      name: 'Помощь',
     },
   ]);
 </script>
-<style>
-  * {
-    box-sizing: border-box;
-  }
+<style lang="scss">
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
   body {
     margin: 0;
-  }
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Roboto', sans-serif !important;
+    line-height: 1.2 !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
   }
   .fade-enter-active, .fade-leave-active {
     transition: opacity .3s;
@@ -58,5 +51,10 @@
   .fade-enter-to,
   .fade-leave-from {
     opacity: 1;
+  }
+  .box {
+    width: 100%;
+    height: 100%;
+    background: var(--el-color-white);
   }
 </style>

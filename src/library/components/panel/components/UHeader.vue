@@ -8,11 +8,14 @@
         </ElIcon>
       </ElButton>
     </div>
+    <div></div>
+    <UUserPanel></UUserPanel>
   </div>
 </template>
 
 <script setup lang="ts">
   import { ElButton, ElIcon } from 'element-plus';
+  import UUserPanel from './UUserPanel.vue'
   import { Fold, Expand } from '@element-plus/icons-vue';
   import { MenuStore, useMenuStore } from "../../../store/panel";
   const menuStore:MenuStore = useMenuStore();
@@ -25,7 +28,7 @@
   .header {
     height: 100%;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr 65px;
     grid-template-rows: minmax(100%, 42px);
     background: #F3F5F8;
   }

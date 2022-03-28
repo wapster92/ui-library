@@ -20,7 +20,7 @@
               </template>
             </UHeader>
           </ElHeader>
-          <ElMain>
+          <ElMain class="u-main">
             <slot />
           </ElMain>
         </ElContainer>
@@ -36,7 +36,6 @@
     ElMain,
     ElConfigProvider,
     ElAside,
-    ElDatePicker,
   } from 'element-plus';
   import {MenuStore, useMenuStore} from '../store/panel';
   import {computed} from "vue";
@@ -63,5 +62,8 @@
     height: 100%;
     min-height: 100vh;
     background: #E9EBEF;
+  }
+  .u-main {
+    padding: 4px;
   }
 </style>
