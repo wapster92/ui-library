@@ -1,10 +1,16 @@
 {
   "compilerOptions": {
-    //...
+    "target": "esnext",
+    "module": "esnext",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "types": ["vite/client", "node", "jest"],
+    "moduleResolution": "node",
+    "noEmit": true
+  },
+  "exclude": ["node_modules", "dist", "tmp"]
 }
