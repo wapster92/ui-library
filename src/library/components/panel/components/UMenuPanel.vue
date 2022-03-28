@@ -11,17 +11,15 @@
       <UMenu v-bind="$attrs"></UMenu>
     </slot>
   </div>
-
 </template>
 
 <script lang="ts" setup>
-import ULogo from './ULogo.vue'
-import UMenu from './UMenu.vue'
-
+  import ULogo from './ULogo.vue';
+  import UMenu from './UMenu.vue';
 </script>
 
 <style scoped lang="scss">
-.logo-in-menu {
-  padding: 9px 0;
-}
+  .logo-in-menu {
+    padding: 9px 0;
+  }
 </style>

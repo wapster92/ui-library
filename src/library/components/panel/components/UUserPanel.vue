@@ -27,58 +27,64 @@
 </template>
 
 <script setup lang="ts">
-import {ElAvatar, ElDropdown, ElDropdownItem, ElIcon, ElDropdownMenu} from 'element-plus'
-import Exit from '../../../assets/icons/exit.svg'
-
+  import {
+    ElAvatar,
+    ElDropdown,
+    ElDropdownItem,
+    ElIcon,
+    ElDropdownMenu,
+  } from 'element-plus';
+  import Exit from '../../../assets/icons/exit.svg';
 </script>
 
 <style scoped lang="scss">
-.avatar-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-.user-card {
-  border: none;
-}
-.user-panel-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.user-avatar {
-  cursor: pointer;
-}
+  .avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .user-card {
+    border: none;
+  }
+  .user-panel-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .user-avatar {
+    cursor: pointer;
+  }
 </style>
 
 <style lang="scss">
-.user-panel-dropdown {
-  width: 204px;
-  .el-dropdown-menu {
-    padding: 0;
-    &__item {
-      &:hover, &:focus {
+  .user-panel-dropdown {
+    width: 204px;
+    .el-dropdown-menu {
+      padding: 0;
+      &__item {
+        &:hover,
+        &:focus {
+          svg {
+            fill: var(--el-dropdown-menuItem-hover-color);
+          }
+        }
         svg {
-          fill: var(--el-dropdown-menuItem-hover-color);
+          fill: var(--el-text-color-regular);
+        }
+        &--divided {
+          margin: 0;
         }
       }
-      svg {
-        fill: var(--el-text-color-regular);
-      }
-      &--divided {
-        margin: 0;
-      }
+    }
+    &__name {
+      display: flex;
+      padding: 15px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0;
+      border-bottom: 1px solid var(--el-border-color-lighter);
     }
   }
-  &__name {
-    display: flex;
-    padding: 15px 20px;
-    font-size: 14px;
-    font-weight: 500;
-    margin: 0;
-    border-bottom: 1px solid var(--el-border-color-lighter);
-  }
-}
 </style>

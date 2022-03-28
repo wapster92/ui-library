@@ -1,21 +1,21 @@
 <template>
   <u-app :menu-items="items">
-    <template #logo="{menuOpen}">
+    <template #logo="{ menuOpen }">
       <transition name="fade" mode="out-in">
         <Logo v-if="menuOpen" />
         <LogoSmall v-else />
       </transition>
     </template>
     <template #default>
-      <TableListing/>
+      <TableListing />
     </template>
   </u-app>
 </template>
 <script setup>
   import Logo from '@/assets/img/logo.svg';
   import LogoSmall from '@/assets/img/logo-small.svg';
-  import { markRaw, reactive } from "vue";
-  import {User, SetUp, Help} from "@element-plus/icons-vue";
+  import { markRaw, reactive } from 'vue';
+  import { User, SetUp, Help } from '@element-plus/icons-vue';
 
   const items = reactive([
     {
@@ -41,8 +41,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .3s;
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s;
   }
   .fade-enter-from,
   .fade-leave-to {

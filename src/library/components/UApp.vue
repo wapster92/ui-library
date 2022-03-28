@@ -37,15 +37,14 @@
     ElConfigProvider,
     ElAside,
   } from 'element-plus';
-  import {MenuStore, useMenuStore} from '../store/panel';
-  import {computed} from "vue";
-
+  import { MenuStore, useMenuStore } from '../store/panel';
+  import { computed } from 'vue';
 
   import UHeader from './panel/components/UHeader.vue';
   import ru from 'element-plus/lib/locale/lang/ru';
-  import UMenuPanel from './panel/components/UMenuPanel.vue'
-  const stateMenu:MenuStore = useMenuStore();
-  const widthMenu = computed(() => stateMenu.isState ? '200px': '64px');
+  import UMenuPanel from './panel/components/UMenuPanel.vue';
+  const stateMenu: MenuStore = useMenuStore();
+  const widthMenu = computed(() => (stateMenu.isState ? '200px' : '64px'));
 </script>
 
 <style scoped lang="scss">
@@ -61,7 +60,7 @@
   .u-app {
     height: 100%;
     min-height: 100vh;
-    background: #E9EBEF;
+    background: #e9ebef;
   }
   .u-main {
     padding: 4px;

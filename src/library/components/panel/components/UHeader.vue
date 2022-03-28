@@ -1,7 +1,12 @@
 <template>
   <div class="header">
     <div class="button-wrapper">
-      <ElButton class="btn" size="small" type="primary" @click="changeMenuStatus">
+      <ElButton
+        class="btn"
+        size="small"
+        type="primary"
+        @click="changeMenuStatus"
+      >
         <ElIcon>
           <Fold v-if="menuStore.isState" />
           <Expand v-else />
@@ -15,10 +20,10 @@
 
 <script setup lang="ts">
   import { ElButton, ElIcon } from 'element-plus';
-  import UUserPanel from './UUserPanel.vue'
+  import UUserPanel from './UUserPanel.vue';
   import { Fold, Expand } from '@element-plus/icons-vue';
-  import { MenuStore, useMenuStore } from "~/store/panel";
-  const menuStore:MenuStore = useMenuStore();
+  import { MenuStore, useMenuStore } from '~/store/panel';
+  const menuStore: MenuStore = useMenuStore();
   const changeMenuStatus = () => {
     menuStore.changeState();
   };
@@ -30,7 +35,7 @@
     display: grid;
     grid-template-columns: auto 1fr 65px;
     grid-template-rows: minmax(100%, 42px);
-    background: #F3F5F8;
+    background: #f3f5f8;
   }
   .button-wrapper {
     display: flex;

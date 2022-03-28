@@ -5,7 +5,6 @@ export interface MenuStore {
   changeState(): void;
 }
 
-
 export const useMenuStore = defineStore('menu', {
   state: () => {
     return <MenuStore>{
