@@ -1,10 +1,10 @@
 <template>
   <nav class="menu">
     <ElMenu :collapse="!stateMenu.isState" class="menu-component">
-      <template v-for="(menuItem, i) of menuItems" :key="i">
+      <template v-for="(menuItem, i) of props.menuItems" :key="i">
         <ElMenuItemGroup v-if="menuItem.groupName">
           <template #title><span>{{ menuItem.groupName }}</span></template>
-          <ElSubMenu :index="`${i}`" v-if="menuItem?.menuItems">
+          <ElSubMenu v-if="menuItem?.menuItems" :index="`${i}`">
             <template #title>
               <ElIcon>
                 <component :is="menuItem.iconSvg"></component>
@@ -23,7 +23,7 @@
           </ElMenuItem>
         </ElMenuItemGroup>
         <template v-else>
-          <ElSubMenu :index="`${i}`" v-if="menuItem?.menuItems">
+          <ElSubMenu v-if="menuItem?.menuItems" :index="`${i}`">
             <template #title>
               <ElIcon>
                 <component :is="menuItem.iconSvg"></component>
@@ -49,22 +49,23 @@
 
 <script lang="ts" setup>
 import { defineProps, withDefaults } from "vue";
-import {ElMenu, ElSubMenu, ElMenuItem, ElMenuItemGroup, ElIcon} from "element-plus";
-import {MenuStore, useMenuStore} from '../../../store/panel';
+import { ElMenu, ElSubMenu, ElMenuItem, ElMenuItemGroup, ElIcon } from "element-plus";
+import { MenuStore, useMenuStore } from "../../../store/panel";
 
-const stateMenu:MenuStore = useMenuStore();
+const stateMenu: MenuStore = useMenuStore();
 
 interface IMenuItem {
-  iconSvg: Function,
+  iconSvg: object,
   name: string,
   groupName?: string,
   menuItems?: IMenuItem[],
 }
+
 interface IProps {
   menuItems: IMenuItem[],
 }
 
-const {menuItems} = withDefaults(defineProps<IProps>(), {})
+const props = withDefaults(defineProps<IProps>(), {});
 
 </script>
 

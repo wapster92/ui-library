@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "./dist/ui.umd.js",
   "module": "./dist/ui.es.js",
+  "license": "MIT",
   "exports": {
     ".": {
       "import": "./dist/ui.es.js",
@@ -13,7 +14,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "lint": "eslint --ext .js,.vue --fix",
     "format": "prettier .  --write"
   },
   "peerDependencies": {

@@ -23,7 +23,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [vue(), svgLoader(), ElementPlus() /*eslintPlugin()*/],
+  plugins: [vue(), svgLoader(), ElementPlus(), eslintPlugin()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
