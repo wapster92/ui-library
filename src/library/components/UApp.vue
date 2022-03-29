@@ -61,6 +61,7 @@
     height: 100%;
     min-height: 100vh;
     background: #e9ebef;
+    color: var(--el-text-color-regular);
   }
   .u-main {
     padding: 4px;

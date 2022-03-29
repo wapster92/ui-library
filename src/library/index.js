@@ -1,7 +1,7 @@
 // import 'element-plus/theme-chalk/index.css';
 import UApp from '~/components/UApp.vue';
 import TableListing from '~/components/listings/TableListing.vue';
-import ListingsWrapper from "~/components/listings/ListingsWrapper.vue";
+import ListingsWrapper from '~/components/listings/ListingsWrapper.vue';
 
 const UI = {
   install(Vue) {
