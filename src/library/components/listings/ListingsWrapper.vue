@@ -27,30 +27,7 @@
         :suffix-icon="Search"
       />
       <div class="listings__filters">
-        <ElTag class="mx-1" size="large" closable>Large</ElTag>
-        <ElTag class="mx-1" size="large" closable>Large</ElTag>
-        <ElTag class="mx-1" size="large" closable>Large</ElTag>
-        <ElPopover placement="bottom" trigger="click">
-          <template #reference>
-            <div class="add-filter">
-              <ElIcon>
-                <Plus></Plus>
-              </ElIcon>
-              <span class="add-filter__text">Добавить фильтр</span>
-            </div>
-          </template>
-          <ElPopover placement="bottom" trigger="click">
-            <template #reference>
-              <div class="add-filter">
-                <ElIcon>
-                  <Plus></Plus>
-                </ElIcon>
-                <span class="add-filter__text">Добавить фильтр</span>
-              </div>
-            </template>
-            <span>Test df dfsa asd fdasf sa asd dsa sa sa sa</span>
-          </ElPopover>
-        </ElPopover>
+        <FiltersView></FiltersView>
       </div>
     </div>
     <slot name="listings"></slot>
@@ -59,11 +36,12 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { ElInput, ElTag, ElIcon, ElPopover } from 'element-plus';
-  import { Search, Plus } from '@element-plus/icons-vue';
+  import { ElInput, ElIcon, } from 'element-plus';
+  import { Search } from '@element-plus/icons-vue';
   import Calendar from '~/assets/icons/calendar.svg';
   import Kanban from '~/assets/icons/kanban.svg';
   import List from '~/assets/icons/list.svg';
+  import FiltersView from '~/components/listings/ui/FiltersView.vue';
 
   const input = ref<string>('');
 </script>
@@ -114,17 +92,6 @@
       &:focus {
         background: var(--el-color-primary-light-8);
       }
-    }
-  }
-  .add-filter {
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    &__text {
-      margin-left: 5px;
-      display: inline-flex;
     }
   }
 </style>
