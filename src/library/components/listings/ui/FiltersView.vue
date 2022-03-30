@@ -35,15 +35,18 @@ import {reactive} from "vue";
 
 interface Filter {
   label: string,
+  type: string,
   value: string
 }
 const filters:Filter[] = reactive([
   {
     label: 'Имя',
+    type: 'like',
     value: 'Тимур'
   },
   {
     label: 'Удален',
+    type: 'bool',
     value: 'Нет'
   },
 ])
