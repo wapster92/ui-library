@@ -14,10 +14,10 @@
           <el-dropdown-item>Action 1</el-dropdown-item>
           <el-dropdown-item>Action 2</el-dropdown-item>
           <el-dropdown-item>Action 3</el-dropdown-item>
-          <el-dropdown-item divided>
-            <ElIcon>
+          <el-dropdown-item :icon="Exit" divided>
+<!--            <ElIcon>
               <Exit />
-            </ElIcon>
+            </ElIcon>-->
             <span>Выход</span>
           </el-dropdown-item>
         </el-dropdown-menu>
