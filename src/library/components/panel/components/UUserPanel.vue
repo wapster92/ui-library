@@ -15,9 +15,6 @@
           <el-dropdown-item>Action 2</el-dropdown-item>
           <el-dropdown-item>Action 3</el-dropdown-item>
           <el-dropdown-item :icon="Exit" divided>
-<!--            <ElIcon>
-              <Exit />
-            </ElIcon>-->
             <span>Выход</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -31,7 +28,6 @@
     ElAvatar,
     ElDropdown,
     ElDropdownItem,
-    ElIcon,
     ElDropdownMenu,
   } from 'element-plus';
   import Exit from '../../../assets/icons/exit.svg';

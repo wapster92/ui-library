@@ -7,11 +7,7 @@
       </transition>
     </template>
     <template #default>
-      <ListingsWrapper>
-        <template #listings>
-          <TableListing />
-        </template>
-      </ListingsWrapper>
+      <router-view></router-view>
     </template>
   </u-app>
 </template>

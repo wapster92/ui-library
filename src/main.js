@@ -2,5 +2,10 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import UI from './library';
 import { createPinia } from 'pinia';
+import router from "@/routes";
 
-createApp(App).use(createPinia()).use(UI).mount('#app');
+const app = createApp(App);
+app.use(createPinia());
+app.use(UI);
+app.use(router);
+app.mount('#app');

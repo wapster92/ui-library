@@ -5,15 +5,21 @@ export interface MenuStore {
   changeState(): void;
 }
 
+let state = false;
+if (window !== undefined) {
+  state = JSON.parse(localStorage.getItem('stateMenu')) ?? false;
+}
+
 export const useMenuStore = defineStore('menu', {
   state: () => {
     return <MenuStore>{
-      isState: false,
+      isState: state,
     };
   },
   actions: {
     changeState() {
       this.isState = !this.isState;
+      localStorage.setItem('stateMenu', this.isState);
     },
   },
 });
