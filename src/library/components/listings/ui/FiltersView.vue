@@ -52,7 +52,7 @@
   interface Filter {
     label: string;
     type: string;
-    value: string|boolean;
+    value: string|boolean|number;
   }
   const filters: Filter[] = reactive([
 
