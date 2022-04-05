@@ -1,6 +1,9 @@
 <template>
   <div>
     <ListingsWrapper>
+      <template #filters>
+        <DateFilter></DateFilter>
+      </template>
       <template #listings>
         <TableListing />
       </template>
@@ -8,10 +11,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ListingPage"
-}
+<script setup lang="ts">
+
 </script>
 
 <style scoped>

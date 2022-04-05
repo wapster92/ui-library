@@ -1,21 +1,24 @@
 <template>
   <div class="filters-view">
-    <ElPopover v-for="(filter, i) of filters" :key="i" placement="bottom" trigger="click">
-      <template #reference>
-        <ElTag
-          class="mx-1 filters-view__tag"
-          size="large"
-          closable
-          @close="removeFilter(filter)"
-        >
-          <span class="filters-view__label">{{ filter.label }}: </span>
-          <span class="filters-view__value">{{ filter.value }}</span>
-        </ElTag>
-      </template>
-      <template #default>
-        test
-      </template>
-    </ElPopover>
+
+    <slot name="filters">
+<!--      <ElPopover v-for="(filter, i) of filters" :key="i" placement="bottom" trigger="click">
+        <template #reference>
+          <ElTag
+            class="mx-1 filters-view__tag"
+            size="large"
+            closable
+            @close="removeFilter(filter)"
+          >
+            <span class="filters-view__label">{{ filter.label }}: </span>
+            <span class="filters-view__value">{{ filter.value }}</span>
+          </ElTag>
+        </template>
+        <template #default>
+          test
+        </template>
+      </ElPopover>-->
+    </slot>
 
     <ElDropdown trigger="click">
       <div class="add-filter" :class="{ 'add-filter--more': filters.length }">

@@ -27,7 +27,11 @@
         :suffix-icon="Search"
       />
       <div class="listings__filters">
-        <FiltersView></FiltersView>
+        <FiltersView>
+          <template #filters>
+            <slot name="filters"></slot>
+          </template>
+        </FiltersView>
       </div>
     </div>
     <slot name="listings"></slot>
