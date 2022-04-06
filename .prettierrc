@@ -3,5 +3,6 @@
   "semi": true,
   "vueIndentScriptAndStyle": true,
   "bracketSpacing": true,
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "bracketSameLine": true
 }
