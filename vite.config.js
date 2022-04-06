@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import ElementPlus from 'unplugin-element-plus/vite';
 import eslintPlugin from 'vite-plugin-eslint';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,15 +16,18 @@ export default defineConfig({
       fileName: format => `ui.${format}.js`,
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'pinia', 'vue-router'],
       output: {
         globals: {
           vue: 'Vue',
+          pinia: 'pinia',
+          'vue-router': 'vueRouter',
         },
       },
     },
   },
   plugins: [
+    peerDepsExternal(),
     vue(),
     svgLoader(),
     ElementPlus({ useSource: true }),

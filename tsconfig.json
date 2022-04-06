@@ -9,7 +9,7 @@
     },
     "skipLibCheck": true,
     "isolatedModules": true,
-    "types": ["vite/client", "node", "jest"],
+    "types": ["vite/client"],
     "moduleResolution": "node",
     "noEmit": true
   },
