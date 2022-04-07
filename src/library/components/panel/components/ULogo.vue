@@ -14,7 +14,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--u-logo-padding);
     &__link {
       display: flex;
       height: 100%;

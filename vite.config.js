@@ -10,6 +10,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 export default defineConfig({
   build: {
     minify: true,
+    target: 'esnext',
     lib: {
       entry: path.resolve(__dirname, 'src/library/index.js'),
       name: 'UI',
