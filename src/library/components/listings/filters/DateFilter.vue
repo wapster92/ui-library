@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div v-if="false">
     <ElPopover
       v-model:visible="filterPopoverVisible"
       placement="bottom"
       width="auto"
-      @hide="closeFilterPopover"
-      trigger="click">
+      trigger="click"
+      @hide="closeFilterPopover">
       <template #reference>
         <ElTag
           class="mx-1 filters-view__tag"
@@ -19,9 +19,9 @@
       </template>
       <template #default>
         <ElDatePicker
-          @visible-change="datePickerVisibleChange"
           v-model="date"
-          type="date" />
+          type="date"
+          @visible-change="datePickerVisibleChange" />
       </template>
     </ElPopover>
   </div>
@@ -31,7 +31,7 @@
   import { DateTime } from 'luxon';
   import { ElPopover, ElTag, ElDatePicker } from 'element-plus';
   import { ref, computed } from 'vue';
-  const date = ref('');
+  const date = ref<Date | string>('');
 
   const dateString = computed(() => {
     if (Array.isArray(date.value) && date.value?.length) {
@@ -53,14 +53,14 @@
   };
 
   const openFilterPopover = () => {
-    console.log('click')
+    console.log('click');
     filterPopoverVisible.value = true;
   };
 
   const closeFilterPopover = () => {
-    console.log('close')
+    console.log('close');
     filterPopoverVisible.value = false;
-  }
+  };
 
   const datePickerVisibleChange = e => {
     if (!e) {

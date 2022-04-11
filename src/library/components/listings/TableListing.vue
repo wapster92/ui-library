@@ -12,12 +12,12 @@
 
 <script setup lang="ts">
   import { ElTable, ElTableColumn } from 'element-plus';
-  import { useRouter } from "vue-router";
+  /*import { useRouter } from "vue-router";
   import { onMounted } from "vue";
   const router = useRouter();
   onMounted(() => {
     router.push({query: {plan: 'text'}})
-  })
+  })*/
 
   const tableData = [
     {

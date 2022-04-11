@@ -49,6 +49,7 @@
     "vue-router": "4"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^0.2.7"
+    "@element-plus/icons-vue": "^0.2.7",
+    "qs": "^6.10.3"
   }
 }
