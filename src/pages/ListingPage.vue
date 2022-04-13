@@ -3,7 +3,7 @@
     <ApiListings>
       <ListingsWrapper>
         <template #filters>
-          <DateFilter></DateFilter>
+          <DateFilter label="Дата добавления" field="createdAt" type="$eq"></DateFilter>
         </template>
         <template #listings>
           <TableListing />

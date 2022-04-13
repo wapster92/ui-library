@@ -1,24 +1,6 @@
 <template>
   <div class="filters-view">
-
-    <slot name="filters">
-<!--      <ElPopover v-for="(filter, i) of filters" :key="i" placement="bottom" trigger="click">
-        <template #reference>
-          <ElTag
-            class="mx-1 filters-view__tag"
-            size="large"
-            closable
-            @close="removeFilter(filter)"
-          >
-            <span class="filters-view__label">{{ filter.label }}: </span>
-            <span class="filters-view__value">{{ filter.value }}</span>
-          </ElTag>
-        </template>
-        <template #default>
-          test
-        </template>
-      </ElPopover>-->
-    </slot>
+    <slot name="filters"> </slot>
 
     <ElDropdown trigger="click">
       <div class="add-filter" :class="{ 'add-filter--more': filters.length }">
@@ -31,9 +13,12 @@
       </div>
       <template #dropdown>
         <ElDropdownMenu>
-          <ElDropdownItem v-for="(filter, i) of filtersList" :key="i" @click="addFilter(filter)">{{
-            filter.label
-          }}</ElDropdownItem>
+          <ElDropdownItem
+            v-for="(filter, i) of filtersList"
+            :key="i"
+            @click="addFilter(filter)"
+            >{{ filter.label }}</ElDropdownItem
+          >
         </ElDropdownMenu>
       </template>
     </ElDropdown>
@@ -42,42 +27,44 @@
 
 <script setup lang="ts">
   import {
-    ElTag,
     ElIcon,
-    ElPopover,
     ElDropdown,
     ElDropdownMenu,
     ElDropdownItem,
   } from 'element-plus';
   import { Plus } from '@element-plus/icons-vue';
-  import { reactive } from 'vue';
+  import { reactive, useSlots, VNode } from 'vue';
+
+  const slots = useSlots();
+  console.log(slots.filters());
+  const [filterSlot] = slots.filters();
+  const childrensInFilterSlot = filterSlot.children;
+
+  console.log(Array.isArray(childrensInFilterSlot));
+
+  const defaultFilters = () => {
+    if (Array.isArray(childrensInFilterSlot)) {
+      return childrensInFilterSlot.map(({props: {field, label, type, value}}) => ({
+        field,
+        label,
+        type,
+        value: value ?? null,
+      }));
+    }
+    return [];
+  };
+
+  console.log(defaultFilters());
 
   interface Filter {
+    field: string;
     label: string;
     type: string;
-    value: string|boolean|number;
+    value: string | boolean | number;
   }
-  const filters: Filter[] = reactive([
+  const filters: Filter[] = reactive([]);
 
-  ]);
-
-  const filtersList = reactive([
-    {
-      label: 'Имя',
-      type: 'like',
-      value: ''
-    },
-    {
-      label: 'Дата',
-      type: 'date',
-      value: '',
-    },
-    {
-      label: 'Удален',
-      type: 'bool',
-      value: false,
-    },
-  ]);
+  const filtersList: Filter[] = reactive(defaultFilters());
 
   const removeFilter = (item: Filter) => {
     const idx = filters.findIndex(filter => filter.label === item.label);
@@ -87,8 +74,8 @@
   };
 
   const addFilter = (item: Filter) => {
-    filters.push(item)
-  }
+    filters.push(item);
+  };
 </script>
 
 <style scoped lang="scss">

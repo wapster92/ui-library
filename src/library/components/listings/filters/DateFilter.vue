@@ -30,8 +30,21 @@
 <script setup lang="ts">
   import { DateTime } from 'luxon';
   import { ElPopover, ElTag, ElDatePicker } from 'element-plus';
-  import { ref, computed } from 'vue';
-  const date = ref<Date | string>('');
+  import { ref, computed, withDefaults, defineProps } from "vue";
+
+  interface IProps {
+    label: string;
+    field: string;
+    type: string;
+    value?: Date|string;
+  }
+  const props = withDefaults(defineProps<IProps>(), {
+    value: null,
+  });
+
+  console.log(props)
+
+  const date = ref<Date[] | Date>(null);
 
   const dateString = computed(() => {
     if (Array.isArray(date.value) && date.value?.length) {
