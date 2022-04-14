@@ -5,14 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+  import { useRouter } from 'vue-router';
 
-const router = useRouter();
+  const router = useRouter();
 
-router.push({query: {'api-listing': 'string'}})
-
+  // router.push({ query: { 'api-listing': 'string' } });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

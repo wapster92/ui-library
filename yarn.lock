@@ -157,6 +157,11 @@
   resolved "https://verdaccio.dev.indins.ru/@types/luxon/-/luxon-2.3.1.tgz#e34763178b46232e4c5f079f1706e18692415519"
   integrity sha512-nAPUltOT28fal2eDZz8yyzNhBjHw1NEymFBP7Q9iCShqpflWPybxHbD7pw/46jQmT+HXOy1QN5hNTms8MOTlOQ==
 
+"@types/qs@^6.9.7":
+  version "6.9.7"
+  resolved "https://verdaccio.dev.indins.ru/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
+  integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
+
 "@typescript-eslint/eslint-plugin@^5.0.0", "@typescript-eslint/eslint-plugin@^5.12.0":
   version "5.16.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.16.0.tgz#78f246dd8d1b528fc5bfca99a8a64d4023a3d86d"
@@ -363,15 +368,44 @@
     "@vueuse/shared" "8.2.0"
     vue-demi "*"
 
+"@vueuse/core@^8.2.5":
+  version "8.2.5"
+  resolved "https://verdaccio.dev.indins.ru/@vueuse/core/-/core-8.2.5.tgz#ca6a59091ecf16e6739c53f3d857b11967a5eb06"
+  integrity sha512-5prZAA1Ji2ltwNUnzreu6WIXYqHYP/9U2BiY5mD/650VYLpVcwVlYznJDFcLCmEWI3o3Vd34oS1FUf+6Mh68GQ==
+  dependencies:
+    "@vueuse/metadata" "8.2.5"
+    "@vueuse/shared" "8.2.5"
+    vue-demi "*"
+
 "@vueuse/metadata@8.2.0":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-8.2.0.tgz#f62a02e840220768941b3683dd8171c39581b950"
   integrity sha512-cbaezEccNuxQC+OiudG9VjZNg9/RbAAHkyuhC6+8Gsgsc+MvDhfn1NrV6NNTaldLlZgJFgUiYOkrf3JGTTTGXQ==
 
+"@vueuse/metadata@8.2.5":
+  version "8.2.5"
+  resolved "https://verdaccio.dev.indins.ru/@vueuse/metadata/-/metadata-8.2.5.tgz#51c7d95e04284ea378a5242a2e88b77494e2c117"
+  integrity sha512-Lk9plJjh9cIdiRdcj16dau+2LANxIdFCiTgdfzwYXbflxq0QnMBeOD2qHgKDE7fuVrtPcVWj8VSuZEx1HRfNQA==
+
+"@vueuse/router@^8.2.5":
+  version "8.2.5"
+  resolved "https://verdaccio.dev.indins.ru/@vueuse/router/-/router-8.2.5.tgz#09437ccb6a7c669035dc8a658d4653441b286739"
+  integrity sha512-YNeTGa3HOSyMHUG68diVZnH3TdsdIiogfhLvmFxMtyt8bFHMt5jxE5/SWlMvAw3FvyXUt4GRZJrVOSICU0D17w==
+  dependencies:
+    "@vueuse/shared" "8.2.5"
+    vue-demi "*"
+
 "@vueuse/shared@8.2.0":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-8.2.0.tgz#a8e2b637cfd866ea985615df9ec4913c4355c084"
   integrity sha512-dTw7EJZgZCgG9DoVAiz4LtmKnIFXuE/idUFzvqRAJLjbPiVJc+qQH5kDUdKHI3W1U9t//1mdasQEKONArburiQ==
+  dependencies:
+    vue-demi "*"
+
+"@vueuse/shared@8.2.5":
+  version "8.2.5"
+  resolved "https://verdaccio.dev.indins.ru/@vueuse/shared/-/shared-8.2.5.tgz#1ae200a240c4b8d42d41723b64d8f917aa57ff16"
+  integrity sha512-lNWo+7sk6JCuOj4AiYM+6HZ6fq4xAuVq1sVckMQKgfCJZpZRe4i8es+ZULO5bYTKP+VrOCtqrLR2GzEfrbr3YQ==
   dependencies:
     vue-demi "*"
 

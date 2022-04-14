@@ -33,48 +33,56 @@
     ElDropdownItem,
   } from 'element-plus';
   import { Plus } from '@element-plus/icons-vue';
-  import { reactive, useSlots, VNode } from 'vue';
+  import { reactive, useSlots, VNodeArrayChildren} from 'vue';
+  import {stringify, parse} from 'qs';
+  import { useRouter } from 'vue-router';
 
   const slots = useSlots();
-  console.log(slots.filters());
-  const [filterSlot] = slots.filters();
-  const childrensInFilterSlot = filterSlot.children;
+  const router = useRouter();
 
-  console.log(Array.isArray(childrensInFilterSlot));
+  console.log(slots.filters())
+
+  const [filterSlot] = slots.filters();
+  const childrenInFilterSlot = filterSlot.children;
 
   const defaultFilters = () => {
-    if (Array.isArray(childrensInFilterSlot)) {
-      return childrensInFilterSlot.map(({props: {field, label, type, value}}) => ({
-        field,
-        label,
-        type,
-        value: value ?? null,
-      }));
+    if (Array.isArray(childrenInFilterSlot)) {
+      return childrenInFilterSlot.map(
+        ({ props: { field, label, type, value } }) => ({
+          field,
+          label,
+          type,
+          value: value ?? null,
+        })
+      );
     }
     return [];
   };
 
-  console.log(defaultFilters());
-
-  interface Filter {
+  export interface IFilter {
     field: string;
     label: string;
     type: string;
     value: string | boolean | number;
   }
-  const filters: Filter[] = reactive([]);
+  const filters: IFilter[] = reactive([]);
 
-  const filtersList: Filter[] = reactive(defaultFilters());
+  const filtersList: IFilter[] = reactive(defaultFilters());
 
-  const removeFilter = (item: Filter) => {
+  const removeFilter = (item: IFilter) => {
     const idx = filters.findIndex(filter => filter.label === item.label);
     if (~idx) {
       filters.splice(idx, 1);
     }
   };
 
-  const addFilter = (item: Filter) => {
-    filters.push(item);
+  const addFilter = (filterObj: IFilter) => {
+    const filter = {
+      filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`, `${filterObj.field}||${filterObj.type}||${filterObj.value}`],
+    };
+    const qs = stringify(filter, { encode: true, arrayFormat: 'repeat' });
+    router.replace({ query: { 'api-listing': qs } });
+    console.log(parse(qs))
   };
 </script>
 
