@@ -42,9 +42,11 @@
     value: null,
   });
 
-  console.log(props)
-
   const date = ref<Date[] | Date>(null);
+
+  const getUrlFilters = () => {
+    return;
+  };
 
   const dateString = computed(() => {
     if (Array.isArray(date.value) && date.value?.length) {

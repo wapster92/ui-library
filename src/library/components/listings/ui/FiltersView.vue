@@ -5,7 +5,7 @@
     <ElDropdown trigger="click">
       <div class="add-filter" :class="{ 'add-filter--more': filters.length }">
         <ElIcon>
-          <Plus></Plus>
+          <PlusIcon></PlusIcon>
         </ElIcon>
         <span v-if="!filters.length" class="add-filter__text"
           >Добавить фильтр</span
@@ -33,56 +33,53 @@
     ElDropdownItem,
   } from 'element-plus';
   import { Plus } from '@element-plus/icons-vue';
-  import { reactive, useSlots, VNodeArrayChildren} from 'vue';
-  import {stringify, parse} from 'qs';
+  const PlusIcon = Plus;
+  import { reactive, useSlots } from 'vue';
+  import { stringify, parse } from 'qs';
   import { useRouter } from 'vue-router';
-
-  const slots = useSlots();
-  const router = useRouter();
-
-  console.log(slots.filters())
-
-  const [filterSlot] = slots.filters();
-  const childrenInFilterSlot = filterSlot.children;
-
-  const defaultFilters = () => {
-    if (Array.isArray(childrenInFilterSlot)) {
-      return childrenInFilterSlot.map(
-        ({ props: { field, label, type, value } }) => ({
-          field,
-          label,
-          type,
-          value: value ?? null,
-        })
-      );
-    }
-    return [];
-  };
-
   export interface IFilter {
     field: string;
     label: string;
     type: string;
     value: string | boolean | number;
   }
+  const slots = useSlots();
+  const router = useRouter();
+
+  const [filterSlot] = slots.filters();
+  const childrenInFilterSlot = filterSlot.children;
+
+  const defaultFilters = () => {
+    if (Array.isArray(childrenInFilterSlot)) {
+      console.log(childrenInFilterSlot);
+      return childrenInFilterSlot.map(filter => ({
+        field: filter['props'].field,
+        label: filter['props'].label,
+        type: filter['props'].type,
+        value: filter['props'].value ?? null,
+      }));
+    }
+    return [];
+  };
+
   const filters: IFilter[] = reactive([]);
 
   const filtersList: IFilter[] = reactive(defaultFilters());
 
-  const removeFilter = (item: IFilter) => {
+  /*const removeFilter = (item: IFilter) => {
     const idx = filters.findIndex(filter => filter.label === item.label);
     if (~idx) {
       filters.splice(idx, 1);
     }
-  };
+  };*/
 
   const addFilter = (filterObj: IFilter) => {
     const filter = {
-      filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`, `${filterObj.field}||${filterObj.type}||${filterObj.value}`],
+      filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
     };
     const qs = stringify(filter, { encode: true, arrayFormat: 'repeat' });
     router.replace({ query: { 'api-listing': qs } });
-    console.log(parse(qs))
+    console.log(parse(qs));
   };
 </script>
 
