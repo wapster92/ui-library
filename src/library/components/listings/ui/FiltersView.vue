@@ -32,8 +32,7 @@
     ElDropdownMenu,
     ElDropdownItem,
   } from 'element-plus';
-  import { Plus } from '@element-plus/icons-vue';
-  const PlusIcon = Plus;
+  import { Plus as PlusIcon } from '@element-plus/icons-vue';
   import { reactive, useSlots } from 'vue';
   import { stringify, parse } from 'qs';
   import { useRouter } from 'vue-router';
@@ -51,7 +50,6 @@
 
   const defaultFilters = () => {
     if (Array.isArray(childrenInFilterSlot)) {
-      console.log(childrenInFilterSlot);
       return childrenInFilterSlot.map(filter => ({
         field: filter['props'].field,
         label: filter['props'].label,
@@ -79,7 +77,6 @@
     };
     const qs = stringify(filter, { encode: true, arrayFormat: 'repeat' });
     router.replace({ query: { 'api-listing': qs } });
-    console.log(parse(qs));
   };
 </script>
 

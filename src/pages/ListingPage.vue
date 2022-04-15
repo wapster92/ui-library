@@ -10,6 +10,7 @@
         </template>
       </ListingsWrapper>
     </ApiListings>
+    <RouterLink :to="{path: '/'}">На главную</RouterLink>
   </div>
 </template>
 
