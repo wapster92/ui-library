@@ -35,7 +35,8 @@
   import { Plus as PlusIcon } from '@element-plus/icons-vue';
   import { reactive, useSlots } from 'vue';
   import { stringify, parse } from 'qs';
-  import { useRouter } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
+  import { addUrlFilter } from "~/utils/api-querys";
   export interface IFilter {
     field: string;
     label: string;
@@ -70,13 +71,8 @@
       filters.splice(idx, 1);
     }
   };*/
-
   const addFilter = (filterObj: IFilter) => {
-    const filter = {
-      filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
-    };
-    const qs = stringify(filter, { encode: true, arrayFormat: 'repeat' });
-    router.replace({ query: { 'api-listing': qs } });
+    console.log(addUrlFilter())
   };
 </script>
 

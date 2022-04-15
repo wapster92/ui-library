@@ -38,7 +38,19 @@ export const getUrlFilters = (
   }
 };
 
-export const addUrlFilter = (queryString, field): string => {
+export const addUrlFilter = (query, filterObj): string => {
+  const { filter } = readQuery(query);
+  if (Array.isArray(filter)) {
+    return;
+  }
+  if (typeof filter === 'string' || !filter) {
+    const { field } = convertStrFilterToObj(filter);
+    if (field === filterObj.field) {
+      return stringifyQuery({
+        filter: [`${filterObj.field}||${filterObj.type}||${filterObj?.null}`],
+      });
+    }
+  }
   return;
 };
 
