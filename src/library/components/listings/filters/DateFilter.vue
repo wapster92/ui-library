@@ -21,6 +21,7 @@
         <ElDatePicker
           v-model="date"
           type="date"
+          @change="changeFilter"
           @visible-change="datePickerVisibleChange" />
       </template>
     </ElPopover>
@@ -39,7 +40,11 @@
     onMounted,
   } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
-  import { getUrlFilters, removeUrlFilter } from "~/utils/api-querys";
+  import {
+    changeUrlFilter,
+    getUrlFilters,
+    removeUrlFilter,
+  } from '~/utils/api-querys';
 
   interface IProps {
     label: string;
@@ -58,17 +63,18 @@
   const filterVisible = ref(false);
   const filterPopoverVisible = ref(false);
 
-
   onMounted(() => {
-    if (route.query['api-listing']) {
-      getUrlFilters(route.query['api-listing'], props.field, filterVisible, filterPopoverVisible);
+    if (route.query['filters']) {
+      getFilter(route.query['filters']);
     }
   });
 
-  watch(() => route.query['api-listing'], (val) => {
-    console.log('watch')
-    getUrlFilters(val, props.field, filterVisible, filterPopoverVisible);
-  });
+  watch(
+    () => route.query['filters'],
+    val => {
+      getFilter(val);
+    }
+  );
 
   const dateString = computed(() => {
     if (Array.isArray(date.value) && date.value?.length) {
@@ -83,9 +89,35 @@
     return 'Выберете дату';
   });
 
+  const getFilter = query => {
+    if (query) {
+      const { field, type, value } = getUrlFilters(query, props.field);
+      if (field) {
+        filterVisible.value = true;
+        if (value !== 'null') {
+          date.value = DateTime.fromISO(value).toJSDate();
+        } else {
+          filterPopoverVisible.value = true;
+        }
+      }
+    } else {
+      filterVisible.value = false;
+    }
+  };
+
+  const changeFilter = (e: Date) => {
+    const filterObj = {
+      field: props.field,
+      type: props.type,
+      value: DateTime.fromJSDate(e).toISO(),
+    };
+    const query = changeUrlFilter(route.query['filters'], filterObj);
+    router.replace({ query: { filters: query } });
+  };
+
   const removeFilter = () => {
-    const query = removeUrlFilter(route.query['api-listing'], props.field);
-    router.replace({query: {'api-listing': query}})
+    const query = removeUrlFilter(route.query['filters'], props.field);
+    router.replace({ query: { filters: query } });
   };
 
   const openFilterPopover = () => {

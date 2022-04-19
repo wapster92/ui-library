@@ -13,45 +13,55 @@ export const convertStrFilterToObj = str => {
   return { field, type, value };
 };
 
-export const getUrlFilters = (
-  query,
-  fieldDefault,
-  filterVisible,
-  filterPopoverVisible
-) => {
+export const getUrlFilters = (query, fieldDefault) => {
   const { filter } = readQuery(query);
   if (Array.isArray(filter)) {
     return;
   }
   if (typeof filter === 'string') {
-    const { field, value } = convertStrFilterToObj(filter);
+    const { field, type, value } = convertStrFilterToObj(filter);
     if (field === fieldDefault) {
-      filterVisible.value = true;
-    }
-    if (value === 'null') {
-      filterPopoverVisible.value = true;
+      return { field, type, value };
     }
   }
-  if (!filter) {
-    filterPopoverVisible.value = false;
-    filterVisible.value = false;
-  }
+  return null;
 };
 
 export const addUrlFilter = (query, filterObj): string => {
   const { filter } = readQuery(query);
   if (Array.isArray(filter)) {
-    return;
+    return '';
   }
-  if (typeof filter === 'string' || !filter) {
+  if (typeof filter === 'string') {
     const { field } = convertStrFilterToObj(filter);
     if (field === filterObj.field) {
       return stringifyQuery({
-        filter: [`${filterObj.field}||${filterObj.type}||${filterObj?.null}`],
+        filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
       });
     }
   }
-  return;
+  if (!filter) {
+    return stringifyQuery({
+      filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
+    });
+  }
+  return '';
+};
+
+export const changeUrlFilter = (query, filterObj): string => {
+  const { filter } = readQuery(query);
+  if (Array.isArray(filter)) {
+    return '';
+  }
+  if (typeof filter === 'string') {
+    const { field } = convertStrFilterToObj(filter);
+    if (field === filterObj.field) {
+      return stringifyQuery({
+        filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
+      });
+    }
+  }
+  return '';
 };
 
 export const removeUrlFilter = (query, filterField: string): string => {
@@ -59,11 +69,12 @@ export const removeUrlFilter = (query, filterField: string): string => {
   if (Array.isArray(filter)) {
     return;
   }
+
   if (typeof filter === 'string') {
-    const { field, value } = convertStrFilterToObj(filter);
+    const { field } = convertStrFilterToObj(filter);
     if (field === filterField) {
       return stringifyQuery({ filter: [] });
     }
   }
-  return;
+  return '';
 };

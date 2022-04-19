@@ -12,12 +12,12 @@
   // const router = useRouter();
 
   watch(
-    () => ([route.query['api-listing'], route.query['api-filters']]),
+    () => ([route.query['filters']]),
     value => {
       console.log(value);
     }
   );
-  // router.push({ query: { 'api-listing': 'string' } });
+  // router.push({ query: { 'filters': 'string' } });
 </script>
 
 <style scoped></style>

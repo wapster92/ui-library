@@ -45,6 +45,7 @@
   }
   const slots = useSlots();
   const router = useRouter();
+  const route = useRoute();
 
   const [filterSlot] = slots.filters();
   const childrenInFilterSlot = filterSlot.children;
@@ -64,15 +65,12 @@
   const filters: IFilter[] = reactive([]);
 
   const filtersList: IFilter[] = reactive(defaultFilters());
-
-  /*const removeFilter = (item: IFilter) => {
-    const idx = filters.findIndex(filter => filter.label === item.label);
-    if (~idx) {
-      filters.splice(idx, 1);
-    }
-  };*/
   const addFilter = (filterObj: IFilter) => {
-    console.log(addUrlFilter())
+    const query = addUrlFilter(route.query['filters'], filterObj)
+    console.log(query);
+    if(query) {
+      router.replace({query: {filters: query}})
+    }
   };
 </script>
 
