@@ -13,14 +13,14 @@ export const convertStrFilterToObj = str => {
   return { field, type, value };
 };
 
-export const getUrlFilters = (query, fieldDefault) => {
+export const getUrlFilters = (query, fieldDefault, typeDefault) => {
   const { filter } = readQuery(query);
   if (Array.isArray(filter)) {
     return;
   }
   if (typeof filter === 'string') {
     const { field, type, value } = convertStrFilterToObj(filter);
-    if (field === fieldDefault) {
+    if (field === fieldDefault && type === typeDefault) {
       return { field, type, value };
     }
   }

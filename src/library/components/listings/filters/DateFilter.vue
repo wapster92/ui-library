@@ -91,7 +91,7 @@
 
   const getFilter = query => {
     if (query) {
-      const { field, type, value } = getUrlFilters(query, props.field);
+      const { field, value } = getUrlFilters(query, props.field, props.type);
       if (field) {
         filterVisible.value = true;
         if (value !== 'null') {
