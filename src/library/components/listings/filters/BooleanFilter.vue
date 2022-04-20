@@ -1,6 +1,25 @@
 <template>
   <div v-show="filterVisible">
-    <ElPopover
+    <ElDropdown ref="dropdown" trigger="click">
+      <ElTag
+        class="mx-1 filters-view__tag"
+        size="large"
+        closable
+        @click="openFilterPopover"
+        @close="closeFilter">
+        <span class="filters-view__label">Удален: </span>
+        <span class="filters-view__value">Нет</span>
+      </ElTag>
+      <template #dropdown>
+        <ElDropdownMenu>
+          <ElDropdownItem>Да</ElDropdownItem>
+          <ElDropdownItem>Нет</ElDropdownItem>
+        </ElDropdownMenu>
+      </template>
+    </ElDropdown>
+
+
+<!--    <ElPopover
       v-model:visible="filterPopoverVisible"
       placement="bottom"
       width="auto"
@@ -13,24 +32,20 @@
           closable
           @click="openFilterPopover"
           @close="closeFilter">
-          <span class="filters-view__label">Дата: </span>
+          <span class="filters-view__label">Удален: </span>
           <span class="filters-view__value">{{ dateString }}</span>
         </ElTag>
       </template>
       <template #default>
-        <ElDatePicker
-          v-model="date"
-          type="daterange"
-          @change="changeFilter"
-          @visible-change="datePickerVisibleChange" />
+
       </template>
-    </ElPopover>
+    </ElPopover>-->
   </div>
 </template>
 
 <script setup lang="ts">
   import { DateTime } from 'luxon';
-  import { ElPopover, ElTag, ElDatePicker } from 'element-plus';
+  import { ElTag, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus';
   import {
     ref,
     computed,
@@ -50,18 +65,19 @@
     label: string;
     field: string;
     type: string;
-    value?: Date | string;
+    value?: boolean;
   }
   const props = withDefaults(defineProps<IProps>(), {
     value: null,
   });
+
+  const dropdown = ref();
 
   const date = ref<Date[] | Date>(null);
   const route = useRoute();
   const router = useRouter();
 
   const filterVisible = ref(false);
-  const filterPopoverVisible = ref(false);
 
   onMounted(() => {
     if (route.query['filters']) {
@@ -77,15 +93,6 @@
   );
 
   const dateString = computed(() => {
-    if (Array.isArray(date.value) && date.value?.length) {
-      const [first, last] = date.value;
-      return `с ${DateTime.fromJSDate(first).toLocaleString(
-        DateTime.DATE_MED
-      )} по ${DateTime.fromJSDate(last).toLocaleString(DateTime.DATE_MED)}`;
-    }
-    if (!Array.isArray(date.value) && date.value) {
-      return DateTime.fromJSDate(date.value).toLocaleString(DateTime.DATE_MED);
-    }
     return 'Выберете дату';
   });
 
@@ -97,7 +104,7 @@
         if (filterObj?.value !== 'null') {
           date.value = datesIsoStringToDate(filterObj.value);
         } else {
-          filterPopoverVisible.value = true;
+          dropdown.value.handleOpen();
         }
       }
     } else {
@@ -137,22 +144,20 @@
 
   const closeFilter = () =>  {
     removeFilter();
-    filterPopoverVisible.value = false;
+    dropdown.value.handleClose();
   };
 
   const openFilterPopover = () => {
-    filterPopoverVisible.value = true;
+    dropdown.value.handleOpen();
   };
 
   const closeFilterPopover = () => {
-    if (filterPopoverVisible.value) {
-      filterPopoverVisible.value = false;
-    }
+    dropdown.value.handleClose();
   };
 
   const datePickerVisibleChange = e => {
     if (!e) {
-      filterPopoverVisible.value = false;
+      dropdown.value.handleClose();
     }
   };
 </script>

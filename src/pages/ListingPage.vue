@@ -1,17 +1,22 @@
 <template>
   <div>
     <ApiListings>
-      <ListingsWrapper>
+      <DynamicListing>
         <template #filters>
           <DateFilter
             label="Дата добавления"
             field="createdAt"
             type="$eq"></DateFilter>
+          <BooleanFilter
+            label="Удален"
+            field="deletedAt"
+            type="$bool"
+          ></BooleanFilter>
         </template>
         <template #listings>
           <TableListing />
         </template>
-      </ListingsWrapper>
+      </DynamicListing>
     </ApiListings>
     <RouterLink :to="{ path: '/' }">На главную</RouterLink>
   </div>
