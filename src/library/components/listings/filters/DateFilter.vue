@@ -12,7 +12,7 @@
           size="large"
           closable
           @click="openFilterPopover"
-          @close="removeFilter">
+          @close="closeFilter">
           <span class="filters-view__label">Дата: </span>
           <span class="filters-view__value">{{ dateString }}</span>
         </ElTag>
@@ -135,12 +135,19 @@
     return DateTime.fromISO(value).toJSDate();
   };
 
+  const closeFilter = () =>  {
+    removeFilter();
+    filterPopoverVisible.value = false;
+  };
+
   const openFilterPopover = () => {
     filterPopoverVisible.value = true;
   };
 
   const closeFilterPopover = () => {
-    filterPopoverVisible.value = false;
+    if (filterPopoverVisible.value) {
+      filterPopoverVisible.value = false;
+    }
   };
 
   const datePickerVisibleChange = e => {
