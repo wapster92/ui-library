@@ -5,8 +5,7 @@
         class="btn"
         size="small"
         type="primary"
-        @click="changeMenuStatus"
-      >
+        @click="changeMenuStatus">
         <ElIcon>
           <Fold v-if="menuStore.isState" />
           <Expand v-else />

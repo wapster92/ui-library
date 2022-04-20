@@ -1,4 +1,4 @@
-import qs, { stringify } from 'qs';
+import qs from 'qs';
 
 export const readQuery = str => {
   return qs.parse(str);

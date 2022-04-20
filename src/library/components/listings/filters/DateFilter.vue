@@ -120,20 +120,20 @@
     router.replace({ query: { filters: query } });
   };
 
-  const datesToIsoStrings = (value: Date|Date[]) => {
+  const datesToIsoStrings = (value: Date | Date[]) => {
     if (Array.isArray(value)) {
-      return value.map(val => DateTime.fromJSDate(val).toISO())
+      return value.map(val => DateTime.fromJSDate(val).toISO());
     }
     return DateTime.fromJSDate(value).toISO();
-  }
+  };
 
   const datesIsoStringToDate = (value: string) => {
     const values = value.split(',');
     if (values.length > 1) {
-      return values.map(val => DateTime.fromISO(val).toJSDate())
+      return values.map(val => DateTime.fromISO(val).toJSDate());
     }
     return DateTime.fromISO(value).toJSDate();
-  }
+  };
 
   const openFilterPopover = () => {
     filterPopoverVisible.value = true;

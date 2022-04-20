@@ -24,8 +24,7 @@
         v-model="input"
         class="w-50 m-2"
         placeholder="Поиск"
-        :suffix-icon="Search"
-      />
+        :suffix-icon="Search" />
       <div class="listings__filters">
         <FiltersView>
           <template #filters>
@@ -40,7 +39,7 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { ElInput, ElIcon, } from 'element-plus';
+  import { ElInput, ElIcon } from 'element-plus';
   import { Search } from '@element-plus/icons-vue';
   import Calendar from '~/assets/icons/calendar.svg';
   import Kanban from '~/assets/icons/kanban.svg';

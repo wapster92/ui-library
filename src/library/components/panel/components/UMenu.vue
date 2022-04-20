@@ -16,8 +16,7 @@
             <ElMenuItem
               v-for="(subItem, k) of menuItem.menuItems"
               :key="k"
-              :index="`${i}-${k}`"
-            >
+              :index="`${i}-${k}`">
               <template #title
                 ><span>{{ subItem.name }}</span></template
               >
@@ -43,8 +42,7 @@
             <ElMenuItem
               v-for="(subItem, k) of menuItem.menuItems"
               :key="k"
-              :index="`${i}-${k}`"
-            >
+              :index="`${i}-${k}`">
               <template #title
                 ><span>{{ subItem.name }}</span></template
               >
