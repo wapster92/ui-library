@@ -20,7 +20,7 @@
       <template #default>
         <ElDatePicker
           v-model="date"
-          type="date"
+          type="daterange"
           @change="changeFilter"
           @visible-change="datePickerVisibleChange" />
       </template>
@@ -95,7 +95,7 @@
       if (field) {
         filterVisible.value = true;
         if (value !== 'null') {
-          date.value = DateTime.fromISO(value).toJSDate();
+          date.value = datesIsoStringToDate(value);
         } else {
           filterPopoverVisible.value = true;
         }
@@ -109,7 +109,7 @@
     const filterObj = {
       field: props.field,
       type: props.type,
-      value: DateTime.fromJSDate(e).toISO(),
+      value: datesToIsoStrings(e),
     };
     const query = changeUrlFilter(route.query['filters'], filterObj);
     router.replace({ query: { filters: query } });
@@ -119,6 +119,21 @@
     const query = removeUrlFilter(route.query['filters'], props.field);
     router.replace({ query: { filters: query } });
   };
+
+  const datesToIsoStrings = (value: Date|Date[]) => {
+    if (Array.isArray(value)) {
+      return value.map(val => DateTime.fromJSDate(val).toISO())
+    }
+    return DateTime.fromJSDate(value).toISO();
+  }
+
+  const datesIsoStringToDate = (value: string) => {
+    const values = value.split(',');
+    if (values.length > 1) {
+      return values.map(val => DateTime.fromISO(val).toJSDate())
+    }
+    return DateTime.fromISO(value).toJSDate();
+  }
 
   const openFilterPopover = () => {
     filterPopoverVisible.value = true;

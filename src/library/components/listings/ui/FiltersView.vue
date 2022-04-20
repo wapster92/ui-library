@@ -34,7 +34,6 @@
   } from 'element-plus';
   import { Plus as PlusIcon } from '@element-plus/icons-vue';
   import { reactive, useSlots } from 'vue';
-  import { stringify, parse } from 'qs';
   import { useRouter, useRoute } from 'vue-router';
   import { addUrlFilter } from "~/utils/api-querys";
   export interface IFilter {
@@ -67,7 +66,6 @@
   const filtersList: IFilter[] = reactive(defaultFilters());
   const addFilter = (filterObj: IFilter) => {
     const query = addUrlFilter(route.query['filters'], filterObj)
-    console.log(query);
     if(query) {
       router.replace({query: {filters: query}})
     }

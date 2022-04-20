@@ -5,6 +5,7 @@ export const readQuery = str => {
 };
 
 export const stringifyQuery = obj => {
+  obj.value = valueToString(obj.value);
   return qs.stringify(obj, { encode: true, arrayFormat: 'repeat' });
 };
 
@@ -77,4 +78,11 @@ export const removeUrlFilter = (query, filterField: string): string => {
     }
   }
   return '';
+};
+
+const valueToString = (value: string | string[]) => {
+  if (Array.isArray(value)) {
+    return value.join(',');
+  }
+  return value;
 };
