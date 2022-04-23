@@ -49,14 +49,26 @@
   const [filterSlot] = slots.filters();
   const childrenInFilterSlot = filterSlot.children;
 
+  const filteringSlots = slots => {
+    if (Array.isArray(slots)) {
+      return slots.filter(
+        slot => slot?.props?.field && slot?.props?.label && slot?.props?.type
+      );
+    }
+    return [];
+  };
+
   const defaultFilters = () => {
-    if (Array.isArray(childrenInFilterSlot)) {
-      return childrenInFilterSlot.map(filter => ({
-        field: filter['props'].field,
-        label: filter['props'].label,
-        type: filter['props'].type,
-        value: filter['props'].value ?? null,
-      }));
+    const currentSlots = filteringSlots(childrenInFilterSlot);
+    if (Array.isArray(currentSlots) && currentSlots.length) {
+      return currentSlots.map(filter => {
+        return {
+          field: filter.props.field,
+          label: filter.props.label,
+          type: filter.props.type,
+          value: filter.props.value ?? null,
+        };
+      });
     }
     return [];
   };
@@ -65,7 +77,7 @@
 
   const filtersList: IFilter[] = reactive(defaultFilters());
   const addFilter = (filterObj: IFilter) => {
-    const query = addUrlFilter(route.query['filters'], filterObj);
+    const query = addUrlFilter(route?.query?.filters, filterObj);
     if (query) {
       router.replace({ query: { filters: query } });
     }

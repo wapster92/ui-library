@@ -5,7 +5,7 @@
         <ElAside class="u-aside" :width="widthMenu">
           <UMenuPanel v-bind="$attrs">
             <template #logo>
-              <slot name="logo" :menuOpen="stateMenu.isState"></slot>
+              <slot name="logo" :menu-open="stateMenu.isState"></slot>
             </template>
             <template #menu>
               <slot name="menu"></slot>

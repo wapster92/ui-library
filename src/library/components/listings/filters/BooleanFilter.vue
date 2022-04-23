@@ -14,8 +14,12 @@
       </ElTag>
       <template #dropdown>
         <ElDropdownMenu>
-          <ElDropdownItem @click="changeFilter(true)">{{props.trueText}}</ElDropdownItem>
-          <ElDropdownItem @click="changeFilter(false)">{{props.falseText}}</ElDropdownItem>
+          <ElDropdownItem @click="changeFilter(true)">{{
+            props.trueText
+          }}</ElDropdownItem>
+          <ElDropdownItem @click="changeFilter(false)">{{
+            props.falseText
+          }}</ElDropdownItem>
         </ElDropdownMenu>
       </template>
     </ElDropdown>
@@ -31,7 +35,6 @@
   } from 'element-plus';
   import {
     ref,
-    computed,
     withDefaults,
     defineProps,
     watch,
@@ -63,17 +66,17 @@
   const filterValue = ref(false);
   const route = useRoute();
   const router = useRouter();
-
+  console.log(route);
   const filterVisible = ref(false);
 
   onMounted(() => {
-    if (route.query['filters']) {
+    if (route?.query?.filters) {
       getFilter(route.query['filters']);
     }
   });
 
   watch(
-    () => route.query['filters'],
+    () => route?.query?.filters,
     val => {
       getFilter(val);
     }
@@ -100,7 +103,7 @@
       return true;
     }
     return false;
-  }
+  };
 
   const changeFilter = (e: boolean) => {
     const filterObj = {
@@ -108,12 +111,12 @@
       type: props.type,
       value: e,
     };
-    const query = changeUrlFilter(route.query['filters'], filterObj);
+    const query = changeUrlFilter(route?.query?.filters, filterObj);
     router.replace({ query: { filters: query } });
   };
 
   const removeFilter = () => {
-    const query = removeUrlFilter(route.query['filters'], props.field);
+    const query = removeUrlFilter(route?.query?.filters, props.field);
     router.replace({ query: { filters: query } });
   };
 

@@ -5,18 +5,18 @@
 </template>
 
 <script setup lang="ts">
-  import { useRoute } from 'vue-router';
-  import { watch } from 'vue';
+  //import { useRoute } from 'vue-router';
+  // import { watch } from 'vue';
 
-  const route = useRoute();
+  //const route = useRoute();
   // const router = useRouter();
 
-  watch(
-    () => [route.query['filters']],
-    value => {
-      console.log(value);
-    }
-  );
+  // watch(
+  //   () => [route.query['filters']],
+  //   value => {
+  //     console.log(value);
+  //   }
+  // );
   // router.push({ query: { 'filters': 'string' } });
 </script>
 

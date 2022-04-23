@@ -10,8 +10,7 @@
           <BooleanFilter
             label="Удален"
             field="deletedAt"
-            type="$bool"
-          ></BooleanFilter>
+            type="$bool"></BooleanFilter>
         </template>
         <template #listings>
           <TableListing />

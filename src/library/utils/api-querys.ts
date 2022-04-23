@@ -29,40 +29,52 @@ export const getUrlFilters = (query, fieldDefault, typeDefault) => {
 };
 
 export const addUrlFilter = (query, filterObj): string => {
-  const { filter } = readQuery(query);
-  if (Array.isArray(filter)) {
-    return '';
-  }
-  if (typeof filter === 'string') {
-    const { field } = convertStrFilterToObj(filter);
-    if (field === filterObj.field) {
+  if (query) {
+    const { filter } = readQuery(query);
+    console.log(readQuery(query));
+    if (Array.isArray(filter)) {
+      return '';
+    }
+    if (typeof filter === 'string') {
+      const { field } = convertStrFilterToObj(filter);
+      if (field === filterObj.field) {
+        return stringifyQuery({
+          filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
+        });
+      }
+    }
+    if (!filter) {
       return stringifyQuery({
         filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
       });
     }
+    return '';
   }
-  if (!filter) {
+  return stringifyQuery({
+    filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
+  });
+};
+
+export const changeUrlFilter = (query, filterObj): string => {
+  if (query) {
+    const { filter } = readQuery(query);
+    if (Array.isArray(filter)) {
+      return '';
+    }
+    if (typeof filter === 'string') {
+      const { field } = convertStrFilterToObj(filter);
+      if (field === filterObj.field) {
+        return stringifyQuery({
+          filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
+        });
+      }
+    }
+    return '';
+  } else {
     return stringifyQuery({
       filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
     });
   }
-  return '';
-};
-
-export const changeUrlFilter = (query, filterObj): string => {
-  const { filter } = readQuery(query);
-  if (Array.isArray(filter)) {
-    return '';
-  }
-  if (typeof filter === 'string') {
-    const { field } = convertStrFilterToObj(filter);
-    if (field === filterObj.field) {
-      return stringifyQuery({
-        filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
-      });
-    }
-  }
-  return '';
 };
 
 export const removeUrlFilter = (query, filterField: string): string => {

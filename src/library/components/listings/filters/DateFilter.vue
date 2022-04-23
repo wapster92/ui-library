@@ -64,13 +64,13 @@
   const filterPopoverVisible = ref(false);
 
   onMounted(() => {
-    if (route.query['filters']) {
+    if (route?.query?.filters) {
       getFilter(route.query['filters']);
     }
   });
 
   watch(
-    () => route.query['filters'],
+    () => route?.query?.filters,
     val => {
       getFilter(val);
     }
@@ -111,12 +111,12 @@
       type: props.type,
       value: datesToIsoStrings(e),
     };
-    const query = changeUrlFilter(route.query['filters'], filterObj);
+    const query = changeUrlFilter(route.query?.filters, filterObj);
     router.replace({ query: { filters: query } });
   };
 
   const removeFilter = () => {
-    const query = removeUrlFilter(route.query['filters'], props.field);
+    const query = removeUrlFilter(route.query?.filters, props.field);
     router.replace({ query: { filters: query } });
   };
 
@@ -135,7 +135,7 @@
     return DateTime.fromISO(value).toJSDate();
   };
 
-  const closeFilter = () =>  {
+  const closeFilter = () => {
     removeFilter();
     filterPopoverVisible.value = false;
   };
