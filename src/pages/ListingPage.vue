@@ -11,9 +11,8 @@
             label="Удален"
             field="deletedAt"
             type="$bool"></BooleanFilter>
-        </template>
-        <template #listings>
-          <TableListing />
+
+          <TableListing/>
         </template>
       </DynamicListing>
     </ApiListings>

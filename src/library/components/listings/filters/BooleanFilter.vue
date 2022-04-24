@@ -48,7 +48,7 @@
     removeUrlFilter,
   } from '~/utils/api-querys';
 
-  interface IProps {
+  export interface IProps {
     label: string;
     field: string;
     type: string;
@@ -69,7 +69,6 @@
   const dropdown = ref();
 
   const filterValue = ref(false);
-  console.log(route);
   const filterVisible = ref(false);
 
   onMounted(() => {

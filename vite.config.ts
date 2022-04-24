@@ -12,7 +12,7 @@ export default defineConfig({
     minify: true,
     target: 'esnext',
     lib: {
-      entry: path.resolve(__dirname, 'src/library/index.js'),
+      entry: path.resolve(__dirname, 'src/library/index.ts'),
       name: 'UI',
       fileName: format => `ui.${format}.js`,
     },

@@ -2,6 +2,7 @@ import { openBlock, createElementBlock, createElementVNode, defineComponent, cre
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElAvatar, ElButton, ElIcon, ElMenu, ElMenuItemGroup, ElSubMenu, ElMenuItem, ElConfigProvider, ElContainer, ElAside, ElHeader, ElMain, ElTable, ElTableColumn, ElInput, ElPopover, ElTag, ElDatePicker } from 'element-plus';
 import { defineStore } from 'pinia';
 import { Fold, Expand, Plus, Search } from '@element-plus/icons-vue';
+import { useRoute, useRouter } from 'vue-router';
 import { DateTime } from 'luxon';
 
 var base = '';
@@ -356,7 +357,7 @@ function _sfc_render(_ctx, _cache) {
     ])
   ]))
 }
-var ULogo = /*#__PURE__*/_export_sfc(_sfc_main$9, [['render',_sfc_render],['__scopeId',"data-v-1d00d9d0"]]);
+var ULogo = /*#__PURE__*/_export_sfc(_sfc_main$9, [['render',_sfc_render],['__scopeId',"data-v-5eadb968"]]);
 
 var menu = '';
 
@@ -487,7 +488,7 @@ const _sfc_main$8 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var UMenu = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-fe27631a"]]);
+var UMenu = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-ce048dc2"]]);
 
 var UMenuPanel_vue_vue_type_style_index_0_scoped_true_lang = '';
 
@@ -2851,10 +2852,10 @@ const _hoisted_2$3 = {
 const _sfc_main$3 = /* @__PURE__ */ defineComponent({
   setup(__props) {
     const slots = useSlots();
-    const routeU = inject("useRoute");
-    const routerU = inject("useRouter");
-    const route = routeU();
-    const router = routerU();
+    const uRoute = inject("useRoute", useRoute);
+    const uRouter = inject("useRouter", useRouter);
+    const route = uRoute();
+    const router = uRouter();
     const [filterSlot] = slots.filters();
     const childrenInFilterSlot = filterSlot.children;
     const filteringSlots = (slots2) => {
@@ -2926,7 +2927,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var FiltersView = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-6cad680b"]]);
+var FiltersView = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-82dd130e"]]);
 
 var DynamicListing_vue_vue_type_style_index_0_lang = '';
 
@@ -3010,10 +3011,10 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   setup(__props) {
     const props = __props;
     const date = ref(null);
-    const routeU = inject("useRoute");
-    const routerU = inject("useRouter");
-    const route = routeU();
-    const router = routerU();
+    const uRoute = inject("useRoute", useRoute);
+    const uRouter = inject("useRouter", useRouter);
+    const route = uRoute();
+    const router = uRouter();
     const filterVisible = ref(false);
     const filterPopoverVisible = ref(false);
     onMounted(() => {
@@ -3148,14 +3149,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   },
   setup(__props) {
     const props = __props;
-    const routeU = inject("useRoute");
-    const routerU = inject("useRouter");
-    const route = routeU();
-    const router = routerU();
-    console.log(route);
+    const uRoute = inject("useRoute", useRoute);
+    const uRouter = inject("useRouter", useRouter);
+    const route = uRoute();
+    const router = uRouter();
     const dropdown = ref();
     const filterValue = ref(false);
-    console.log(route);
     const filterVisible = ref(false);
     onMounted(() => {
       if (route?.query?.filters) {
@@ -3181,10 +3180,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }
     };
     const stringToBoolean = (value) => {
-      if (value === "true") {
-        return true;
-      }
-      return false;
+      return value === "true";
     };
     const changeFilter = (e) => {
       const filterObj = {
@@ -3260,20 +3256,17 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   }
 });
 
-// import 'element-plus/theme-chalk/index.css';
-
 const UI = {
   install(Vue, options) {
-    Vue.component('UApp', UApp);
-    Vue.component('TableListing', _sfc_main$4);
-    Vue.component('DynamicListing', _sfc_main$2);
-    Vue.component('DateFilter', _sfc_main$1);
-    Vue.component('BooleanFilter', _sfc_main);
-    Vue.component('ApiListings', _sfc_main$5);
-    console.log(options);
-    Vue.provide('useRouter', options.useRouter);
-    Vue.provide('useRoute', options.useRoute);
-  },
+    Vue.component("UApp", UApp);
+    Vue.component("TableListing", _sfc_main$4);
+    Vue.component("DynamicListing", _sfc_main$2);
+    Vue.component("DateFilter", _sfc_main$1);
+    Vue.component("BooleanFilter", _sfc_main);
+    Vue.component("ApiListings", _sfc_main$5);
+    Vue.provide("useRouter", options.useRouter);
+    Vue.provide("useRoute", options.useRoute);
+  }
 };
 
 export { UI as default };

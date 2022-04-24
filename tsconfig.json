@@ -12,7 +12,9 @@
     "isolatedModules": true,
     "types": ["vite/client"],
     "moduleResolution": "node",
-    "noEmit": true
+    // "noEmit": true
   },
-  "exclude": ["node_modules", "dist", "tmp"]
+  "exclude": ["node_modules", "dist", "tmp"],
+  "outDir": "dist",
+  "declaration": true
 }

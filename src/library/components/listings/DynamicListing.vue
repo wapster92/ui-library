@@ -59,12 +59,14 @@
       background: var(--el-color-white);
       .el-input {
         height: 100%;
-        &__inner {
-          height: 100%;
+        &__wrapper {
           border-radius: 0;
           box-shadow: none;
           border-right: 1px solid var(--el-border-color);
           border-left: 1px solid var(--el-border-color);
+        }
+        &__inner {
+          height: 100%;
         }
       }
     }

@@ -46,7 +46,7 @@
     removeUrlFilter,
   } from '~/utils/api-querys';
 
-  interface IProps {
+  export interface IProps {
     label: string;
     field: string;
     type: string;

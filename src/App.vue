@@ -11,7 +11,7 @@
     </template>
   </u-app>
 </template>
-<script setup>
+<script setup lang="ts">
   import Logo from '@/assets/img/logo.svg';
   import LogoSmall from '@/assets/img/logo-small.svg';
   import { markRaw, reactive } from 'vue';

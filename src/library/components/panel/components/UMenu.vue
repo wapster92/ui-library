@@ -82,10 +82,10 @@
     menuItems?: IMenuItem[];
   }
 
-  interface IProps {
+
+  export interface IProps {
     menuItems: IMenuItem[];
   }
-
   const props = withDefaults(defineProps<IProps>(), {});
 </script>
 
