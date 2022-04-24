@@ -33,8 +33,8 @@
     ElDropdownItem,
   } from 'element-plus';
   import { Plus as PlusIcon } from '@element-plus/icons-vue';
-  import { reactive, useSlots } from 'vue';
-  import { useRouter, useRoute } from 'vue-router';
+  import {inject, reactive, useSlots} from 'vue';
+  import {useRoute, useRouter} from 'vue-router';
   import { addUrlFilter } from '~/utils/api-querys';
   export interface IFilter {
     field: string;
@@ -43,8 +43,11 @@
     value: string | boolean | number;
   }
   const slots = useSlots();
-  const router = useRouter();
-  const route = useRoute();
+  const uRoute = inject('useRoute', useRoute)
+  const uRouter = inject('useRouter', useRouter)
+
+  const route = uRoute();
+  const router = uRouter();
 
   const [filterSlot] = slots.filters();
   const childrenInFilterSlot = filterSlot.children;

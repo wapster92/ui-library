@@ -39,8 +39,9 @@
     defineProps,
     watch,
     onMounted,
+    inject
   } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRoute, useRouter} from 'vue-router';
   import {
     changeUrlFilter,
     getUrlFilters,
@@ -60,12 +61,14 @@
     trueText: 'Да',
     falseText: 'Нет',
   });
+  const uRoute = inject('useRoute', useRoute)
+  const uRouter = inject('useRouter', useRouter)
 
+  const route = uRoute();
+  const router = uRouter();
   const dropdown = ref();
 
   const filterValue = ref(false);
-  const route = useRoute();
-  const router = useRouter();
   console.log(route);
   const filterVisible = ref(false);
 
@@ -99,10 +102,7 @@
   };
 
   const stringToBoolean = (value: string) => {
-    if (value === 'true') {
-      return true;
-    }
-    return false;
+    return value === 'true';
   };
 
   const changeFilter = (e: boolean) => {

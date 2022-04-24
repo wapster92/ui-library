@@ -37,9 +37,9 @@
     withDefaults,
     defineProps,
     watch,
-    onMounted,
+    onMounted, inject,
   } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRoute, useRouter} from 'vue-router';
   import {
     changeUrlFilter,
     getUrlFilters,
@@ -57,8 +57,11 @@
   });
 
   const date = ref<Date[] | Date>(null);
-  const route = useRoute();
-  const router = useRouter();
+  const uRoute = inject('useRoute', useRoute)
+  const uRouter = inject('useRouter', useRouter)
+
+  const route = uRoute();
+  const router = uRouter();
 
   const filterVisible = ref(false);
   const filterPopoverVisible = ref(false);

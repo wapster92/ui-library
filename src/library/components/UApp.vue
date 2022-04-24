@@ -37,7 +37,7 @@
     ElConfigProvider,
     ElAside,
   } from 'element-plus';
-  import { MenuStore, useMenuStore } from '../store/panel';
+  import { MenuStore, useMenuStore } from '~/store/panel';
   import { computed } from 'vue';
 
   import UHeader from './panel/components/UHeader.vue';

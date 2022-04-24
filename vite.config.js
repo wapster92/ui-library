@@ -17,12 +17,15 @@ export default defineConfig({
       fileName: format => `ui.${format}.js`,
     },
     rollupOptions: {
-      external: ['vue', 'pinia', 'luxon'],
+      external: ['vue', 'pinia', 'luxon', 'vue-router', 'element-plus', '@element-plus/icons-vue'],
       output: {
         globals: {
           vue: 'Vue',
           pinia: 'pinia',
           luxon: 'luxon',
+          'vue-router': 'Router',
+          'element-plus': 'ElementPlus',
+          '@element-plus/icons-vue': 'elementPlusIcons',
         },
       },
     },
