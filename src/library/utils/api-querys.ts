@@ -14,16 +14,26 @@ export const convertStrFilterToObj = str => {
   return { field, type, value };
 };
 
-export const getUrlFilters = (query, fieldDefault, typeDefault) => {
-  const { filter } = readQuery(query);
-  if (Array.isArray(filter)) {
-    return;
-  }
-  if (typeof filter === 'string') {
-    const { field, type, value } = convertStrFilterToObj(filter);
-    if (field === fieldDefault && type === typeDefault) {
-      return { field, type, value };
+export const getUrlFilters = (query, filterObj?) => {
+  if (query) {
+    const { filter } = readQuery(query);
+    let filters = [];
+    if (typeof filter === 'string') {
+      filters = [filter];
     }
+    if (Array.isArray(filter)) {
+      filters = filter;
+    }
+    if (filterObj) {
+      const obj = filters.find(el => {
+        const {field, type} = convertStrFilterToObj(el);
+        return field === filterObj.field && type === filterObj.type
+      });
+      return obj ? convertStrFilterToObj(obj) : null;
+    }
+    return filters.map(el => {
+      return convertStrFilterToObj(el);
+    })
   }
   return null;
 };
@@ -31,24 +41,17 @@ export const getUrlFilters = (query, fieldDefault, typeDefault) => {
 export const addUrlFilter = (query, filterObj): string => {
   if (query) {
     const { filter } = readQuery(query);
-    console.log(readQuery(query));
-    if (Array.isArray(filter)) {
-      return '';
-    }
+    let filters = [];
     if (typeof filter === 'string') {
-      const { field } = convertStrFilterToObj(filter);
-      if (field === filterObj.field) {
-        return stringifyQuery({
-          filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
-        });
-      }
+      filters = [filter];
     }
-    if (!filter) {
-      return stringifyQuery({
-        filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
-      });
+    if (Array.isArray(filter)) {
+      filters = filter;
     }
-    return '';
+    filters.push(`${filterObj.field}||${filterObj.type}||${filterObj.value}`)
+    return stringifyQuery({
+      filter: filters
+    });
   }
   return stringifyQuery({
     filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
@@ -58,18 +61,23 @@ export const addUrlFilter = (query, filterObj): string => {
 export const changeUrlFilter = (query, filterObj): string => {
   if (query) {
     const { filter } = readQuery(query);
-    if (Array.isArray(filter)) {
-      return '';
-    }
+    let filters = [];
     if (typeof filter === 'string') {
-      const { field } = convertStrFilterToObj(filter);
-      if (field === filterObj.field) {
-        return stringifyQuery({
-          filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
-        });
-      }
+      filters = [filter];
     }
-    return '';
+    if (Array.isArray(filter)) {
+      filters = filter;
+    }
+    filters = filters.map(el => {
+      const {field, type} = convertStrFilterToObj(el);
+      if(field === filterObj.field && type === filterObj.type) {
+        return `${filterObj.field}||${filterObj.type}||${filterObj.value}`
+      }
+      return el
+    })
+    return stringifyQuery({
+      filter: filters
+    })
   } else {
     return stringifyQuery({
       filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
@@ -77,19 +85,28 @@ export const changeUrlFilter = (query, filterObj): string => {
   }
 };
 
-export const removeUrlFilter = (query, filterField: string): string => {
-  const { filter } = readQuery(query);
-  if (Array.isArray(filter)) {
-    return;
-  }
-
-  if (typeof filter === 'string') {
-    const { field } = convertStrFilterToObj(filter);
-    if (field === filterField) {
-      return stringifyQuery({ filter: [] });
+export const removeUrlFilter = (query, filterObj): string => {
+  if (query) {
+    const { filter } = readQuery(query);
+    let filters = [];
+    if (typeof filter === 'string') {
+      filters = [filter];
     }
+    if (Array.isArray(filter)) {
+      filters = filter;
+    }
+    filters = filters.filter(el => {
+      const {field, type} = convertStrFilterToObj(el);
+      return !(field === filterObj.field && type === filterObj.type);
+    })
+    return stringifyQuery({
+      filter: filters
+    })
+  } else {
+    return stringifyQuery({
+      filter: [],
+    });
   }
-  return '';
 };
 
 const valueToString = (value: string | string[]) => {

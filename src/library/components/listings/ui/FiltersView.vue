@@ -2,12 +2,12 @@
   <div class="filters-view">
     <slot name="filters"> </slot>
 
-    <ElDropdown trigger="click">
-      <div class="add-filter" :class="{ 'add-filter--more': filters.length }">
+    <ElDropdown v-if="filtersList.length" trigger="click">
+      <div class="add-filter" :class="{ 'add-filter--more':  filtersList.length < defaultFilters.length}">
         <ElIcon>
           <PlusIcon></PlusIcon>
         </ElIcon>
-        <span v-if="!filters.length" class="add-filter__text"
+        <span v-if="filtersList.length === defaultFilters.length" class="add-filter__text"
           >Добавить фильтр</span
         >
       </div>
@@ -33,9 +33,9 @@
     ElDropdownItem,
   } from 'element-plus';
   import { Plus as PlusIcon } from '@element-plus/icons-vue';
-  import {inject, reactive, useSlots} from 'vue';
+  import {computed, inject, onMounted, ref, useSlots, watch} from 'vue';
   import {useRoute, useRouter} from 'vue-router';
-  import { addUrlFilter } from '~/utils/api-querys';
+  import {addUrlFilter, getUrlFilters} from '~/utils/api-querys';
   export interface IFilter {
     field: string;
     label: string;
@@ -61,7 +61,7 @@
     return [];
   };
 
-  const defaultFilters = () => {
+  const defaultFilters = computed(() => {
     const currentSlots = filteringSlots(childrenInFilterSlot);
     if (Array.isArray(currentSlots) && currentSlots.length) {
       return currentSlots.map(filter => {
@@ -74,17 +74,46 @@
       });
     }
     return [];
-  };
+  });
 
-  const filters: IFilter[] = reactive([]);
-
-  const filtersList: IFilter[] = reactive(defaultFilters());
+  const filtersList = ref([]);
+  filtersList.value = defaultFilters.value
   const addFilter = (filterObj: IFilter) => {
     const query = addUrlFilter(route?.query?.filters, filterObj);
     if (query) {
       router.replace({ query: { filters: query } });
     }
   };
+  const getFilter = query => {
+    if (query) {
+      const activeFilters = getUrlFilters(query);
+      console.log(activeFilters)
+      if (activeFilters === null) {
+        filtersList.value = defaultFilters.value;
+      }
+      if(Array.isArray(activeFilters)) {
+        filtersList.value = defaultFilters.value.filter(el => {
+          return !(activeFilters.some(activeFilter => el.field === activeFilter.field && el.type === activeFilter.type))
+        })
+      }
+    } else {
+      filtersList.value = defaultFilters.value;
+    }
+  };
+
+  watch(
+    () => route?.query?.filters,
+    val => {
+      getFilter(val);
+    }
+  );
+
+  onMounted(() => {
+    if (route?.query?.filters) {
+      getFilter(route.query['filters']);
+    }
+  });
+
 </script>
 
 <style scoped lang="scss">
@@ -93,9 +122,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    &__tag {
-      margin-right: 6px;
-    }
+    gap: 6px;
   }
   .add-filter {
     font-size: 14px;

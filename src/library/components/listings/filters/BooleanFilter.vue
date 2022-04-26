@@ -86,13 +86,23 @@
 
   const getFilter = query => {
     if (query) {
-      const filterObj = getUrlFilters(query, props.field, props.type);
-      if (filterObj?.field === props.field) {
-        filterVisible.value = true;
-        if (filterObj?.value !== 'null') {
-          filterValue.value = stringToBoolean(filterObj.value);
-        } else {
-          dropdown.value.handleOpen();
+      const obj = {
+        field: props.field,
+        type: props.type,
+      }
+      const filterObj = getUrlFilters(query, obj);
+      if (filterObj === null) {
+        filterVisible.value = false;
+        return;
+      }
+      if (!Array.isArray(filterObj)) {
+        if (filterObj?.field === props.field) {
+          filterVisible.value = true;
+          if (filterObj?.value !== 'null') {
+            filterValue.value = stringToBoolean(filterObj.value);
+          } else {
+            dropdown.value.handleOpen();
+          }
         }
       }
     } else {
@@ -115,7 +125,11 @@
   };
 
   const removeFilter = () => {
-    const query = removeUrlFilter(route?.query?.filters, props.field);
+    const filterObj = {
+      field: props.field,
+      type: props.type,
+    };
+    const query = removeUrlFilter(route?.query?.filters, filterObj);
     router.replace({ query: { filters: query } });
   };
 
