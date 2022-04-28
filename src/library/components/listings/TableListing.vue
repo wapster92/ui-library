@@ -1,8 +1,7 @@
 <template>
   <div class="listing">
-    <ElTable :data="tableData" border style="width: 100%">
+    <ElTable :data="tableData" @sort-change="test" ref="tableListingRef" border style="width: 100%">
       <ElTableColumn prop="id" label="ID" width="180" />
-      <ElTableColumn prop="name" label="Name" />
       <ElTableColumn prop="amount1" sortable label="Amount 1" />
       <ElTableColumn prop="amount2" sortable label="Amount 2" />
       <ElTableColumn prop="amount3" sortable label="Amount 3" />
@@ -12,12 +11,8 @@
 
 <script setup lang="ts">
   import { ElTable, ElTableColumn } from 'element-plus';
-  /*import { useRouter } from "vue-router";
-  import { onMounted } from "vue";
-  const router = useRouter();
-  onMounted(() => {
-    router.push({query: {plan: 'text'}})
-  })*/
+  import {ref} from "vue";
+
 
   const tableData = [
     {
@@ -56,6 +51,13 @@
       amount3: 15,
     },
   ];
+
+  const tableListingRef = ref()
+  const test = (e) => {
+    console.log(e)
+    tableListingRef.value.sort(null, null);
+  }
+
 </script>
 
 <style scoped></style>
