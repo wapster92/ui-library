@@ -56,6 +56,7 @@
     background: #fff;
     transition: width var(--el-transition-duration);
     overflow: hidden;
+    will-change: width;
   }
   .u-app {
     height: 100%;

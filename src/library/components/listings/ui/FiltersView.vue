@@ -87,7 +87,6 @@
   const getFilter = query => {
     if (query) {
       const activeFilters = getUrlFilters(query);
-      console.log(activeFilters)
       if (activeFilters === null) {
         filtersList.value = defaultFilters.value;
       }

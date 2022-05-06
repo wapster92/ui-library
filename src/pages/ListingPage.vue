@@ -1,24 +1,24 @@
 <template>
-  <div>
-    <ApiListings>
-      <DynamicListing>
-        <template #filters>
-          <DateFilter
-            label="Дата добавления"
-            field="createdAt"
-            type="$eq"></DateFilter>
-          <BooleanFilter
-            label="Удален"
-            field="deletedAt"
-            type="$bool"></BooleanFilter>
-        </template>
-        <template #listings>
-          <TableListing/>
-        </template>
-      </DynamicListing>
+    <ApiListings url="http://localhost:5000/api" entity="orders">
+      <template #default="{tableData}">
+        <DynamicListing>
+          <template #filters>
+            <DateFilter
+              label="Дата добавления"
+              field="deadline"
+              type="$eq"></DateFilter>
+            <BooleanFilter
+              label="Завершен"
+              field="completed"
+              type="$eq"></BooleanFilter>
+          </template>
+          <template #listings>
+            <TableListing :table-data="tableData"/>
+          </template>
+        </DynamicListing>
+      </template>
+
     </ApiListings>
-    <RouterLink :to="{ path: '/' }">На главную</RouterLink>
-  </div>
 </template>
 
 <script setup lang="ts"></script>

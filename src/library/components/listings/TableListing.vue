@@ -1,63 +1,67 @@
 <template>
-  <div class="listing">
-    <ElTable :data="tableData" @sort-change="test" ref="tableListingRef" border style="width: 100%">
-      <ElTableColumn prop="id" label="ID" width="180" />
-      <ElTableColumn prop="amount1" sortable label="Amount 1" />
-      <ElTableColumn prop="amount2" sortable label="Amount 2" />
-      <ElTableColumn prop="amount3" sortable label="Amount 3" />
-    </ElTable>
+  <div ref="listing" class="listing">
+    <div v-if="!props.tableData.length" class="listing__empty">
+      <ElEmpty></ElEmpty>
+    </div>
+    <div v-else class="listing__table">
+      <ElTable ref="tableListingRef" table-layout="auto" :height="listingHeight" :data="props.tableData" border style="width: 100%" @sort-change="test">
+        <ElTableColumn prop="id" label="ID" width="50" />
+        <ElTableColumn prop="name" sortable label="Имя" width="250" />
+        <ElTableColumn prop="deadline" sortable label="Deadline" width="250" />
+        <ElTableColumn prop="company" sortable label="Компания" width="250" />
+        <ElTableColumn prop="amount" sortable label="Цена сделки" width="250" />
+        <ElTableColumn prop="completed" sortable label="Завершено" width="250" />
+      </ElTable>
+      <div class="listing__bottom">
+
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ElTable, ElTableColumn } from 'element-plus';
-  import {ref} from "vue";
+  import { ElTable, ElTableColumn, ElEmpty } from 'element-plus';
+  import {defineProps, onMounted, ref, withDefaults} from "vue";
+  import axios from 'axios';
 
+  interface ITableData {
+    id: number;
+    name: string;
+    deadline: Date;
+    company: string;
+    amount: number;
+    completed: boolean;
+  }
 
-  const tableData = [
-    {
-      id: '12987122',
-      name: 'Tom',
-      amount1: '234',
-      amount2: '3.2',
-      amount3: 10,
-    },
-    {
-      id: '12987123',
-      name: 'Tom',
-      amount1: '165',
-      amount2: '4.43',
-      amount3: 12,
-    },
-    {
-      id: '12987124',
-      name: 'Tom',
-      amount1: '324',
-      amount2: '1.9',
-      amount3: 9,
-    },
-    {
-      id: '12987125',
-      name: 'Tom',
-      amount1: '621',
-      amount2: '2.2',
-      amount3: 17,
-    },
-    {
-      id: '12987126',
-      name: 'Tom',
-      amount1: '539',
-      amount2: '4.1',
-      amount3: 15,
-    },
-  ];
-
+  const listing = ref()
   const tableListingRef = ref()
+  interface IProps {
+    tableData: object[],
+  }
+  const props = withDefaults(defineProps<IProps>(), {
+
+  });
+
   const test = (e) => {
     console.log(e)
     tableListingRef.value.sort(null, null);
   }
+  const listingHeight = ref(0);
+  const calcHeight = () => {
+    const offsetTop = listing.value.offsetTop;
+    const windowHeight = window.innerHeight;
+    console.log(offsetTop)
+    console.log(windowHeight)
+    return (windowHeight - offsetTop - 4); // 4 - это паддинг основной части страницы
+  }
+  onMounted(async () => {
+    listingHeight.value = calcHeight();
+  })
 
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.el-table__body {
+  will-change: width;
+}
+</style>

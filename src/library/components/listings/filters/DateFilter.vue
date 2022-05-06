@@ -20,7 +20,7 @@
       <template #default>
         <ElDatePicker
           v-model="date"
-          type="daterange"
+          type="date"
           @change="changeFilter"
           @visible-change="datePickerVisibleChange" />
       </template>
