@@ -3,9 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import {ElTableColumn} from "element-plus";
+  import { ElTableColumn } from 'element-plus';
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

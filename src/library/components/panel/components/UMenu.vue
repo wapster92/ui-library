@@ -82,7 +82,6 @@
     menuItems?: IMenuItem[];
   }
 
-
   export interface IProps {
     menuItems: IMenuItem[];
   }

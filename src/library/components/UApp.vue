@@ -1,9 +1,9 @@
 <template>
   <div>
     <ElConfigProvider :locale="ru">
-      <ElContainer class="u-app">
+      <div class="u-app">
         <ElAside class="u-aside" :width="widthMenu">
-          <UMenuPanel v-bind="$attrs">
+          <UMenuPanel :menu-items="props.menuItems">
             <template #logo>
               <slot name="logo" :menu-open="stateMenu.isState"></slot>
             </template>
@@ -24,7 +24,7 @@
             <slot />
           </ElMain>
         </ElContainer>
-      </ElContainer>
+      </div>
     </ElConfigProvider>
   </div>
 </template>
@@ -38,13 +38,25 @@
     ElAside,
   } from 'element-plus';
   import { MenuStore, useMenuStore } from '~/store/panel';
-  import { computed } from 'vue';
+  import { computed, defineProps, withDefaults } from 'vue';
 
   import UHeader from './panel/components/UHeader.vue';
   import ru from 'element-plus/lib/locale/lang/ru';
   import UMenuPanel from './panel/components/UMenuPanel.vue';
   const stateMenu: MenuStore = useMenuStore();
   const widthMenu = computed(() => (stateMenu.isState ? '200px' : '64px'));
+
+  interface IMenuItem {
+    iconSvg: object;
+    name: string;
+    groupName?: string;
+    menuItems?: IMenuItem[];
+  }
+
+  export interface IProps {
+    menuItems: IMenuItem[];
+  }
+  const props = withDefaults(defineProps<IProps>(), {});
 </script>
 
 <style scoped lang="scss">
@@ -63,6 +75,8 @@
     min-height: 100vh;
     background: #e9ebef;
     color: var(--el-text-color-regular);
+    display: grid;
+    grid-template-columns: min-content 1fr;
   }
   .u-main {
     padding: 4px;

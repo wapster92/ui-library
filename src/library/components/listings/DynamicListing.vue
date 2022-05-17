@@ -33,25 +33,25 @@
         </FiltersView>
       </div>
     </div>
-    <slot name="listings" :tableData="props.tableData"></slot>
+    <slot name="listings" :table-data="props.tableData"></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import {defineProps, ref, withDefaults} from 'vue';
+  import { defineProps, ref, withDefaults } from 'vue';
   import { ElInput, ElIcon } from 'element-plus';
   import { Search } from '@element-plus/icons-vue';
   import Calendar from '~/assets/icons/calendar.svg';
   import Kanban from '~/assets/icons/kanban.svg';
   import List from '~/assets/icons/list.svg';
   import FiltersView from '~/components/listings/ui/FiltersView.vue';
-const input = ref('')
-interface IProps {
-  tableData?: object[],
-}
-const props = withDefaults(defineProps<IProps>(), {
-
-});
+  const input = ref('');
+  interface IProps {
+    tableData?: object[] | null;
+  }
+  const props = withDefaults(defineProps<IProps>(), {
+    tableData: null,
+  });
 </script>
 
 <style lang="scss">

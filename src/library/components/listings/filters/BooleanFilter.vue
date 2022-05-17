@@ -39,9 +39,9 @@
     defineProps,
     watch,
     onMounted,
-    inject
+    inject,
   } from 'vue';
-  import { useRoute, useRouter} from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import {
     changeUrlFilter,
     getUrlFilters,
@@ -61,8 +61,8 @@
     trueText: 'Да',
     falseText: 'Нет',
   });
-  const uRoute = inject('useRoute', useRoute)
-  const uRouter = inject('useRouter', useRouter)
+  const uRoute = inject('useRoute', useRoute);
+  const uRouter = inject('useRouter', useRouter);
 
   const route = uRoute();
   const router = uRouter();
@@ -89,7 +89,7 @@
       const obj = {
         field: props.field,
         type: props.type,
-      }
+      };
       const filterObj = getUrlFilters(query, obj);
       if (filterObj === null) {
         filterVisible.value = false;

@@ -3,11 +3,17 @@
     <slot name="filters"> </slot>
 
     <ElDropdown v-if="filtersList.length" trigger="click">
-      <div class="add-filter" :class="{ 'add-filter--more':  filtersList.length < defaultFilters.length}">
+      <div
+        class="add-filter"
+        :class="{
+          'add-filter--more': filtersList.length < defaultFilters.length,
+        }">
         <ElIcon>
           <PlusIcon></PlusIcon>
         </ElIcon>
-        <span v-if="filtersList.length === defaultFilters.length" class="add-filter__text"
+        <span
+          v-if="filtersList.length === defaultFilters.length"
+          class="add-filter__text"
           >Добавить фильтр</span
         >
       </div>
@@ -33,9 +39,9 @@
     ElDropdownItem,
   } from 'element-plus';
   import { Plus as PlusIcon } from '@element-plus/icons-vue';
-  import {computed, inject, onMounted, ref, useSlots, watch} from 'vue';
-  import {useRoute, useRouter} from 'vue-router';
-  import {addUrlFilter, getUrlFilters} from '~/utils/api-querys';
+  import { computed, inject, onMounted, ref, useSlots, watch } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import { addUrlFilter, getUrlFilters } from '~/utils/api-querys';
   export interface IFilter {
     field: string;
     label: string;
@@ -43,8 +49,8 @@
     value: string | boolean | number;
   }
   const slots = useSlots();
-  const uRoute = inject('useRoute', useRoute)
-  const uRouter = inject('useRouter', useRouter)
+  const uRoute = inject('useRoute', useRoute);
+  const uRouter = inject('useRouter', useRouter);
 
   const route = uRoute();
   const router = uRouter();
@@ -77,7 +83,7 @@
   });
 
   const filtersList = ref([]);
-  filtersList.value = defaultFilters.value
+  filtersList.value = defaultFilters.value;
   const addFilter = (filterObj: IFilter) => {
     const query = addUrlFilter(route?.query?.filters, filterObj);
     if (query) {
@@ -90,10 +96,13 @@
       if (activeFilters === null) {
         filtersList.value = defaultFilters.value;
       }
-      if(Array.isArray(activeFilters)) {
+      if (Array.isArray(activeFilters)) {
         filtersList.value = defaultFilters.value.filter(el => {
-          return !(activeFilters.some(activeFilter => el.field === activeFilter.field && el.type === activeFilter.type))
-        })
+          return !activeFilters.some(
+            activeFilter =>
+              el.field === activeFilter.field && el.type === activeFilter.type
+          );
+        });
       }
     } else {
       filtersList.value = defaultFilters.value;
@@ -112,7 +121,6 @@
       getFilter(route.query['filters']);
     }
   });
-
 </script>
 
 <style scoped lang="scss">

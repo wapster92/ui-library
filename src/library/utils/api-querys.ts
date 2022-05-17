@@ -26,14 +26,14 @@ export const getUrlFilters = (query, filterObj?) => {
     }
     if (filterObj) {
       const obj = filters.find(el => {
-        const {field, type} = convertStrFilterToObj(el);
-        return field === filterObj.field && type === filterObj.type
+        const { field, type } = convertStrFilterToObj(el);
+        return field === filterObj.field && type === filterObj.type;
       });
       return obj ? convertStrFilterToObj(obj) : null;
     }
     return filters.map(el => {
       return convertStrFilterToObj(el);
-    })
+    });
   }
   return null;
 };
@@ -48,9 +48,9 @@ export const addUrlFilter = (query, filterObj): string => {
     if (Array.isArray(filter)) {
       filters = filter;
     }
-    filters.push(`${filterObj.field}||${filterObj.type}||${filterObj.value}`)
+    filters.push(`${filterObj.field}||${filterObj.type}||${filterObj.value}`);
     return stringifyQuery({
-      filter: filters
+      filter: filters,
     });
   }
   return stringifyQuery({
@@ -69,15 +69,15 @@ export const changeUrlFilter = (query, filterObj): string => {
       filters = filter;
     }
     filters = filters.map(el => {
-      const {field, type} = convertStrFilterToObj(el);
-      if(field === filterObj.field && type === filterObj.type) {
-        return `${filterObj.field}||${filterObj.type}||${filterObj.value}`
+      const { field, type } = convertStrFilterToObj(el);
+      if (field === filterObj.field && type === filterObj.type) {
+        return `${filterObj.field}||${filterObj.type}||${filterObj.value}`;
       }
-      return el
-    })
+      return el;
+    });
     return stringifyQuery({
-      filter: filters
-    })
+      filter: filters,
+    });
   } else {
     return stringifyQuery({
       filter: [`${filterObj.field}||${filterObj.type}||${filterObj.value}`],
@@ -96,12 +96,12 @@ export const removeUrlFilter = (query, filterObj): string => {
       filters = filter;
     }
     filters = filters.filter(el => {
-      const {field, type} = convertStrFilterToObj(el);
+      const { field, type } = convertStrFilterToObj(el);
       return !(field === filterObj.field && type === filterObj.type);
-    })
+    });
     return stringifyQuery({
-      filter: filters
-    })
+      filter: filters,
+    });
   } else {
     return stringifyQuery({
       filter: [],

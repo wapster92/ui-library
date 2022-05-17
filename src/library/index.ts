@@ -1,5 +1,3 @@
-
-
 // Оновной компонент
 import UApp from '~/components/UApp.vue';
 
@@ -13,8 +11,8 @@ import DateFilter from '~/components/listings/filters/DateFilter.vue';
 import BooleanFilter from '~/components/listings/filters/BooleanFilter.vue';
 
 //Ячейки таблицы
-import TableColumn from '~/components/listings/columns/TableColumn.vue'
-import DateColumn from '~/components/listings/columns/DateColumn.vue'
+import TableColumn from '~/components/listings/columns/TableColumn.vue';
+import DateColumn from '~/components/listings/columns/DateColumn.vue';
 
 const UI = {
   install(Vue, options) {
@@ -25,8 +23,8 @@ const UI = {
     Vue.component('BooleanFilter', BooleanFilter);
     Vue.component('ApiListings', ApiListings);
     Vue.component('TableColumn', TableColumn);
-    Vue.provide('useRouter', options.useRouter)
-    Vue.provide('useRoute', options.useRoute)
+    Vue.provide('useRouter', options.useRouter);
+    Vue.provide('useRoute', options.useRoute);
   },
 };
 
