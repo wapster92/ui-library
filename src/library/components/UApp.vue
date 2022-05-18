@@ -38,13 +38,19 @@
     ElAside,
   } from 'element-plus';
   import { MenuStore, useMenuStore } from '~/store/panel';
-  import { computed, defineProps, withDefaults } from 'vue';
+  import { computed, defineProps, ref, withDefaults } from "vue";
 
   import UHeader from './panel/components/UHeader.vue';
   import ru from 'element-plus/lib/locale/lang/ru';
   import UMenuPanel from './panel/components/UMenuPanel.vue';
+  import { ApiQuery } from "~/utils/query";
   const stateMenu: MenuStore = useMenuStore();
   const widthMenu = computed(() => (stateMenu.isState ? '200px' : '64px'));
+
+  const query = ref(new ApiQuery('ts'))
+  console.log(query.value.query)
+
+  const test = computed(() => (query.value.query))
 
   interface IMenuItem {
     iconSvg: object;
