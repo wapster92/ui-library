@@ -40,7 +40,6 @@
   const props = withDefaults(defineProps<IProps>(), {});
 
   const test = e => {
-    console.log(e);
     tableListingRef.value.sort(null, null);
   };
 
@@ -48,8 +47,6 @@
   const calcHeight = () => {
     const offsetTop = listing.value.offsetTop;
     const windowHeight = window.innerHeight;
-    console.log(offsetTop);
-    console.log(windowHeight);
     return windowHeight - offsetTop - 4; // 4 - это паддинг основной части страницы
   };
 
