@@ -6,11 +6,11 @@
           <DateFilter
             label="Дата добавления"
             field="deadline"
-            type="$eq"></DateFilter>
+            operator="$eq"></DateFilter>
           <BooleanFilter
             label="Завершен"
             field="completed"
-            type="$eq"></BooleanFilter>
+            operator="$eq"></BooleanFilter>
         </template>
         <template #listings>
           <TableListing :table-data="tableData" />

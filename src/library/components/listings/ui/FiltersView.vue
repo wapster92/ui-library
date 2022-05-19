@@ -44,7 +44,7 @@
   export interface IFilter {
     field: string;
     label: string;
-    type: string;
+    operator: string;
     value: string | boolean | number;
   }
   const slots = useSlots();
@@ -54,7 +54,7 @@
   const filteringSlots = slots => {
     if (Array.isArray(slots)) {
       return slots.filter(
-        slot => slot?.props?.field && slot?.props?.label && slot?.props?.type
+        slot => slot?.props?.field && slot?.props?.label && slot?.props?.operator
       );
     }
     return [];
@@ -67,7 +67,7 @@
         return {
           field: filter.props.field,
           label: filter.props.label,
-          type: filter.props.type,
+          operator: filter.props.operator,
           value: filter.props.value ?? null,
         };
       });
@@ -93,7 +93,7 @@
       filtersList.value = defaultFilters.value.filter(el => {
         return !activeFilters.some(
           activeFilter =>
-            el.field === activeFilter.field && el.type === activeFilter.type
+            el.field === activeFilter.field && el.operator === activeFilter.operator
         );
       });
     }

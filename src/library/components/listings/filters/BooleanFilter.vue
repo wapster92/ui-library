@@ -45,7 +45,7 @@
   export interface IProps {
     label: string;
     field: string;
-    type: string;
+    operator: string;
     value?: boolean;
     trueText?: string;
     falseText?: string;
@@ -66,7 +66,7 @@
   const getFilter = () => {
     const obj = {
       field: props.field,
-      type: props.type,
+      operator: props.operator,
     };
     const filterObj = queryFilter.getQueryFilters(obj);
     if (filterObj === null) {
@@ -96,7 +96,7 @@
   const changeFilter = (e: boolean) => {
     const filterObj = {
       field: props.field,
-      type: props.type,
+      operator: props.operator,
       value: e,
     };
     queryFilter.changeQueryFilter(filterObj);
@@ -105,7 +105,7 @@
   const removeFilter = () => {
     const filterObj = {
       field: props.field,
-      type: props.type,
+      operator: props.operator,
     };
     queryFilter.removeQueryFilter(filterObj);
   };

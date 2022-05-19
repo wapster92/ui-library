@@ -43,7 +43,7 @@
   export interface IProps {
     label: string;
     field: string;
-    type: string;
+    operator: string;
     value?: Date | string;
   }
   const props = withDefaults(defineProps<IProps>(), {
@@ -72,7 +72,7 @@
   const getFilter = () => {
     const obj = {
       field: props.field,
-      type: props.type,
+      operator: props.operator,
     };
     const filterObj = queryFilter.getQueryFilters(obj);
     if (filterObj === null) {
@@ -99,7 +99,7 @@
   const changeFilter = (e: Date) => {
     const filterObj = {
       field: props.field,
-      type: props.type,
+      operator: props.operator,
       value: datesToIsoStrings(e),
     };
     queryFilter.changeQueryFilter(filterObj);
@@ -108,7 +108,7 @@
   const removeFilter = () => {
     const filterObj = {
       field: props.field,
-      type: props.type,
+      operator: props.operator,
     };
     queryFilter.removeQueryFilter(filterObj);
   };

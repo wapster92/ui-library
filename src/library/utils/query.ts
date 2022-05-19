@@ -16,12 +16,12 @@ export const useQueryFilter = () => {
   };
 
   const convertStrFilterToObj = str => {
-    const [field, type, value] = str.split('||');
-    return { field, type, value };
+    const [field, operator, value] = str.split('||');
+    return { field, operator, value };
   };
 
   const convertObjToString = filterObj => {
-    return `${filterObj.field}||${filterObj.type}||${valueToString(
+    return `${filterObj.field}||${filterObj.operator}||${valueToString(
       filterObj.value
     )}`;
   };
@@ -31,7 +31,7 @@ export const useQueryFilter = () => {
   }
   interface IFilterObj {
     field: string;
-    type: string;
+    operator: string;
     value?: string | string[] | boolean;
   }
   const query = ref<string>('');
@@ -78,8 +78,8 @@ export const useQueryFilter = () => {
     let filters = initialFilters();
     if (filterObj) {
       const obj = filters.find(filter => {
-        const { field, type } = convertStrFilterToObj(filter);
-        return field === filterObj.field && type === filterObj.type;
+        const { field, operator } = convertStrFilterToObj(filter);
+        return field === filterObj.field && operator === filterObj.operator;
       });
       return obj ? convertStrFilterToObj(obj) : null;
     }
@@ -101,8 +101,8 @@ export const useQueryFilter = () => {
   const changeQueryFilter = (filterObj: IFilterObj) => {
     let filters = initialFilters();
     filters = filters.map(el => {
-      const { field, type } = convertStrFilterToObj(el);
-      if (field === filterObj.field && type === filterObj.type) {
+      const { field, operator } = convertStrFilterToObj(el);
+      if (field === filterObj.field && operator === filterObj.operator) {
         return convertObjToString(filterObj);
       }
       return el;
@@ -119,8 +119,8 @@ export const useQueryFilter = () => {
       filters = queryObj.value.filter;
     }
     filters = filters.filter(el => {
-      const { field, type } = convertStrFilterToObj(el);
-      return !(field === filterObj.field && type === filterObj.type);
+      const { field, operator } = convertStrFilterToObj(el);
+      return !(field === filterObj.field && operator === filterObj.operator);
     });
     queryObj.value = { filter: filters };
   };
