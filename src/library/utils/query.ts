@@ -75,7 +75,7 @@ export const useQueryFilter = () => {
   };
 
   const getQueryFilters = (filterObj?: IFilterObj) => {
-    const filters = initialFilters();
+    let filters = initialFilters();
     if (filterObj) {
       const obj = filters.find(filter => {
         const { field, type } = convertStrFilterToObj(filter);
@@ -83,7 +83,7 @@ export const useQueryFilter = () => {
       });
       return obj ? convertStrFilterToObj(obj) : null;
     }
-    filters.map(filter => {
+    filters = filters.map(filter => {
       return convertStrFilterToObj(filter);
     });
     if (filters.length) {

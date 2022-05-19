@@ -12,7 +12,7 @@ import BooleanFilter from '~/components/listings/filters/BooleanFilter.vue';
 
 //Ячейки таблицы
 import TableColumn from '~/components/listings/columns/TableColumn.vue';
-import DateColumn from '~/components/listings/columns/DateColumn.vue';
+// import DateColumn from '~/components/listings/columns/DateColumn.vue';
 
 const UI = {
   install(Vue, options) {
