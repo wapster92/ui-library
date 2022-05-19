@@ -37,15 +37,8 @@
     withDefaults,
     defineProps,
     watch,
-    onMounted,
-    inject,
   } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import {
-    changeUrlFilter,
-    getUrlFilters,
-    removeUrlFilter,
-  } from '~/utils/api-querys';
+  import { useQueryFilter } from "~/utils/query";
 
   export interface IProps {
     label: string;
@@ -58,27 +51,8 @@
   });
 
   const date = ref<Date[] | Date>(null);
-  const uRoute = inject('useRoute', useRoute);
-  const uRouter = inject('useRouter', useRouter);
-
-  const route = uRoute();
-  const router = uRouter();
-
   const filterVisible = ref(false);
   const filterPopoverVisible = ref(false);
-
-  onMounted(() => {
-    if (route?.query?.filters) {
-      getFilter(route.query['filters']);
-    }
-  });
-
-  watch(
-    () => route?.query?.filters,
-    val => {
-      getFilter(val);
-    }
-  );
 
   const dateString = computed(() => {
     if (Array.isArray(date.value) && date.value?.length) {
@@ -93,32 +67,34 @@
     return 'Выберете дату';
   });
 
-  const getFilter = query => {
-    if (query) {
-      const obj = {
-        field: props.field,
-        type: props.type,
-      };
-      const filterObj = getUrlFilters(query, obj);
-      if (filterObj === null) {
-        filterVisible.value = false;
-        return;
-      }
-      if (!Array.isArray(filterObj)) {
-        if (filterObj?.field === props.field) {
-          filterVisible.value = true;
-          if (filterObj?.value !== 'null') {
-            date.value = datesIsoStringToDate(filterObj.value);
-          } else {
-            date.value = null;
-            filterPopoverVisible.value = true;
-          }
+  const queryFilter = useQueryFilter();
+
+  const getFilter = () => {
+    const obj = {
+      field: props.field,
+      type: props.type,
+    };
+    const filterObj = queryFilter.getQueryFilters(obj);
+    if (filterObj === null) {
+      filterVisible.value = false;
+      return;
+    }
+    if (!Array.isArray(filterObj)) {
+      if (filterObj?.field === props.field) {
+        filterVisible.value = true;
+        if (filterObj?.value !== 'null') {
+          date.value = datesIsoStringToDate(filterObj.value);
+        } else {
+          date.value = null;
+          filterPopoverVisible.value = true;
         }
       }
-    } else {
-      filterVisible.value = false;
     }
   };
+
+  watch(queryFilter.queryObj, () => {
+    getFilter();
+  });
 
   const changeFilter = (e: Date) => {
     const filterObj = {
@@ -126,8 +102,7 @@
       type: props.type,
       value: datesToIsoStrings(e),
     };
-    const query = changeUrlFilter(route.query?.filters, filterObj);
-    router.replace({ query: { filters: query } });
+    queryFilter.changeQueryFilter(filterObj);
   };
 
   const removeFilter = () => {
@@ -135,8 +110,7 @@
       field: props.field,
       type: props.type,
     };
-    const query = removeUrlFilter(route.query?.filters, filterObj);
-    router.replace({ query: { filters: query } });
+    queryFilter.removeQueryFilter(filterObj);
   };
 
   const datesToIsoStrings = (value: Date | Date[]) => {

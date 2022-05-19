@@ -38,15 +38,9 @@
     withDefaults,
     defineProps,
     watch,
-    onMounted,
-    inject,
   } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import {
-    changeUrlFilter,
-    getUrlFilters,
-    removeUrlFilter,
-  } from '~/utils/api-querys';
+
+  import { useQueryFilter } from "~/utils/query";
 
   export interface IProps {
     label: string;
@@ -61,54 +55,39 @@
     trueText: 'Да',
     falseText: 'Нет',
   });
-  const uRoute = inject('useRoute', useRoute);
-  const uRouter = inject('useRouter', useRouter);
 
-  const route = uRoute();
-  const router = uRouter();
   const dropdown = ref();
 
   const filterValue = ref(false);
   const filterVisible = ref(false);
 
-  onMounted(() => {
-    if (route?.query?.filters) {
-      getFilter(route.query['filters']);
-    }
-  });
+  const queryFilter = useQueryFilter();
 
-  watch(
-    () => route?.query?.filters,
-    val => {
-      getFilter(val);
+  const getFilter = () => {
+    const obj = {
+      field: props.field,
+      type: props.type,
+    };
+    const filterObj = queryFilter.getQueryFilters(obj);
+    if (filterObj === null) {
+      filterVisible.value = false;
+      return;
     }
-  );
-
-  const getFilter = query => {
-    if (query) {
-      const obj = {
-        field: props.field,
-        type: props.type,
-      };
-      const filterObj = getUrlFilters(query, obj);
-      if (filterObj === null) {
-        filterVisible.value = false;
-        return;
-      }
-      if (!Array.isArray(filterObj)) {
-        if (filterObj?.field === props.field) {
-          filterVisible.value = true;
-          if (filterObj?.value !== 'null') {
-            filterValue.value = stringToBoolean(filterObj.value);
-          } else {
-            dropdown.value.handleOpen();
-          }
+    if (!Array.isArray(filterObj)) {
+      if (filterObj?.field === props.field) {
+        filterVisible.value = true;
+        if (filterObj?.value !== 'null') {
+          filterValue.value = stringToBoolean(filterObj.value);
+        } else {
+          dropdown.value.handleOpen();
         }
       }
-    } else {
-      filterVisible.value = false;
     }
   };
+
+  watch(queryFilter.queryObj, () => {
+    getFilter();
+  });
 
   const stringToBoolean = (value: string) => {
     return value === 'true';
@@ -120,8 +99,7 @@
       type: props.type,
       value: e,
     };
-    const query = changeUrlFilter(route?.query?.filters, filterObj);
-    router.replace({ query: { filters: query } });
+    queryFilter.changeQueryFilter(filterObj);
   };
 
   const removeFilter = () => {
@@ -129,8 +107,7 @@
       field: props.field,
       type: props.type,
     };
-    const query = removeUrlFilter(route?.query?.filters, filterObj);
-    router.replace({ query: { filters: query } });
+    queryFilter.removeQueryFilter(filterObj);
   };
 
   const closeFilter = () => {

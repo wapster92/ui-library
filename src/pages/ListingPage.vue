@@ -1,5 +1,5 @@
 <template>
-  <ApiListings url="http://localhost:5000/api" entity="orders" limit="100">
+  <ApiListings>
     <template #default="{ tableData }">
       <DynamicListing>
         <template #filters>

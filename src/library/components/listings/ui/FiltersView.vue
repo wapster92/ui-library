@@ -39,9 +39,8 @@
     ElDropdownItem,
   } from 'element-plus';
   import { Plus as PlusIcon } from '@element-plus/icons-vue';
-  import { computed, inject, onMounted, ref, useSlots, watch } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import { addUrlFilter, getUrlFilters } from '~/utils/api-querys';
+  import { computed, ref, useSlots, watch } from 'vue';
+  import { useQueryFilter } from "~/utils/query";
   export interface IFilter {
     field: string;
     label: string;
@@ -49,12 +48,6 @@
     value: string | boolean | number;
   }
   const slots = useSlots();
-  const uRoute = inject('useRoute', useRoute);
-  const uRouter = inject('useRouter', useRouter);
-
-  const route = uRoute();
-  const router = uRouter();
-
   const [filterSlot] = slots.filters();
   const childrenInFilterSlot = filterSlot.children;
 
@@ -82,44 +75,32 @@
     return [];
   });
 
-  const filtersList = ref([]);
+  const filtersList = ref<IFilter[]>([]);
   filtersList.value = defaultFilters.value;
-  const addFilter = (filterObj: IFilter) => {
-    const query = addUrlFilter(route?.query?.filters, filterObj);
-    if (query) {
-      router.replace({ query: { filters: query } });
-    }
+
+  const queryFilter = useQueryFilter();
+
+  const addFilter = (filterObj) => {
+    queryFilter.addQueryFilter(filterObj);
   };
-  const getFilter = query => {
-    if (query) {
-      const activeFilters = getUrlFilters(query);
-      if (activeFilters === null) {
-        filtersList.value = defaultFilters.value;
-      }
-      if (Array.isArray(activeFilters)) {
-        filtersList.value = defaultFilters.value.filter(el => {
-          return !activeFilters.some(
-            activeFilter =>
-              el.field === activeFilter.field && el.type === activeFilter.type
-          );
-        });
-      }
-    } else {
+
+  const getFilter = () => {
+    const activeFilters = queryFilter.getQueryFilters();
+    if (activeFilters === null) {
       filtersList.value = defaultFilters.value;
     }
+    if (Array.isArray(activeFilters)) {
+      filtersList.value = defaultFilters.value.filter(el => {
+        return !activeFilters.some(
+          activeFilter =>
+            el.field === activeFilter.field && el.type === activeFilter.type
+        );
+      });
+    }
   };
 
-  watch(
-    () => route?.query?.filters,
-    val => {
-      getFilter(val);
-    }
-  );
-
-  onMounted(() => {
-    if (route?.query?.filters) {
-      getFilter(route.query['filters']);
-    }
+  watch(queryFilter.queryObj, () => {
+    getFilter();
   });
 </script>
 
