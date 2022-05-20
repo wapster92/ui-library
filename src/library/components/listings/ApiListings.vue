@@ -1,6 +1,5 @@
 <template>
   <slot :table-data="tableData"></slot>
-  <button @click="test">add order</button>
 </template>
 
 <script setup lang="ts">

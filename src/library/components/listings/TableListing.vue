@@ -12,16 +12,7 @@
         :data="props.tableData"
         border
         @sort-change="test">
-        <ElTableColumn prop="id" label="ID" width="50" />
-        <ElTableColumn prop="name" sortable label="Имя" width="250" />
-        <ElTableColumn prop="deadline" sortable label="Deadline" width="250" />
-        <ElTableColumn prop="company" sortable label="Компания" width="250" />
-        <ElTableColumn prop="amount" sortable label="Цена сделки" width="250" />
-        <ElTableColumn
-          prop="completed"
-          sortable
-          label="Завершено"
-          width="250" />
+        <slot></slot>
       </ElTable>
       <div class="listing__bottom"></div>
     </div>
@@ -29,9 +20,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ElTable, ElTableColumn, ElEmpty } from 'element-plus';
+  import { ElTable, ElEmpty } from 'element-plus';
   import { defineProps, onMounted, ref, withDefaults } from 'vue';
-
   const listing = ref();
   const tableListingRef = ref();
   interface IProps {

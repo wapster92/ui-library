@@ -13,13 +13,18 @@
             operator="$eq"></BooleanFilter>
         </template>
         <template #listings>
-          <TableListing :table-data="tableData" />
+          <TableListing :table-data="tableData">
+            <ElTableColumn prop="name" label="Название"></ElTableColumn>
+            <TableColumn prop="name" label="Название"></TableColumn>
+          </TableListing>
         </template>
       </DynamicListing>
     </template>
   </ApiListings>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ElTableColumn } from "element-plus";
+</script>
 
 <style scoped></style>
