@@ -1,63 +1,88 @@
 <template>
   <slot :table-data="tableData"></slot>
+  <button @click="test">add order</button>
 </template>
 
 <script setup lang="ts">
-  import { useQueryFilter } from '~/utils/query';
-  import { defineProps, onMounted, ref, watch, withDefaults } from "vue";
-  import { RequestQueryBuilder } from "@nestjsx/crud-request/lib";
-  import axios from "axios";
+  import {
+    defineProps,
+    inject,
+    onMounted,
+    ref,
+    watch,
+    withDefaults,
+  } from 'vue';
+  import qs from 'qs';
+  import axios from 'axios';
+  import { useRoute, useRouter } from 'vue-router';
+  const uRoute = inject('useRoute', useRoute);
+  const uRouter = inject('useRouter', useRouter);
 
   export interface IProps {
     limit?: number;
   }
+
+  const route = uRoute();
+  const router = uRouter();
   const props = withDefaults(defineProps<IProps>(), {
     limit: 50,
   });
 
-  const filters = ref([]);
-
   const tableData = ref([]);
-  const queryFilter = useQueryFilter();
 
-  const query = ref('')
+  const query = ref('');
 
   const generateQS = () => {
-    const qb = RequestQueryBuilder.create();
-    qb.setFilter(filters.value).setLimit(props.limit);
-    return qb.query();
-  };
-
-
-  onMounted(() => {
-    if (queryFilter.queryObj.value?.filter) {
-      filters.value = parseFilters(queryFilter.queryObj.value.filter);
+    let queryObj = {
+      filter: [],
+      limit: props.limit,
+    };
+    const filtersInQuery = route?.query?.filters;
+    if (filtersInQuery) {
+      if (typeof filtersInQuery === 'string') {
+        const { filter } = qs.parse(filtersInQuery);
+        const filters = parseFilters(filter);
+        queryObj.filter = filters.map(
+          filter => `${filter.field}||${filter.operator}||${filter.value}`
+        );
+      }
     }
-    query.value = generateQS();
-  })
-
-  watch(queryFilter.queryObj, value => {
-    if (value?.filter) {
-      filters.value = parseFilters(value.filter);
-      query.value = generateQS();
+    query.value = qs.stringify(queryObj, {
+      encode: true,
+      arrayFormat: 'repeat',
+    });
+  };
+  const test = () => {
+    const query = { ...route.query, orders: { order: 'test' } };
+    router.replace({ query });
+    console.log(route.query.order)
+  };
+  onMounted(() => {
+    const filters = route?.query?.filters;
+    if (filters) {
+      generateQS();
     }
   });
 
-  /*onMounted(() => {
-    query.value = generateQS();
-
-  })*/
+  watch(
+    () => route?.query?.filters,
+    val => {
+      generateQS();
+    }
+  );
 
   watch(query, (current, old) => {
     if (current !== old) {
       getData();
     }
-  })
+  });
 
   const getData = async () => {
-    const { data } = await axios.get(`http://localhost:5000/api/orders?${query.value}`)
+    const { data } = await axios.get(
+      `http://localhost:5000/api/orders?${query.value}`
+    );
     tableData.value = data.data;
-  }
+  };
 
   const parseFilters = (filters: string | string[]) => {
     if (Array.isArray(filters)) {

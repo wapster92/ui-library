@@ -1,5 +1,5 @@
 <template>
-  <ApiListings>
+  <ApiListings :limit="10">
     <template #default="{ tableData }">
       <DynamicListing>
         <template #filters>
