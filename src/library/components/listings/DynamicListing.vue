@@ -87,6 +87,7 @@
     margin: 0;
     padding: 0;
     height: 100%;
+    gap: 5px;
     justify-content: center;
     align-items: center;
     &__item {

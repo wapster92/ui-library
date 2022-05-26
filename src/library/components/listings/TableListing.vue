@@ -10,6 +10,7 @@
         table-layout="auto"
         :height="listingHeight"
         :data="props.tableData"
+        size="small"
         border
         @sort-change="test">
         <slot></slot>
@@ -49,7 +50,7 @@
   .listing {
     &__table-component {
       //  width: 100%;
-      // width: 700px;
+      //width: 700px;
     }
   }
 </style>

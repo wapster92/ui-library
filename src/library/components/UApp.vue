@@ -1,7 +1,7 @@
 <template>
   <div>
     <ElConfigProvider :locale="ru">
-      <div class="u-app">
+      <ElContainer class="u-app">
         <ElAside class="u-aside" :width="widthMenu">
           <UMenuPanel :menu-items="props.menuItems">
             <template #logo>
@@ -24,7 +24,7 @@
             <slot />
           </ElMain>
         </ElContainer>
-      </div>
+      </ElContainer>
     </ElConfigProvider>
   </div>
 </template>
@@ -38,7 +38,7 @@
     ElAside,
   } from 'element-plus';
   import { MenuStore, useMenuStore } from '~/store/panel';
-  import { computed, defineProps, ref, withDefaults } from "vue";
+  import { computed, defineProps, ref, watch, withDefaults } from "vue";
 
   import UHeader from './panel/components/UHeader.vue';
   import ru from 'element-plus/lib/locale/lang/ru';
@@ -57,6 +57,37 @@
     menuItems: IMenuItem[];
   }
   const props = withDefaults(defineProps<IProps>(), {});
+
+
+  /*const minWidth = 64;
+  const maxWidth = 200;
+  const currentWidth = ref<number>(stateMenu.isState ? maxWidth : minWidth);
+  const widthMenu = ref(currentWidth.value + 'px');
+  // testing requestAnimationFrame
+  const writeCurrentWidth = (width) => {
+    if (width >= maxWidth) {
+      return maxWidth;
+    }
+    if (width <= minWidth) {
+      return minWidth;
+    }
+    return width;
+  }
+  const animateMenuWidth = (val, duration = 5) => {
+    let start = performance.now();
+    requestAnimationFrame(function animate(time) {
+      let timeFraction = Math.abs((time - start) / duration);
+      currentWidth.value = writeCurrentWidth(val ? currentWidth.value + timeFraction : currentWidth.value - timeFraction);
+      widthMenu.value = currentWidth.value + 'px';
+      if (currentWidth.value > minWidth && currentWidth.value < maxWidth) {
+        requestAnimationFrame(animate)
+      }
+    })
+  }
+
+  watch(() => stateMenu.isState, (value) => {
+    animateMenuWidth(value);
+  })*/
 </script>
 
 <style scoped lang="scss">
@@ -75,8 +106,6 @@
     min-height: 100vh;
     background: #e9ebef;
     color: var(--el-text-color-regular);
-    display: grid;
-    grid-template-columns: min-content 1fr;
   }
   .u-main {
     padding: 4px;
