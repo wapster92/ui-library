@@ -96,7 +96,7 @@
 
   .u-aside {
     background: #fff;
-    transition: width var(--el-transition-duration);
+    // transition: width var(--el-transition-duration);
     overflow: hidden;
     will-change: width;
   }

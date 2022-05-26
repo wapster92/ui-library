@@ -2,7 +2,12 @@
   <ElTableColumn
     :prop="props.prop"
     :label="props.label"
-    :sortable="props.sortable">
+    :sortable="props.sortable"
+    :min-width="props.minWidth"
+  >
+    <template #default="{row, column}">
+      {{row[column.property]}}
+    </template>
   </ElTableColumn>
 </template>
 
@@ -13,11 +18,15 @@
     prop: string;
     sortable?: boolean;
     label?: string;
+    width?: number|string;
+    minWidth?: number|string;
   }
 
   const props = withDefaults(defineProps<IProps>(), {
     sortable: false,
     label: '',
+    width: 'auto',
+    minWidth: 0,
   });
 </script>
 

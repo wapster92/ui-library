@@ -14,16 +14,25 @@
         </template>
         <template #listings>
           <TableListing :table-data="tableData">
-            <ElTableColumn prop="id" label="ID" width="80" />
-            <ElTableColumn prop="name" sortable label="Имя" width="250" />
-            <DateColumn prop="deadline" sortable label="Deadline" width="250" />
-            <ElTableColumn prop="company" sortable label="Компания" width="250" />
-            <ElTableColumn prop="amount" sortable label="Цена сделки" width="250" />
-            <ElTableColumn
+            <TextColumn prop="id" label="ID" sortable></TextColumn>
+            <TextColumn prop="name" label="Имя" sortable></TextColumn>
+
+            <TextColumn
+              prop="company"
+              sortable
+              label="Компания"
+              ></TextColumn>
+            <TextColumn
+              prop="amount"
+              sortable
+              label="Цена сделки"
+              ></TextColumn>
+            <BoolColumn
               prop="completed"
               sortable
               label="Завершено"
-              width="250" />
+              ></BoolColumn>
+            <DateColumn prop="deadline" sortable label="Deadline" />
           </TableListing>
         </template>
       </DynamicListing>
@@ -32,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { ElTableColumn } from "element-plus";
+  import { ElTableColumn } from 'element-plus';
 </script>
 
 <style scoped></style>

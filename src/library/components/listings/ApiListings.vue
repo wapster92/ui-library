@@ -14,6 +14,7 @@
   import qs from 'qs';
   import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
+  import { ElNotification } from "element-plus";
   const uRoute = inject('useRoute', useRoute);
   const uRouter = inject('useRouter', useRouter);
 
@@ -51,17 +52,6 @@
       arrayFormat: 'repeat',
     });
   };
-  const test = () => {
-    const query = { ...route.query, orders: { order: 'test' } };
-    router.replace({ query });
-    console.log(route.query.order)
-  };
-  onMounted(() => {
-    const filters = route?.query?.filters;
-    if (filters) {
-      generateQS();
-    }
-  });
 
   watch(
     () => route?.query?.filters,
@@ -72,15 +62,27 @@
 
   watch(query, (current, old) => {
     if (current !== old) {
-      getData();
+      getData('watch');
     }
   });
-
-  const getData = async () => {
-    const { data } = await axios.get(
-      `http://localhost:5000/api/orders?${query.value}`
-    );
-    tableData.value = data.data;
+  onMounted(() => {
+    generateQS();
+    // getData('mounted');
+  })
+  const getData = async (dot) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/orders?${query.value}`
+      );
+      console.log(dot)
+      tableData.value = data.data;
+    } catch (e) {
+      ElNotification({
+        title: 'Ошибка',
+        message: e.message || 'Произошла ошибка',
+        type: 'error',
+      })
+    }
   };
 
   const parseFilters = (filters: string | string[]) => {

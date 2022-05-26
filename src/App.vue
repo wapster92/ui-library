@@ -1,10 +1,11 @@
 <template>
   <u-app :menu-items="items">
     <template #logo="{ menuOpen }">
-      <transition name="fade" mode="out-in">
-        <Logo v-if="menuOpen" />
-        <LogoSmall v-else />
-      </transition>
+      <!--      <transition name="fade" mode="out-in">-->
+      <!--        -->
+      <!--      </transition>-->
+      <Logo v-if="menuOpen" />
+      <LogoSmall v-else />
     </template>
     <template #default>
       <router-view></router-view>

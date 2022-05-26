@@ -11,8 +11,9 @@ import DateFilter from '~/components/listings/filters/DateFilter.vue';
 import BooleanFilter from '~/components/listings/filters/BooleanFilter.vue';
 
 //Ячейки таблицы
-import TableColumn from '~/components/listings/columns/TableColumn.vue';
+import TextColumn from '~/components/listings/columns/TextColumn.vue';
 import DateColumn from '~/components/listings/columns/DateColumn.vue';
+import BoolColumn from '~/components/listings/columns/BoolColumn.vue';
 
 const UI = {
   install(Vue, options) {
@@ -22,8 +23,9 @@ const UI = {
     Vue.component('DateFilter', DateFilter);
     Vue.component('BooleanFilter', BooleanFilter);
     Vue.component('ApiListings', ApiListings);
-    Vue.component('TableColumn', TableColumn);
+    Vue.component('TextColumn', TextColumn);
     Vue.component('DateColumn', DateColumn);
+    Vue.component('BoolColumn', BoolColumn);
     Vue.provide('useRouter', options.useRouter);
     Vue.provide('useRoute', options.useRoute);
   },
