@@ -58,7 +58,6 @@
   }
   const props = withDefaults(defineProps<IProps>(), {});
 
-
   /*const minWidth = 64;
   const maxWidth = 200;
   const currentWidth = ref<number>(stateMenu.isState ? maxWidth : minWidth);

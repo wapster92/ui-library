@@ -1,5 +1,5 @@
 <template>
-  <ElTableColumn :prop="props.prop" :label="props.label">
+  <ElTableColumn :prop="props.prop" :label="props.label" :sortable="props.sortable">
     <template #default="{ row, column }">
       {{ formatTime(row[column.property]) }}
     </template>
