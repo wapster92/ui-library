@@ -23,6 +23,7 @@
       <ElInput
         v-model="input"
         class="w-50 m-2"
+        clearable
         placeholder="Поиск"
         :suffix-icon="Search" />
       <div class="listings__filters">
@@ -45,13 +46,45 @@
   import Kanban from '~/assets/icons/kanban.svg';
   import List from '~/assets/icons/list.svg';
   import FiltersView from '~/components/listings/ui/FiltersView.vue';
-  const input = ref('');
+  import { useQueryFilter } from '~/utils/query';
+
   interface IProps {
     tableData?: object[] | null;
+    multipleSearch?: string[] | string;
   }
   const props = withDefaults(defineProps<IProps>(), {
     tableData: null,
+    multipleSearch: null,
   });
+
+  const input = ref('irvin');
+  const queryFilter = useQueryFilter();
+  const addFilters = () => {
+    if (props.multipleSearch) {
+      if (Array.isArray(props.multipleSearch)) {
+        props.multipleSearch.forEach((prop) => {
+          queryFilter.addQueryFilter({
+            field: prop,
+            operator: '$cont',
+            value: input.value,
+          });
+
+        });
+      }
+      if (
+        props.multipleSearch?.length &&
+        typeof props.multipleSearch === 'string'
+      ) {
+        queryFilter.addQueryFilter({
+          field: props.multipleSearch || '',
+          operator: '$cont',
+          value: input.value,
+        });
+      }
+    }
+  };
+
+  addFilters()
 </script>
 
 <style lang="scss">

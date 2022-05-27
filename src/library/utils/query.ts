@@ -40,6 +40,7 @@ export const useQueryFilter = () => {
       return qs.parse(query.value);
     },
     async set(val) {
+      console.log(val);
       await router.replace({
         query: {
           filters: qs.stringify(val, { encode: true, arrayFormat: 'repeat' }),
@@ -94,6 +95,7 @@ export const useQueryFilter = () => {
 
   const addQueryFilter = (filterObj: IFilterObj) => {
     const filters = initialFilters();
+    console.log('filters', filters);
     filters.push(convertObjToString(filterObj));
     queryObj.value = { filter: filters };
   };

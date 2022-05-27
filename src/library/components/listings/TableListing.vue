@@ -46,11 +46,10 @@
     listingHeight.value = calcHeight();
   });
 
-  const emit = defineEmits(['selection-change'])
-  const handleSelectionChange = (val) => {
-    emit('selection-change', val)
-  }
-
+  const emit = defineEmits(['selection-change']);
+  const handleSelectionChange = val => {
+    emit('selection-change', val);
+  };
 </script>
 
 <style scoped lang="scss">

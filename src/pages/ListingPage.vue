@@ -1,7 +1,9 @@
 <template>
   <ApiListings :limit="200">
     <template #default="{ tableData }">
-      <DynamicListing>
+      <DynamicListing
+        :multiple-search="['company', 'name',]"
+      >
         <template #filters>
           <DateFilter
             label="Дата добавления"
@@ -13,7 +15,7 @@
             operator="$eq"></BooleanFilter>
         </template>
         <template #listings>
-          <TableListing @selection-change="test" :table-data="tableData">
+          <TableListing :table-data="tableData" @selection-change="test">
             <SelectionColumn></SelectionColumn>
             <TextColumn prop="id" label="ID" sortable></TextColumn>
             <TextColumn prop="name" label="Имя" sortable></TextColumn>
@@ -27,7 +29,7 @@
               label="Завершено"></BoolColumn>
             <DateColumn prop="deadline" sortable label="Deadline" />
             <SlotColumn label="Слот">
-              <template #default="{row}">
+              <template #default="{ row }">
                 {{ row.id }}
               </template>
             </SlotColumn>
@@ -40,9 +42,9 @@
 
 <script setup lang="ts">
   // import { ElTableColumn } from 'element-plus';
-const test = (e) => {
-  console.log(e)
-}
+  const test = e => {
+    console.log(e);
+  };
 </script>
 
 <style scoped></style>
