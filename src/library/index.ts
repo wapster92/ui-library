@@ -14,6 +14,7 @@ import BooleanFilter from '~/components/listings/filters/BooleanFilter.vue';
 import TextColumn from '~/components/listings/columns/TextColumn.vue';
 import DateColumn from '~/components/listings/columns/DateColumn.vue';
 import BoolColumn from '~/components/listings/columns/BoolColumn.vue';
+import TagColumn from '~/components/listings/columns/TagColumn.vue';
 
 const UI = {
   install(Vue, options) {
@@ -26,6 +27,7 @@ const UI = {
     Vue.component('TextColumn', TextColumn);
     Vue.component('DateColumn', DateColumn);
     Vue.component('BoolColumn', BoolColumn);
+    Vue.component('TagColumn', TagColumn);
     Vue.provide('useRouter', options.useRouter);
     Vue.provide('useRoute', options.useRoute);
   },

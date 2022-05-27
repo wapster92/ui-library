@@ -27,7 +27,7 @@
     sortable?: boolean;
     label?: string;
     isIcon?: boolean;
-    sizeIcon: number | string;
+    sizeIcon?: number | string;
     trueIconColor?: string;
     falseIconColor?: string;
     width?: number | string;

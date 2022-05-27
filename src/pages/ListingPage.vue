@@ -16,11 +16,11 @@
           <TableListing :table-data="tableData">
             <TextColumn prop="id" label="ID" sortable></TextColumn>
             <TextColumn prop="name" label="Имя" sortable></TextColumn>
-            <TextColumn
-              prop="tag.name"
+            <TagColumn
+              prop="tag"
               sortable
-              label="Теги"
-            ></TextColumn>
+              label="Тег"
+            ></TagColumn>
             <TextColumn
               prop="company"
               sortable
