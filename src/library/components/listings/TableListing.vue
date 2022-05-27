@@ -12,7 +12,8 @@
         :data="props.tableData"
         size="small"
         border
-        @sort-change="test">
+        @sort-change="test"
+        @selection-change="handleSelectionChange">
         <slot></slot>
       </ElTable>
       <div class="listing__bottom"></div>
@@ -22,7 +23,7 @@
 
 <script setup lang="ts">
   import { ElTable, ElEmpty } from 'element-plus';
-  import { defineProps, onMounted, ref, withDefaults } from 'vue';
+  import { defineEmits, defineProps, onMounted, ref, withDefaults } from 'vue';
   const listing = ref();
   const tableListingRef = ref();
   interface IProps {
@@ -30,7 +31,7 @@
   }
   const props = withDefaults(defineProps<IProps>(), {});
 
-  const test = e => {
+  const test = () => {
     tableListingRef.value.sort(null, null);
   };
 
@@ -44,6 +45,12 @@
   onMounted(async () => {
     listingHeight.value = calcHeight();
   });
+
+  const emit = defineEmits(['selection-change'])
+  const handleSelectionChange = (val) => {
+    emit('selection-change', val)
+  }
+
 </script>
 
 <style scoped lang="scss">
