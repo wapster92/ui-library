@@ -16,7 +16,11 @@
           <TableListing :table-data="tableData">
             <TextColumn prop="id" label="ID" sortable></TextColumn>
             <TextColumn prop="name" label="Имя" sortable></TextColumn>
-
+            <TextColumn
+              prop="tag.name"
+              sortable
+              label="Теги"
+            ></TextColumn>
             <TextColumn
               prop="company"
               sortable
@@ -30,6 +34,7 @@
             <BoolColumn
               prop="completed"
               sortable
+              is-icon
               label="Завершено"
               ></BoolColumn>
             <DateColumn prop="deadline" sortable label="Deadline" />

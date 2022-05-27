@@ -5,7 +5,7 @@
     :sortable="props.sortable"
     :min-width="props.minWidth">
     <template #default="{ row, column }">
-      {{ formatTime(row[column.property]) }}
+      {{ formatTime(getByPath(row, column.property)) }}
     </template>
   </ElTableColumn>
 </template>
@@ -14,6 +14,7 @@
   import { ElTableColumn } from 'element-plus';
   import { DateTime } from 'luxon';
   import { defineProps, withDefaults } from 'vue';
+  import { getByPath } from '~/utils/utils';
 
   interface IProps {
     prop: string;

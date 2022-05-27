@@ -3,10 +3,9 @@
     :prop="props.prop"
     :label="props.label"
     :sortable="props.sortable"
-    :min-width="props.minWidth"
-  >
-    <template #default="{row, column}">
-      {{row[column.property]}}
+    :min-width="props.minWidth">
+    <template #default="{ row, column }">
+      {{ getByPath(row, column.property) }}
     </template>
   </ElTableColumn>
 </template>
@@ -14,12 +13,14 @@
 <script setup lang="ts">
   import { ElTableColumn } from 'element-plus';
   import { defineProps, withDefaults } from 'vue';
+  import { getByPath } from '~/utils/utils';
+
   interface IProps {
     prop: string;
     sortable?: boolean;
     label?: string;
-    width?: number|string;
-    minWidth?: number|string;
+    width?: number | string;
+    minWidth?: number | string;
   }
 
   const props = withDefaults(defineProps<IProps>(), {
