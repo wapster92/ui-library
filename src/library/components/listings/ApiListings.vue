@@ -18,7 +18,7 @@
   const uRoute = inject('useRoute', useRoute);
   const uRouter = inject('useRouter', useRouter);
 
-  export interface IProps {
+  interface IProps {
     limit?: number;
   }
 
@@ -53,22 +53,22 @@
     });
   };
 
-  watch(
-    () => route?.query?.filters,
-    val => {
-      generateQS();
-    }
-  );
+  // watch(
+  //   () => route?.query?.filters,
+  //   val => {
+  //     generateQS();
+  //   }
+  // );
 
-  watch(query, (current, old) => {
-    if (current !== old) {
-      getData('watch');
-    }
-  });
-  onMounted(() => {
-    generateQS();
-    // getData('mounted');
-  })
+  // watch(query, (current, old) => {
+  //   if (current !== old) {
+  //     getData('watch');
+  //   }
+  // });
+  // onMounted(() => {
+  //   generateQS();
+  //   // getData('mounted');
+  // })
   const getData = async (dot) => {
     try {
       const { data } = await axios.get(
@@ -85,7 +85,7 @@
     }
   };
 
-  const parseFilters = (filters: string | string[]) => {
+  const parseFilters = (filters) => {
     if (Array.isArray(filters)) {
       return filters.reduce((acc, filter) => {
         const [field, operator, value] = filter.split('||');

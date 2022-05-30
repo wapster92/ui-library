@@ -8,6 +8,7 @@
       "@/*": ["./src/*"],
       "~/*": ["./src/library/*"]
     },
+    "jsx": "preserve",
     "skipLibCheck": true,
     "isolatedModules": true,
     "types": ["vite/client"],

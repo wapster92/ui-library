@@ -20,7 +20,7 @@
             <TextColumn prop="id" label="ID" sortable></TextColumn>
             <TextColumn prop="name" label="Имя" sortable></TextColumn>
             <TagColumn prop="tag" sortable label="Тег"></TagColumn>
-            <TextColumn prop="company" sortable label="Компания"></TextColumn>
+            <TextColumn prop="company" min-width="20" sortable label="Компания"></TextColumn>
             <TextColumn prop="amount" sortable label="Цена сделки"></TextColumn>
             <BoolColumn
               prop="completed"
@@ -42,9 +42,6 @@
 
 <script setup lang="ts">
   // import { ElTableColumn } from 'element-plus';
-  const test = e => {
-    console.log(e);
-  };
 </script>
 
 <style scoped></style>

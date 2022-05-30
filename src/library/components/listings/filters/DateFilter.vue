@@ -82,7 +82,7 @@
     if (!Array.isArray(filterObj)) {
       if (filterObj?.field === props.field) {
         filterVisible.value = true;
-        if (filterObj?.value !== 'null') {
+        if (filterObj?.value !== null && typeof filterObj.value === 'string') {
           date.value = datesIsoStringToDate(filterObj.value);
         } else {
           date.value = null;
@@ -96,7 +96,7 @@
     getFilter();
   });
 
-  const changeFilter = (e: Date) => {
+  const changeFilter = (e) => {
     const filterObj = {
       field: props.field,
       operator: props.operator,

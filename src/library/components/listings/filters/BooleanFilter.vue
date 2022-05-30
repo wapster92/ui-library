@@ -76,8 +76,8 @@
     if (!Array.isArray(filterObj)) {
       if (filterObj?.field === props.field) {
         filterVisible.value = true;
-        if (filterObj?.value !== 'null') {
-          filterValue.value = stringToBoolean(filterObj.value);
+        if (filterObj?.value !== null) {
+          filterValue.value = Boolean(filterObj.value);
         } else {
           dropdown.value.handleOpen();
         }

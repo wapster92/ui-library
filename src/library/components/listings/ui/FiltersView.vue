@@ -23,14 +23,13 @@
             v-for="(filter, i) of filtersList"
             :key="i"
             @click="addFilter(filter)"
-            >{{ filter.label }}</ElDropdownItem
-          >
+            >{{ filter.label }}
+          </ElDropdownItem>
         </ElDropdownMenu>
       </template>
     </ElDropdown>
   </div>
 </template>
-
 <script setup lang="ts">
   import {
     ElIcon,
@@ -40,7 +39,7 @@
   } from 'element-plus';
   import { Plus as PlusIcon } from '@element-plus/icons-vue';
   import { computed, ref, useSlots, watch } from 'vue';
-  import { useQueryFilter } from "~/utils/query";
+  import { useQueryFilter } from '~/utils/query';
   export interface IFilter {
     field: string;
     label: string;
@@ -54,7 +53,8 @@
   const filteringSlots = slots => {
     if (Array.isArray(slots)) {
       return slots.filter(
-        slot => slot?.props?.field && slot?.props?.label && slot?.props?.operator
+        slot =>
+          slot?.props?.field && slot?.props?.label && slot?.props?.operator
       );
     }
     return [];
@@ -80,8 +80,9 @@
 
   const queryFilter = useQueryFilter();
 
-  const addFilter = (filterObj) => {
-    queryFilter.addQueryFilter(filterObj);
+  const addFilter = filterObj => {
+    const {field, operator, value} = filterObj;
+    queryFilter.addQueryFilter({field, operator, value});
   };
 
   const getFilter = () => {
@@ -93,7 +94,8 @@
       filtersList.value = defaultFilters.value.filter(el => {
         return !activeFilters.some(
           activeFilter =>
-            el.field === activeFilter.field && el.operator === activeFilter.operator
+            el.field === activeFilter.field &&
+            el.operator === activeFilter.operator
         );
       });
     }
@@ -104,6 +106,12 @@
   });
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'FiltersView',
+  };
+</script>
+
 <style scoped lang="scss">
   .filters-view {
     width: 100%;
@@ -112,12 +120,14 @@
     align-items: center;
     gap: 6px;
   }
+
   .add-filter {
     font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
     &--more {
       width: 28px;
       height: 28px;
@@ -125,6 +135,7 @@
       background-color: var(--el-color-primary-light-9);
       color: var(--el-color-primary);
     }
+
     &__text {
       margin-left: 5px;
       display: inline-flex;
