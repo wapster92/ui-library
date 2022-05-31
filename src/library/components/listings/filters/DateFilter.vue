@@ -20,7 +20,7 @@
       <template #default>
         <ElDatePicker
           v-model="date"
-          type="date"
+          type="daterange"
           @change="changeFilter"
           @visible-change="datePickerVisibleChange" />
       </template>
@@ -82,7 +82,7 @@
     if (!Array.isArray(filterObj)) {
       if (filterObj?.field === props.field) {
         filterVisible.value = true;
-        if (filterObj?.value !== null && typeof filterObj.value === 'string') {
+        if (filterObj?.value !== null) {
           date.value = datesIsoStringToDate(filterObj.value);
         } else {
           date.value = null;
@@ -120,12 +120,18 @@
     return DateTime.fromJSDate(value).toISO();
   };
 
-  const datesIsoStringToDate = (value: string) => {
-    const values = value.split(',');
+  const datesIsoStringToDate = (value: string|string[]|boolean) => {
+    let values = [];
+    if(Array.isArray(value)) {
+      values = value;
+    }
+    if(typeof value === 'string') {
+      values = value.split(',');
+    }
     if (values.length > 1) {
       return values.map(val => DateTime.fromISO(val).toJSDate());
     }
-    return DateTime.fromISO(value).toJSDate();
+    return DateTime.fromISO(value[0]).toJSDate();
   };
 
   const closeFilter = () => {

@@ -33,14 +33,9 @@
     ElDropdownMenu,
     ElDropdownItem,
   } from 'element-plus';
-  import {
-    ref,
-    withDefaults,
-    defineProps,
-    watch,
-  } from 'vue';
+  import { ref, withDefaults, defineProps, watch } from 'vue';
 
-  import { useQueryFilter } from "~/utils/query";
+  import { useQueryFilter } from '~/utils/query';
 
   export interface IProps {
     label: string;
@@ -76,8 +71,12 @@
     if (!Array.isArray(filterObj)) {
       if (filterObj?.field === props.field) {
         filterVisible.value = true;
-        if (filterObj?.value !== null) {
-          filterValue.value = Boolean(filterObj.value);
+        if (
+          filterObj?.value !== null &&
+          (typeof filterObj?.value === 'string' ||
+            typeof filterObj?.value === 'boolean')
+        ) {
+          filterValue.value = stringToBoolean(filterObj.value);
         } else {
           dropdown.value.handleOpen();
         }
@@ -89,8 +88,11 @@
     getFilter();
   });
 
-  const stringToBoolean = (value: string) => {
-    return value === 'true';
+  const stringToBoolean = (value: string | boolean) => {
+    if (typeof value === 'string') {
+      return value === 'true';
+    }
+    return value;
   };
 
   const changeFilter = (e: boolean) => {

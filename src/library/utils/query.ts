@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { inject } from 'vue';
+import { inject, watch } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { useQueryStore } from '~/store/queryStore';
 
@@ -8,24 +8,6 @@ export const useQueryFilter = () => {
   const uRouter = inject('useRouter', useRouter);
   const route = uRoute();
   const router = uRouter();
-
-  const valueToString = (value: string | string[]) => {
-    if (Array.isArray(value)) {
-      return value.join(',');
-    }
-    return value;
-  };
-
-  const convertStrFilterToObj = str => {
-    const [field, operator, value] = str.split('||');
-    return { field, operator, value };
-  };
-
-  const convertObjToString = filterObj => {
-    return `${filterObj.field}||${filterObj.operator}||${valueToString(
-      filterObj.value
-    )}`;
-  };
 
   interface IFilterObj {
     field: string;
@@ -38,20 +20,27 @@ export const useQueryFilter = () => {
   queryObj.$subscribe(async (_, state) => {
     await goToQuery({ filter: state.filter });
   });
-  onBeforeRouteUpdate((to, from, next) => {
-    console.log(to);
-    console.log(from);
-    next();
-  });
+
+  watch(
+    () => route,
+    (val, oldVal) => {
+      console.log(oldVal);
+      console.log(val);
+      // if(oldVal.length) {
+      //
+      // }
+    }
+  );
 
   const goToQuery = async val => {
     const filters = val.filter.map(filter => {
       return Object.values(filter).join('||');
     });
+    console.log(filters);
     const qrObj = {
       filter: filters,
     };
-    await router.replace({
+    router.replace({
       query: {
         filters: qs.stringify(qrObj, { encode: true, arrayFormat: 'repeat' }),
       },
@@ -59,8 +48,25 @@ export const useQueryFilter = () => {
   };
 
   const initialFilters = () => {
-    const filters = queryObj?.filter;
-    return filters;
+    if (queryObj?.filter.length) {
+      return queryObj?.filter;
+    }
+    if (route?.query?.filters) {
+      const query = qs.parse(<string>route.query.filters);
+      let filters = [];
+      if (Array.isArray(query.filter)) {
+        filters = query.filter.map(el => {
+          const [field, operator, value] = el.split('||');
+          return { field, operator, value };
+        });
+      }
+      if (typeof query.filter === 'string') {
+        const [field, operator, value] = query.filter.split('||');
+        filters = [{ field, operator, value }];
+      }
+      queryObj.setFilter(filters);
+    }
+    return queryObj?.filter;
   };
 
   const getQueryFilters = (filterObj?: IFilterObj) => {
@@ -110,6 +116,7 @@ export const useQueryFilter = () => {
         el.field === filterObj.field && el.operator === filterObj.operator
       );
     });
+    console.log(filters);
     queryObj.setFilter(filters);
   };
 

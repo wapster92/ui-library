@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps, ref, withDefaults } from 'vue';
+import { defineProps, onMounted, ref, watch, withDefaults } from "vue";
   import { ElInput, ElIcon } from 'element-plus';
   import { Search } from '@element-plus/icons-vue';
   import Calendar from '~/assets/icons/calendar.svg';
@@ -50,41 +50,78 @@
 
   interface IProps {
     tableData?: object[] | null;
-    multipleSearch?: string[] | string;
+    multipleSearch?: string[];
   }
   const props = withDefaults(defineProps<IProps>(), {
     tableData: null,
     multipleSearch: null,
   });
 
-  const input = ref('irvin');
   const queryFilter = useQueryFilter();
-  const addFilters = () => {
-    if (props.multipleSearch) {
-      if (Array.isArray(props.multipleSearch)) {
-        props.multipleSearch.forEach((prop) => {
-          queryFilter.addQueryFilter({
+  const getInitValue = () => {
+    let filters = [];
+
+    props.multipleSearch.forEach(el => {
+      const candidate = queryFilter.getQueryFilters({
+        field: el,
+        operator: '$cont',
+      });
+      if (candidate) {
+        filters.push(candidate);
+      }
+    });
+
+    if (filters.length === props.multipleSearch.length) {
+      return filters.every(el => el.value === filters[0].value)
+        ? filters[0].value
+        : '';
+    }
+    return ''
+  };
+  const input = ref(getInitValue());
+  const addOrRemoveFilters = () => {
+    if (props.multipleSearch.length) {
+      if(input.value.length >= 3) {
+        props.multipleSearch.forEach(prop => {
+          const candidate = queryFilter.getQueryFilters({
             field: prop,
             operator: '$cont',
-            value: input.value,
           });
-
+          if (candidate) {
+            queryFilter.changeQueryFilter({
+              field: prop,
+              operator: '$cont',
+              value: input.value,
+            })
+          } else {
+            queryFilter.addQueryFilter({
+              field: prop,
+              operator: '$cont',
+              value: input.value,
+            });
+          }
         });
-      }
-      if (
-        props.multipleSearch?.length &&
-        typeof props.multipleSearch === 'string'
-      ) {
-        queryFilter.addQueryFilter({
-          field: props.multipleSearch || '',
-          operator: '$cont',
-          value: input.value,
+      } else {
+        props.multipleSearch.forEach(el => {
+          const candidate = queryFilter.getQueryFilters({
+            field: el,
+            operator: '$cont',
+          });
+          console.log(candidate)
+          if (candidate) {
+            queryFilter.removeQueryFilter(candidate)
+          }
         });
       }
     }
   };
-
-  addFilters()
+  onMounted(() => {
+    addOrRemoveFilters();
+  })
+  watch(input, () => {
+    console.log('watch')
+    addOrRemoveFilters()
+  })
 </script>
 
 <style lang="scss">
