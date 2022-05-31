@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { inject } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { useQueryStore } from '~/store/queryStore';
 
 export const useQueryFilter = () => {
@@ -35,14 +35,25 @@ export const useQueryFilter = () => {
 
   const queryObj = useQueryStore();
 
-  // queryObj.$subscribe(async (_, state) => {
-  //   await goToQuery({ filter: state.filter });
-  // });
+  queryObj.$subscribe(async (_, state) => {
+    await goToQuery({ filter: state.filter });
+  });
+  onBeforeRouteUpdate((to, from, next) => {
+    console.log(to);
+    console.log(from);
+    next();
+  });
 
   const goToQuery = async val => {
+    const filters = val.filter.map(filter => {
+      return Object.values(filter).join('||');
+    });
+    const qrObj = {
+      filter: filters,
+    };
     await router.replace({
       query: {
-        filters: qs.stringify(val, { encode: true, arrayFormat: 'repeat' }),
+        filters: qs.stringify(qrObj, { encode: true, arrayFormat: 'repeat' }),
       },
     });
   };
@@ -56,7 +67,10 @@ export const useQueryFilter = () => {
     const filters = initialFilters();
     if (filterObj) {
       const obj = filters.find(filter => {
-        return filter.field === filterObj.field && filter.operator === filterObj.operator;
+        return (
+          filter.field === filterObj.field &&
+          filter.operator === filterObj.operator
+        );
       });
       return obj ? obj : null;
     }
@@ -68,9 +82,11 @@ export const useQueryFilter = () => {
 
   const addQueryFilter = (filterObj: IFilterObj) => {
     const filters = initialFilters();
-    const idx = filters.findIndex(el => el.field === filterObj.field && el.operator === filterObj.operator);
+    const idx = filters.findIndex(
+      el => el.field === filterObj.field && el.operator === filterObj.operator
+    );
     if (~idx) {
-      filters[idx] = filterObj
+      filters[idx] = filterObj;
     } else {
       filters.push(filterObj);
     }
@@ -90,7 +106,9 @@ export const useQueryFilter = () => {
 
   const removeQueryFilter = (filterObj: IFilterObj) => {
     const filters = queryObj.filter.filter(el => {
-      return !(el.field === filterObj.field && el.operator === filterObj.operator);
+      return !(
+        el.field === filterObj.field && el.operator === filterObj.operator
+      );
     });
     queryObj.setFilter(filters);
   };
