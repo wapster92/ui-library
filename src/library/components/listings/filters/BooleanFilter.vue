@@ -69,6 +69,7 @@
       operator: props.operator,
     };
     const filterObj = queryFilter.getQueryFilters(obj);
+    console.log(filterObj)
     if (filterObj === null) {
       filterVisible.value = false;
       return;
@@ -86,6 +87,7 @@
   };
 
   watch(queryFilter.queryObj, () => {
+    console.log('watch');
     getFilter();
   });
 

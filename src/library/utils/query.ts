@@ -27,7 +27,7 @@ export const useQueryFilter = () => {
   };
 
   interface IQueryObj {
-    filter?: string | string[];
+    filter?: string[];
   }
   interface IFilterObj {
     field: string;
@@ -35,26 +35,33 @@ export const useQueryFilter = () => {
     value?: string | string[] | boolean;
   }
   const query = ref<string>('');
+
+  // watch(
+  //   () => route?.query?.filters,
+  //   val => {
+  //     query.value = <string>val;
+  //   }
+  // );
+
   const queryObj = computed<IQueryObj>({
     get() {
-      return qs.parse(query.value);
+      return qs.parse(<string>query.value);
     },
     async set(val) {
-      console.log(val);
+      query.value = qs.stringify(val, { encode: false });
       await router.replace({
         query: {
-          filters: qs.stringify(val, { encode: true, arrayFormat: 'repeat' }),
+          filters: query.value,
         },
       });
     },
   });
-
-  watch(
-    () => route?.query?.filters,
-    val => {
-      query.value = <string>val;
-    }
-  );
+  // watch(
+  //   () => query.value,
+  //   val => {
+  //     console.log('watch', val);
+  //   }
+  // );
 
   onMounted(() => {
     if (route?.query?.filters) {
@@ -63,14 +70,15 @@ export const useQueryFilter = () => {
   });
 
   const initialFilters = () => {
-    let filters = [];
+    let filters = qs.parse(<string>query.value);
     if (queryObj.value?.filter) {
-      if (typeof queryObj.value.filter === 'string') {
+      /*if (typeof queryObj.value.filter === 'string') {
         filters = [queryObj.value.filter];
       }
       if (Array.isArray(queryObj.value.filter)) {
         filters = queryObj.value.filter;
-      }
+      }*/
+      filters = queryObj.value.filter;
     }
     return filters;
   };
@@ -95,7 +103,7 @@ export const useQueryFilter = () => {
 
   const addQueryFilter = (filterObj: IFilterObj) => {
     const filters = initialFilters();
-    console.log('filters', filters);
+    console.log(filters);
     filters.push(convertObjToString(filterObj));
     queryObj.value = { filter: filters };
   };
@@ -128,6 +136,7 @@ export const useQueryFilter = () => {
   };
 
   return {
+    query,
     queryObj,
     getQueryFilters,
     addQueryFilter,
