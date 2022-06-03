@@ -18,26 +18,28 @@ export interface QueryStore {
 export const useQueryStore = defineStore('query', {
   state: () => {
     return <QueryStore>{
-      filter: [],
-      or: [],
+      filter: null,
+      or: null,
     };
   },
   actions: {
     addFilter(payload) {
-      if(this.filter.length <= 0) {
-        this.filter.push(`${payload.field}||${payload.operator}||${payload.value}`);
+      if (this.filter.length <= 0) {
+        this.filter.push(
+          `${payload.field}||${payload.operator}||${payload.value}`
+        );
       }
 
       const candidates = this.filter.reduce((acc, filter) => {
         const [field, operator] = filter.split('||');
-        if(field === payload.field && operator === payload.operator) {
+        if (field === payload.field && operator === payload.operator) {
           acc.push([field, operator, payload.value].join(operator));
           return acc;
         }
         acc.push(`${payload.field}||${payload.operator}||${payload.value}`);
         return acc;
       }, []);
-      console.log(candidates)
+      console.log(candidates);
     },
     setFilter(val) {
       this.filter = val;

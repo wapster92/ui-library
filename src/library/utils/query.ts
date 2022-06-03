@@ -42,13 +42,13 @@ export const useQueryFilter = () => {
     };
     router.replace({
       query: {
-        filters: qs.stringify(qrObj, { encode: true, arrayFormat: 'repeat' }),
+        filters: qs.stringify(qrObj, { encode: false }),
       },
     });
   };
 
   const initialFilters = () => {
-    if (queryObj?.filter.length) {
+    if (Array.isArray(queryObj?.filter)) {
       return queryObj?.filter;
     }
     if (route?.query?.filters) {
@@ -66,11 +66,12 @@ export const useQueryFilter = () => {
       }
       queryObj.setFilter(filters);
     }
-    return queryObj?.filter;
+    return queryObj?.filter || [];
   };
 
   const getQueryFilters = (filterObj?: IFilterObj) => {
     const filters = initialFilters();
+    console.log(filters);
     if (filterObj) {
       const obj = filters.find(filter => {
         return (
@@ -111,12 +112,14 @@ export const useQueryFilter = () => {
   };
 
   const removeQueryFilter = (filterObj: IFilterObj) => {
+    console.log('входящие данные', filterObj);
+    console.log('массив фильтров', queryObj.filter);
     const filters = queryObj.filter.filter(el => {
       return !(
         el.field === filterObj.field && el.operator === filterObj.operator
       );
     });
-    console.log(filters);
+    console.log('полученный массив', filters);
     queryObj.setFilter(filters);
   };
 
