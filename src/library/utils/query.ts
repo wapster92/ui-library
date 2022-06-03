@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { inject, watch } from 'vue';
-import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useQueryStore } from '~/store/queryStore';
 
 export const useQueryFilter = () => {
@@ -40,7 +40,7 @@ export const useQueryFilter = () => {
     const qrObj = {
       filter: filters,
     };
-    router.replace({
+    await router.replace({
       query: {
         filters: qs.stringify(qrObj, { encode: false }),
       },
