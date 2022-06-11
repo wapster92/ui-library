@@ -6,12 +6,15 @@
     :min-width="props.minWidth">
     <template #default="{ row, column }">
       <ElTag
+        v-if="getByPath(row, column.property)"
         :size="props.size"
-        :color="getByPath(row, column.property)[props.colorProperty]">
+        :color="getByPath(row, column.property)[props.colorProperty]"
+        >
         <span :style="{ color: props.colorText }">{{
           getByPath(row, column.property)[props.textProperty]
         }}</span>
       </ElTag>
+      <span v-else>-</span>
     </template>
   </ElTableColumn>
 </template>

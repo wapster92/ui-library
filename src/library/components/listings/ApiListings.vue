@@ -53,22 +53,22 @@
     });
   };
 
-  // watch(
-  //   () => route?.query?.filters,
-  //   val => {
-  //     generateQS();
-  //   }
-  // );
+  watch(
+    () => route?.query?.filters,
+    val => {
+      generateQS();
+    }
+  );
 
-  // watch(query, (current, old) => {
-  //   if (current !== old) {
-  //     getData('watch');
-  //   }
-  // });
-  // onMounted(() => {
-  //   generateQS();
-  //   // getData('mounted');
-  // })
+  watch(query, (current, old) => {
+    if (current !== old) {
+      getData('watch');
+    }
+  });
+  onMounted(() => {
+    generateQS();
+    // getData('mounted');
+  })
   const getData = async (dot) => {
     try {
       const { data } = await axios.get(

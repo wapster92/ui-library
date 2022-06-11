@@ -38,7 +38,7 @@
     ElAside,
   } from 'element-plus';
   import { MenuStore, useMenuStore } from '~/store/panel';
-  import { computed, defineProps, ref, watch, withDefaults } from "vue";
+  import { computed, defineProps, withDefaults } from "vue";
 
   import UHeader from './panel/components/UHeader.vue';
   import ru from 'element-plus/lib/locale/lang/ru';
@@ -53,7 +53,7 @@
     menuItems?: IMenuItem[];
   }
 
-  export interface IProps {
+  interface IProps {
     menuItems: IMenuItem[];
   }
   const props = withDefaults(defineProps<IProps>(), {});

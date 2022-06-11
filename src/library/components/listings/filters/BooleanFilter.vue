@@ -33,7 +33,7 @@
     ElDropdownMenu,
     ElDropdownItem,
   } from 'element-plus';
-  import { ref, withDefaults, defineProps, watch } from 'vue';
+  import { ref, withDefaults, defineProps, watch, onMounted } from 'vue';
 
   import { useQueryFilter } from '~/utils/query';
 
@@ -88,6 +88,9 @@
     getFilter();
   });
 
+  onMounted(() => {
+    getFilter();
+  })
   const stringToBoolean = (value: string | boolean) => {
     if (typeof value === 'string') {
       return value === 'true';

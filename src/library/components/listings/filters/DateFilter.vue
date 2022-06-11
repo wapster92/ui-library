@@ -57,6 +57,7 @@
   const dateString = computed(() => {
     if (Array.isArray(date.value) && date.value?.length) {
       const [first, last] = date.value;
+      console.log(first)
       return `с ${DateTime.fromJSDate(first).toLocaleString(
         DateTime.DATE_MED
       )} по ${DateTime.fromJSDate(last).toLocaleString(DateTime.DATE_MED)}`;

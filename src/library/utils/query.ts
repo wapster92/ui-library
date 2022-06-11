@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { inject, watch } from 'vue';
+import { inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useQueryStore } from '~/store/queryStore';
 
@@ -21,7 +21,7 @@ export const useQueryFilter = () => {
     await goToQuery({ filter: state.filter });
   });
 
-  watch(
+ /* watch(
     () => route,
     (val, oldVal) => {
       console.log(oldVal);
@@ -30,7 +30,7 @@ export const useQueryFilter = () => {
       //
       // }
     }
-  );
+  );*/
 
   const goToQuery = async val => {
     const filters = val.filter.map(filter => {
@@ -42,7 +42,7 @@ export const useQueryFilter = () => {
     };
     await router.replace({
       query: {
-        filters: qs.stringify(qrObj, { encode: false }),
+        filters: qs.stringify(qrObj, { encode: true }),
       },
     });
   };
@@ -52,17 +52,13 @@ export const useQueryFilter = () => {
       return queryObj?.filter;
     }
     if (route?.query?.filters) {
-      const query = qs.parse(<string>route.query.filters);
+      const query = qs.parse(<string>route.query.filters, );
       let filters = [];
       if (Array.isArray(query.filter)) {
         filters = query.filter.map(el => {
           const [field, operator, value] = el.split('||');
           return { field, operator, value };
         });
-      }
-      if (typeof query.filter === 'string') {
-        const [field, operator, value] = query.filter.split('||');
-        filters = [{ field, operator, value }];
       }
       queryObj.setFilter(filters);
     }
@@ -71,7 +67,6 @@ export const useQueryFilter = () => {
 
   const getQueryFilters = (filterObj?: IFilterObj) => {
     const filters = initialFilters();
-    console.log(filters);
     if (filterObj) {
       const obj = filters.find(filter => {
         return (
@@ -112,14 +107,11 @@ export const useQueryFilter = () => {
   };
 
   const removeQueryFilter = (filterObj: IFilterObj) => {
-    console.log('входящие данные', filterObj);
-    console.log('массив фильтров', queryObj.filter);
     const filters = queryObj.filter.filter(el => {
       return !(
         el.field === filterObj.field && el.operator === filterObj.operator
       );
     });
-    console.log('полученный массив', filters);
     queryObj.setFilter(filters);
   };
 
