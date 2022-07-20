@@ -38,11 +38,12 @@
     ElAside,
   } from 'element-plus';
   import { MenuStore, useMenuStore } from '~/store/panel';
-  import { computed, defineProps, withDefaults } from "vue";
+  import { computed, defineProps, withDefaults } from 'vue';
 
-  import UHeader from './panel/components/UHeader.vue';
   import ru from 'element-plus/lib/locale/lang/ru';
+  import UHeader from './panel/components/UHeader.vue';
   import UMenuPanel from './panel/components/UMenuPanel.vue';
+
   const stateMenu: MenuStore = useMenuStore();
   const widthMenu = computed(() => (stateMenu.isState ? '200px' : '64px'));
 
@@ -58,7 +59,7 @@
   }
   const props = withDefaults(defineProps<IProps>(), {});
 
-  /*const minWidth = 64;
+  /* const minWidth = 64;
   const maxWidth = 200;
   const currentWidth = ref<number>(stateMenu.isState ? maxWidth : minWidth);
   const widthMenu = ref(currentWidth.value + 'px');
@@ -86,7 +87,7 @@
 
   watch(() => stateMenu.isState, (value) => {
     animateMenuWidth(value);
-  })*/
+  }) */
 </script>
 
 <style scoped lang="scss">

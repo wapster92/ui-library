@@ -16,12 +16,10 @@ export interface QueryStore {
 }
 
 export const useQueryStore = defineStore('query', {
-  state: () => {
-    return <QueryStore>{
+  state: () => <QueryStore>{
       filter: null,
       or: null,
-    };
-  },
+    },
   actions: {
     addFilter(payload) {
       if (this.filter.length <= 0) {

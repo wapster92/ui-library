@@ -1,6 +1,9 @@
 <template>
   <nav class="menu">
-    <ElMenu :collapse="!stateMenu.isState" :collapse-transition="false" class="menu-component">
+    <ElMenu
+      :collapse="!stateMenu.isState"
+      :collapse-transition="false"
+      class="menu-component">
       <template v-for="(menuItem, i) of props.menuItems" :key="i">
         <ElMenuItemGroup v-if="menuItem.groupName">
           <template #title

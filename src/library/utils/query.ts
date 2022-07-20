@@ -16,27 +16,8 @@ export const useQueryFilter = () => {
   }
 
   const queryObj = useQueryStore();
-
-  queryObj.$subscribe(async (_, state) => {
-    await goToQuery({ filter: state.filter });
-  });
-
- /* watch(
-    () => route,
-    (val, oldVal) => {
-      console.log(oldVal);
-      console.log(val);
-      // if(oldVal.length) {
-      //
-      // }
-    }
-  );*/
-
-  const goToQuery = async val => {
-    const filters = val.filter.map(filter => {
-      return Object.values(filter).join('||');
-    });
-    console.log(filters);
+  const goToQuery = async (val: { filter: IFilterObj[] }) => {
+    const filters = val.filter.map(filter => Object.values(filter).join('||'));
     const qrObj = {
       filter: filters,
     };
@@ -46,13 +27,27 @@ export const useQueryFilter = () => {
       },
     });
   };
+  queryObj.$subscribe(async (_, state) => {
+    await goToQuery({ filter: state.filter });
+  });
+
+  /* watch(
+    () => route,
+    (val, oldVal) => {
+      console.log(oldVal);
+      console.log(val);
+      // if(oldVal.length) {
+      //
+      // }
+    }
+  ); */
 
   const initialFilters = () => {
     if (Array.isArray(queryObj?.filter)) {
       return queryObj?.filter;
     }
     if (route?.query?.filters) {
-      const query = qs.parse(<string>route.query.filters, );
+      const query = qs.parse(<string>route.query.filters);
       let filters = [];
       if (Array.isArray(query.filter)) {
         filters = query.filter.map(el => {
@@ -68,13 +63,11 @@ export const useQueryFilter = () => {
   const getQueryFilters = (filterObj?: IFilterObj) => {
     const filters = initialFilters();
     if (filterObj) {
-      const obj = filters.find(filter => {
-        return (
+      const obj = filters.find(filter => (
           filter.field === filterObj.field &&
           filter.operator === filterObj.operator
-        );
-      });
-      return obj ? obj : null;
+        ));
+      return obj || null;
     }
     if (filters.length) {
       return filters;
@@ -87,7 +80,7 @@ export const useQueryFilter = () => {
     const idx = filters.findIndex(
       el => el.field === filterObj.field && el.operator === filterObj.operator
     );
-    if (~idx) {
+    if (idx >= 0) {
       filters[idx] = filterObj;
     } else {
       filters.push(filterObj);
@@ -107,11 +100,9 @@ export const useQueryFilter = () => {
   };
 
   const removeQueryFilter = (filterObj: IFilterObj) => {
-    const filters = queryObj.filter.filter(el => {
-      return !(
+    const filters = queryObj.filter.filter(el => !(
         el.field === filterObj.field && el.operator === filterObj.operator
-      );
-    });
+      ));
     queryObj.setFilter(filters);
   };
 

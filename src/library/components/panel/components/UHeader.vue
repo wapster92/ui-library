@@ -19,9 +19,10 @@
 
 <script setup lang="ts">
   import { ElButton, ElIcon } from 'element-plus';
-  import UUserPanel from './UUserPanel.vue';
   import { Fold, Expand } from '@element-plus/icons-vue';
   import { MenuStore, useMenuStore } from '~/store/panel';
+  import UUserPanel from './UUserPanel.vue';
+
   const menuStore: MenuStore = useMenuStore();
   const changeMenuStatus = () => {
     menuStore.changeState();

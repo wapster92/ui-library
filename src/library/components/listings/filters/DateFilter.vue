@@ -31,16 +31,10 @@
 <script setup lang="ts">
   import { DateTime } from 'luxon';
   import { ElPopover, ElTag, ElDatePicker } from 'element-plus';
-  import {
-    ref,
-    computed,
-    withDefaults,
-    defineProps,
-    watch,
-  } from 'vue';
-  import { useQueryFilter } from "~/utils/query";
+  import { ref, computed, withDefaults, defineProps, watch } from 'vue';
+  import { useQueryFilter } from '~/utils/query';
 
-  export interface IProps {
+  interface IProps {
     label: string;
     field: string;
     operator: string;
@@ -57,7 +51,7 @@
   const dateString = computed(() => {
     if (Array.isArray(date.value) && date.value?.length) {
       const [first, last] = date.value;
-      console.log(first)
+      console.log(first);
       return `с ${DateTime.fromJSDate(first).toLocaleString(
         DateTime.DATE_MED
       )} по ${DateTime.fromJSDate(last).toLocaleString(DateTime.DATE_MED)}`;
@@ -69,6 +63,20 @@
   });
 
   const queryFilter = useQueryFilter();
+
+  const datesIsoStringToDate = (value: string | string[] | boolean) => {
+    let values = [];
+    if (Array.isArray(value)) {
+      values = value;
+    }
+    if (typeof value === 'string') {
+      values = value.split(',');
+    }
+    if (values.length > 1) {
+      return values.map(val => DateTime.fromISO(val).toJSDate());
+    }
+    return DateTime.fromISO(value[0]).toJSDate();
+  };
 
   const getFilter = () => {
     const obj = {
@@ -97,7 +105,14 @@
     getFilter();
   });
 
-  const changeFilter = (e) => {
+  const datesToIsoStrings = (value: Date | Date[]) => {
+    if (Array.isArray(value)) {
+      return value.map(val => DateTime.fromJSDate(val).toISO());
+    }
+    return DateTime.fromJSDate(value).toISO();
+  };
+
+  const changeFilter = e => {
     const filterObj = {
       field: props.field,
       operator: props.operator,
@@ -114,26 +129,6 @@
     queryFilter.removeQueryFilter(filterObj);
   };
 
-  const datesToIsoStrings = (value: Date | Date[]) => {
-    if (Array.isArray(value)) {
-      return value.map(val => DateTime.fromJSDate(val).toISO());
-    }
-    return DateTime.fromJSDate(value).toISO();
-  };
-
-  const datesIsoStringToDate = (value: string|string[]|boolean) => {
-    let values = [];
-    if(Array.isArray(value)) {
-      values = value;
-    }
-    if(typeof value === 'string') {
-      values = value.split(',');
-    }
-    if (values.length > 1) {
-      return values.map(val => DateTime.fromISO(val).toJSDate());
-    }
-    return DateTime.fromISO(value[0]).toJSDate();
-  };
 
   const closeFilter = () => {
     removeFilter();

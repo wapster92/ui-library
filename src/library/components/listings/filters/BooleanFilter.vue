@@ -37,7 +37,9 @@
 
   import { useQueryFilter } from '~/utils/query';
 
-  export interface IProps {
+
+
+ interface IProps {
     label: string;
     field: string;
     operator: string;
@@ -57,7 +59,12 @@
   const filterVisible = ref(false);
 
   const queryFilter = useQueryFilter();
-
+  const stringToBoolean = (value: string | boolean) => {
+    if (typeof value === 'string') {
+      return value === 'true';
+    }
+    return value;
+  };
   const getFilter = () => {
     const obj = {
       field: props.field,
@@ -90,13 +97,7 @@
 
   onMounted(() => {
     getFilter();
-  })
-  const stringToBoolean = (value: string | boolean) => {
-    if (typeof value === 'string') {
-      return value === 'true';
-    }
-    return value;
-  };
+  });
 
   const changeFilter = (e: boolean) => {
     const filterObj = {

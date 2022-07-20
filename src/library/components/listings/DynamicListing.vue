@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref, watch, withDefaults } from "vue";
+  import { defineProps, onMounted, ref, watch, withDefaults } from 'vue';
   import { ElInput, ElIcon } from 'element-plus';
   import { Search } from '@element-plus/icons-vue';
   import Calendar from '~/assets/icons/calendar.svg';
@@ -59,7 +59,7 @@ import { defineProps, onMounted, ref, watch, withDefaults } from "vue";
 
   const queryFilter = useQueryFilter();
   const getInitValue = () => {
-    let filters = [];
+    const filters = [];
 
     props.multipleSearch.forEach(el => {
       const candidate = queryFilter.getQueryFilters({
@@ -76,12 +76,12 @@ import { defineProps, onMounted, ref, watch, withDefaults } from "vue";
         ? filters[0].value
         : '';
     }
-    return ''
+    return '';
   };
   const input = ref(getInitValue());
   const addOrRemoveFilters = () => {
     if (props.multipleSearch.length) {
-      if(input.value.length >= 3) {
+      if (input.value.length >= 3) {
         props.multipleSearch.forEach(prop => {
           const candidate = queryFilter.getQueryFilters({
             field: prop,
@@ -92,7 +92,7 @@ import { defineProps, onMounted, ref, watch, withDefaults } from "vue";
               field: prop,
               operator: '$cont',
               value: input.value,
-            })
+            });
           } else {
             queryFilter.addQueryFilter({
               field: prop,
@@ -107,9 +107,9 @@ import { defineProps, onMounted, ref, watch, withDefaults } from "vue";
             field: el,
             operator: '$cont',
           });
-          console.log(candidate)
+          console.log(candidate);
           if (candidate) {
-            queryFilter.removeQueryFilter(candidate)
+            queryFilter.removeQueryFilter(candidate);
           }
         });
       }
@@ -117,11 +117,11 @@ import { defineProps, onMounted, ref, watch, withDefaults } from "vue";
   };
   onMounted(() => {
     addOrRemoveFilters();
-  })
+  });
   watch(input, () => {
-    console.log('watch')
-    addOrRemoveFilters()
-  })
+    console.log('watch');
+    addOrRemoveFilters();
+  });
 </script>
 
 <style lang="scss">

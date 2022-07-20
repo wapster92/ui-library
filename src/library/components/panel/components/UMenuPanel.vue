@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts" setup>
+  import { defineProps, withDefaults } from 'vue';
   import ULogo from './ULogo.vue';
   import UMenu from './UMenu.vue';
-  import { defineProps, withDefaults } from 'vue';
 
   interface IMenuItem {
     iconSvg: object;
@@ -25,7 +25,7 @@
     menuItems?: IMenuItem[];
   }
 
-  export interface IProps {
+  interface IProps {
     menuItems: IMenuItem[];
   }
   const props = withDefaults(defineProps<IProps>(), {});

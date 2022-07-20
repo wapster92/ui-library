@@ -24,6 +24,7 @@
 <script setup lang="ts">
   import { ElTable, ElEmpty } from 'element-plus';
   import { defineEmits, defineProps, onMounted, ref, withDefaults } from 'vue';
+
   const listing = ref();
   const tableListingRef = ref();
   interface IProps {
@@ -37,7 +38,7 @@
 
   const listingHeight = ref(0);
   const calcHeight = () => {
-    const offsetTop = listing.value.offsetTop;
+    const {offsetTop} = listing.value;
     const windowHeight = window.innerHeight;
     return windowHeight - offsetTop - 4; // 4 - это паддинг основной части страницы
   };

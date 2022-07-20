@@ -1,8 +1,5 @@
 <template>
-  <ElTableColumn
-    prop="id"
-    :label="props.label"
-    :min-width="props.minWidth">
+  <ElTableColumn prop="id" :label="props.label" :min-width="props.minWidth">
     <template #default="{ row }">
       <slot :row="row"></slot>
     </template>

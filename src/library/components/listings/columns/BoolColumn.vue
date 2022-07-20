@@ -6,8 +6,10 @@
     :sortable="props.sortable">
     <template #default="{ row, column }">
       <ElIcon v-if="props.isIcon" :size="props.sizeIcon">
-        <CircleCheck v-if="isPositive(row, column)" :style="{color: props.trueIconColor}"/>
-        <CircleClose v-else :style="{color: props.falseIconColor}" />
+        <CircleCheck
+          v-if="isPositive(row, column)"
+          :style="{ color: props.trueIconColor }" />
+        <CircleClose v-else :style="{ color: props.falseIconColor }" />
       </ElIcon>
       <template v-else>
         <span v-if="isPositive(row, column)">{{ props.trueText }}</span>
@@ -21,7 +23,8 @@
   import { ElTableColumn, ElIcon } from 'element-plus';
   import { CircleCheck, CircleClose } from '@element-plus/icons-vue';
   import { getByPath } from '~/utils/utils';
-  import { defineProps, withDefaults } from "vue";
+  import { defineProps, withDefaults } from 'vue';
+
   interface IProps {
     prop: string;
     sortable?: boolean;
@@ -47,16 +50,14 @@
     falseText: 'Нет',
   });
 
-  const isPositive = (row, column) => {
-    return getByPath(row, column.property);
-  };
+  const isPositive = (row, column) => getByPath(row, column.property);
 </script>
 
 <style lang="scss">
-.bool-column {
-  .cell {
-    display: flex;
-    align-items: center;
+  .bool-column {
+    .cell {
+      display: flex;
+      align-items: center;
+    }
   }
-}
 </style>

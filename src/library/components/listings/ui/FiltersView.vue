@@ -40,7 +40,8 @@
   import { Plus as PlusIcon } from '@element-plus/icons-vue';
   import { computed, ref, useSlots, watch } from 'vue';
   import { useQueryFilter } from '~/utils/query';
-  export interface IFilter {
+
+  interface IFilter {
     field: string;
     label: string;
     operator: string;
@@ -63,14 +64,12 @@
   const defaultFilters = computed(() => {
     const currentSlots = filteringSlots(childrenInFilterSlot);
     if (Array.isArray(currentSlots) && currentSlots.length) {
-      return currentSlots.map(filter => {
-        return {
+      return currentSlots.map(filter => ({
           field: filter.props.field,
           label: filter.props.label,
           operator: filter.props.operator,
           value: filter.props.value ?? null,
-        };
-      });
+        }));
     }
     return [];
   });
@@ -81,8 +80,8 @@
   const queryFilter = useQueryFilter();
 
   const addFilter = filterObj => {
-    const {field, operator, value} = filterObj;
-    queryFilter.addQueryFilter({field, operator, value});
+    const { field, operator, value } = filterObj;
+    queryFilter.addQueryFilter({ field, operator, value });
   };
 
   const getFilter = () => {
@@ -91,13 +90,11 @@
       filtersList.value = defaultFilters.value;
     }
     if (Array.isArray(activeFilters)) {
-      filtersList.value = defaultFilters.value.filter(el => {
-        return !activeFilters.some(
+      filtersList.value = defaultFilters.value.filter(el => !activeFilters.some(
           activeFilter =>
             el.field === activeFilter.field &&
             el.operator === activeFilter.operator
-        );
-      });
+        ));
     }
   };
 

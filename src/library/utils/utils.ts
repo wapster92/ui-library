@@ -9,9 +9,9 @@ export const getByPath = (obj, path) => {
       current = current[parts[i]];
       if (!current) break;
     }
-    /*parts.forEach(part => {
+    /* parts.forEach(part => {
       current = current[part];
-    });*/
+    }); */
     return current;
   }
 

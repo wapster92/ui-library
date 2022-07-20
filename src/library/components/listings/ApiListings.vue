@@ -14,7 +14,8 @@
   import qs from 'qs';
   import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
-  import { ElNotification } from "element-plus";
+  import { ElNotification } from 'element-plus';
+
   const uRoute = inject('useRoute', useRoute);
   const uRouter = inject('useRouter', useRouter);
 
@@ -31,9 +32,24 @@
   const tableData = ref([]);
 
   const query = ref('');
-
+  const parseFilters = filters => {
+    if (Array.isArray(filters)) {
+      return filters.reduce((acc, filter) => {
+        const [field, operator, value] = filter.split('||');
+        if (value !== 'null') {
+          acc.push({ field, operator, value });
+        }
+        return acc;
+      }, []);
+    }
+    const [field, operator, value] = filters.split('||');
+    if (value !== 'null') {
+      return [{ field, operator, value }];
+    }
+    return [];
+  };
   const generateQS = () => {
-    let queryObj = {
+    const queryObj = {
       filter: [],
       limit: props.limit,
     };
@@ -43,7 +59,7 @@
         const { filter } = qs.parse(filtersInQuery);
         const filters = parseFilters(filter);
         queryObj.filter = filters.map(
-          filter => `${filter.field}||${filter.operator}||${filter.value}`
+          filterEl => `${filterEl.field}||${filterEl.operator}||${filterEl.value}`
         );
       }
     }
@@ -60,6 +76,22 @@
     }
   );
 
+  const getData = async dot => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/orders?${query.value}`
+      );
+      console.log(dot);
+      tableData.value = data.data;
+    } catch (e) {
+      ElNotification({
+        title: 'Ошибка',
+        message: e.message || 'Произошла ошибка',
+        type: 'error',
+      });
+    }
+  };
+
   watch(query, (current, old) => {
     if (current !== old) {
       getData('watch');
@@ -68,39 +100,10 @@
   onMounted(() => {
     generateQS();
     // getData('mounted');
-  })
-  const getData = async (dot) => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:5000/api/orders?${query.value}`
-      );
-      console.log(dot)
-      tableData.value = data.data;
-    } catch (e) {
-      ElNotification({
-        title: 'Ошибка',
-        message: e.message || 'Произошла ошибка',
-        type: 'error',
-      })
-    }
-  };
+  });
 
-  const parseFilters = (filters) => {
-    if (Array.isArray(filters)) {
-      return filters.reduce((acc, filter) => {
-        const [field, operator, value] = filter.split('||');
-        if (value !== 'null') {
-          acc.push({ field, operator, value });
-        }
-        return acc;
-      }, []);
-    }
-    const [field, operator, value] = filters.split('||');
-    if (value !== 'null') {
-      return [{ field, operator, value }];
-    }
-    return [];
-  };
+
+
 </script>
 
 <style scoped></style>

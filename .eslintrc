@@ -6,14 +6,40 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended",
     "plugin:vue/vue3-recommended",
+    "@vue/airbnb",
     "@vue/typescript/recommended",
     "prettier"
   ],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "extensions": [
+          ".js",
+          ".ts",
+          ".vue"
+        ],
+        "map": [
+          [
+            "@",
+            "./src"
+          ],
+          [
+            "~",
+            "./src/library"
+          ]
+        ]
+      }
+    }
+  },
   "parserOptions": {
     "ecmaVersion": 2021
   },
   "plugins": [],
-  "rules": {}
+  "rules": {
+    "no-console": "warn",
+    "no-debugger": "error",
+    "no-plusplus": "off",
+    "import/prefer-default-export": "off"
+  }
 }

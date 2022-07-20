@@ -1,9 +1,7 @@
 <template>
   <ApiListings :limit="50">
     <template #default="{ tableData }">
-      <DynamicListing
-        :multiple-search="['company', 'name',]"
-      >
+      <DynamicListing :multiple-search="['company', 'name']">
         <template #filters>
           <DateFilter
             label="Дата добавления"
@@ -19,8 +17,16 @@
             <SelectionColumn></SelectionColumn>
             <TextColumn prop="id" label="ID" sortable></TextColumn>
             <TextColumn prop="name" label="Имя" sortable></TextColumn>
-            <TagColumn prop="tag" sortable label="Тег" colorProperty="color"></TagColumn>
-            <TextColumn prop="company" min-width="20" sortable label="Компания"></TextColumn>
+            <TagColumn
+              prop="tag"
+              sortable
+              label="Тег"
+              colorProperty="color"></TagColumn>
+            <TextColumn
+              prop="company"
+              min-width="20"
+              sortable
+              label="Компания"></TextColumn>
             <TextColumn prop="amount" sortable label="Цена сделки"></TextColumn>
             <BoolColumn
               prop="completed"
