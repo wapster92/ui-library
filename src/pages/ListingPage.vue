@@ -11,6 +11,11 @@
             label="Завершен"
             field="completed"
             operator="$eq"></BooleanFilter>
+          <SelectFilter
+            label="Тэг"
+            field="order.tag"
+            operator="$eq"
+          ></SelectFilter>
         </template>
         <template #listings>
           <TableListing :table-data="tableData" @selection-change="test">
@@ -48,6 +53,14 @@
 
 <script setup lang="ts">
   // import { ElTableColumn } from 'element-plus';
+import SelectFilter from "~/components/listings/filters/SelectFilter.vue";
+const options = [
+  {
+    name: 'Рок',
+    value: '1'
+
+  }
+]
 </script>
 
 <style scoped></style>
