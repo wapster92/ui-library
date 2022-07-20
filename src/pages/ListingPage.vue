@@ -14,8 +14,7 @@
           <SelectFilter
             label="Тэг"
             field="order.tag"
-            operator="$eq"
-          ></SelectFilter>
+            operator="$eq"></SelectFilter>
         </template>
         <template #listings>
           <TableListing :table-data="tableData" @selection-change="test">
@@ -26,7 +25,7 @@
               prop="tag"
               sortable
               label="Тег"
-              colorProperty="color"></TagColumn>
+              color-property="color"></TagColumn>
             <TextColumn
               prop="company"
               min-width="20"
@@ -53,14 +52,14 @@
 
 <script setup lang="ts">
   // import { ElTableColumn } from 'element-plus';
-import SelectFilter from "~/components/listings/filters/SelectFilter.vue";
-const options = [
-  {
-    name: 'Рок',
-    value: '1'
+  import SelectFilter from '~/components/listings/filters/SelectFilter.vue';
 
-  }
-]
+  const options = [
+    {
+      name: 'Рок',
+      value: '1',
+    },
+  ];
 </script>
 
 <style scoped></style>

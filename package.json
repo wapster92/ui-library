@@ -17,7 +17,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint --ext .js,.vue --fix",
+    "lint": "eslint --fix --ext  .js,.vue .",
     "format": "prettier .  --write"
   },
   "peerDependencies": {

@@ -11,7 +11,8 @@ if (window !== undefined) {
 }
 
 export const useMenuStore = defineStore('menu', {
-  state: () => <MenuStore>{
+  state: () =>
+    <MenuStore>{
       isState: state,
     },
   actions: {

@@ -38,7 +38,7 @@
 
   const listingHeight = ref(0);
   const calcHeight = () => {
-    const {offsetTop} = listing.value;
+    const { offsetTop } = listing.value;
     const windowHeight = window.innerHeight;
     return windowHeight - offsetTop - 4; // 4 - это паддинг основной части страницы
   };

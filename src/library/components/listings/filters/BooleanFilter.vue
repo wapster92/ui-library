@@ -37,9 +37,7 @@
 
   import { useQueryFilter } from '~/utils/query';
 
-
-
- interface IProps {
+  interface IProps {
     label: string;
     field: string;
     operator: string;

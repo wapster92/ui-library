@@ -63,10 +63,11 @@ export const useQueryFilter = () => {
   const getQueryFilters = (filterObj?: IFilterObj) => {
     const filters = initialFilters();
     if (filterObj) {
-      const obj = filters.find(filter => (
+      const obj = filters.find(
+        filter =>
           filter.field === filterObj.field &&
           filter.operator === filterObj.operator
-        ));
+      );
       return obj || null;
     }
     if (filters.length) {
@@ -100,9 +101,10 @@ export const useQueryFilter = () => {
   };
 
   const removeQueryFilter = (filterObj: IFilterObj) => {
-    const filters = queryObj.filter.filter(el => !(
-        el.field === filterObj.field && el.operator === filterObj.operator
-      ));
+    const filters = queryObj.filter.filter(
+      el =>
+        !(el.field === filterObj.field && el.operator === filterObj.operator)
+    );
     queryObj.setFilter(filters);
   };
 

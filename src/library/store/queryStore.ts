@@ -16,7 +16,8 @@ export interface QueryStore {
 }
 
 export const useQueryStore = defineStore('query', {
-  state: () => <QueryStore>{
+  state: () =>
+    <QueryStore>{
       filter: null,
       or: null,
     },

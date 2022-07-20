@@ -24,7 +24,7 @@
   }
 
   const route = uRoute();
-  const router = uRouter();
+  // const router = uRouter();
   const props = withDefaults(defineProps<IProps>(), {
     limit: 50,
   });
@@ -59,7 +59,8 @@
         const { filter } = qs.parse(filtersInQuery);
         const filters = parseFilters(filter);
         queryObj.filter = filters.map(
-          filterEl => `${filterEl.field}||${filterEl.operator}||${filterEl.value}`
+          filterEl =>
+            `${filterEl.field}||${filterEl.operator}||${filterEl.value}`
         );
       }
     }
@@ -71,7 +72,7 @@
 
   watch(
     () => route?.query?.filters,
-    val => {
+    () => {
       generateQS();
     }
   );
@@ -101,9 +102,6 @@
     generateQS();
     // getData('mounted');
   });
-
-
-
 </script>
 
 <style scoped></style>

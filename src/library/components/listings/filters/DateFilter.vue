@@ -129,7 +129,6 @@
     queryFilter.removeQueryFilter(filterObj);
   };
 
-
   const closeFilter = () => {
     removeFilter();
     filterPopoverVisible.value = false;

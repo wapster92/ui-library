@@ -14,20 +14,10 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "extensions": [
-          ".js",
-          ".ts",
-          ".vue"
-        ],
+        "extensions": [".js", ".ts", ".vue"],
         "map": [
-          [
-            "@",
-            "./src"
-          ],
-          [
-            "~",
-            "./src/library"
-          ]
+          ["@", "./src"],
+          ["~", "./src/library"]
         ]
       }
     }

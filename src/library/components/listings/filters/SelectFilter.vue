@@ -17,31 +17,31 @@
           <span class="filters-view__value">Значение</span>
         </ElTag>
       </template>
-      <template #default>
-
-      </template>
+      <template #default> </template>
     </ElPopover>
   </div>
 </template>
 
 <script setup lang="ts">
   import { ElPopover, ElTag, ElSelect, ElOption } from 'element-plus';
-  import {
-    ref,
-    withDefaults,
-    defineProps,
-    computed,
-    watch,
-  } from 'vue';
-  import { useQueryFilter } from "~/utils/query";
-  type tValue = string | string[] | number | number[] | object | object[];
+  import { ref, withDefaults, defineProps, computed, watch } from 'vue';
+  import { useQueryFilter } from '~/utils/query';
+
+  type tValue =
+    | boolean
+    | string
+    | string[]
+    | number
+    | number[]
+    | object
+    | object[];
 
   interface IProps {
     label: string;
     field: string;
     operator: string;
     value?: tValue;
-    options?: object[]
+    options?: object[];
   }
   const props = withDefaults(defineProps<IProps>(), {
     value: null,
@@ -80,7 +80,7 @@
     getFilter();
   });
 
-  const changeFilter = (e) => {
+  const changeFilter = e => {
     const filterObj = {
       field: props.field,
       operator: props.operator,
@@ -96,7 +96,6 @@
     };
     queryFilter.removeQueryFilter(filterObj);
   };
-
 
   const closeFilter = () => {
     removeFilter();

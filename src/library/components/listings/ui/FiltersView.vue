@@ -65,11 +65,11 @@
     const currentSlots = filteringSlots(childrenInFilterSlot);
     if (Array.isArray(currentSlots) && currentSlots.length) {
       return currentSlots.map(filter => ({
-          field: filter.props.field,
-          label: filter.props.label,
-          operator: filter.props.operator,
-          value: filter.props.value ?? null,
-        }));
+        field: filter.props.field,
+        label: filter.props.label,
+        operator: filter.props.operator,
+        value: filter.props.value ?? null,
+      }));
     }
     return [];
   });
@@ -90,11 +90,14 @@
       filtersList.value = defaultFilters.value;
     }
     if (Array.isArray(activeFilters)) {
-      filtersList.value = defaultFilters.value.filter(el => !activeFilters.some(
-          activeFilter =>
-            el.field === activeFilter.field &&
-            el.operator === activeFilter.operator
-        ));
+      filtersList.value = defaultFilters.value.filter(
+        el =>
+          !activeFilters.some(
+            activeFilter =>
+              el.field === activeFilter.field &&
+              el.operator === activeFilter.operator
+          )
+      );
     }
   };
 
